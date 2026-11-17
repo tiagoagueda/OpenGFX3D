@@ -13,7 +13,8 @@ photographs or from other graphics.
 
 The game matches the average colour of each texture to the ground sprites of the 2D game,
 so the same textures serve all climates. Only the differences in colour within a texture
-matter here, not its overall tint. ground_sand.png, the beach, is used as it is.
+matter here, not its overall tint. The beach (sand), roads (asphalt), the ground beside tracks (gravel) and
+pavements (paving) are used as they are.
 """
 
 import os
@@ -35,6 +36,9 @@ FILES = {
     "sand": "ground_sand.png",
     "water": "ground_water.png",
     "mask": "ground_mask.png",
+    "asphalt": "ground_asphalt.png",
+    "gravel": "ground_gravel.png",
+    "paving": "ground_paving.png",
 }
 
 
@@ -164,6 +168,46 @@ def water(rng):
     return mix(image, colour(120, 164, 200), ridges * 0.22)
 
 
+def asphalt(rng):
+    """Asphalt: dark grey with fine grit, patches that are a little worn, and a few repairs."""
+    patches = level(noise(rng, 1, 8, 1.2))
+    grit = noise(rng, 120, 256, 0.0)
+    stones = smoothstep(0.93, 0.99, level(noise(rng, 60, 200, 0.2)))
+    repairs = smoothstep(0.80, 0.83, level(noise(rng, 2, 6, 1.6)))
+    image = mix(colour(70, 71, 74), colour(88, 88, 90), patches)
+    image = mix(image, colour(62, 63, 66), repairs * 0.35)
+    image = shade(image, 0.10 * grit)
+    return mix(image, colour(122, 120, 116), stones * 0.4)
+
+
+def gravel(rng):
+    """Gravel: small stones of greys and browns, close together."""
+    stones = noise(rng, 50, 160, 0.4)
+    tint = level(noise(rng, 20, 80, 0.6))
+    patches = level(noise(rng, 1, 6, 1.2))
+    image = mix(colour(112, 104, 94), colour(140, 134, 124), tint)
+    image = mix(image * 0.88, image, patches)
+    # Light tops and dark gaps between the stones.
+    return shade(image, 0.28 * stones)
+
+
+def paving(rng):
+    """Paving slabs: squares of a quarter of a tile, each its own shade, with joints between them."""
+    slabs = TILES * 4
+    step = SIZE // slabs
+    y, x = np.mgrid[0:SIZE, 0:SIZE]
+    shades = rng.uniform(-1.0, 1.0, (slabs, slabs))
+    each = shades[y // step, x // step]
+    # Distance to the nearest joint, in pixels.
+    gap = np.minimum(np.minimum(x % step, step - 1 - x % step), np.minimum(y % step, step - 1 - y % step))
+    joint = 1.0 - smoothstep(0.0, 1.6, gap.astype(float))
+    grain = noise(rng, 80, 250, 0.0)
+    stains = level(noise(rng, 2, 12, 1.0))
+    image = mix(colour(150, 146, 138), colour(176, 172, 164), stains)
+    image = shade(image, 0.05 * each + 0.06 * grain)
+    return mix(image, colour(104, 100, 94), joint * 0.8)
+
+
 def mask(rng):
     """Where one kind of ground takes over from another: every value from black to white is as common as the next.
     The game puts the second kind where the mask is below how far the change has gone."""
@@ -184,6 +228,9 @@ def main():
         "sand": lambda rng: sandy(rng, colour(206, 180, 132), colour(234, 214, 170), 0.05),
         "water": water,
         "mask": mask,
+        "asphalt": asphalt,
+        "gravel": gravel,
+        "paving": paving,
     }
     for seed, (name, maker) in enumerate(makers.items()):
         save(name, maker(np.random.default_rng(1000 + seed)))

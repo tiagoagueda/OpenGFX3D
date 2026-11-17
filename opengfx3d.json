@@ -4902,9 +4902,12 @@
 	"ground": {
 		"tiles": 4,
 		"textures": {
+			"asphalt": "ground_asphalt.png",
 			"desert": "ground_desert.png",
 			"grass": "ground_grass.png",
+			"gravel": "ground_gravel.png",
 			"mask": "ground_mask.png",
+			"paving": "ground_paving.png",
 			"rocks": "ground_rocks.png",
 			"rough": "ground_rough.png",
 			"sand": "ground_sand.png",

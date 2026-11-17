@@ -30,8 +30,8 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
 * `tiles`: along how many tiles the game spreads one texture.
 * `textures`: the images by name. They must be square PNG files, all of the same size, a power of two.
   * `grass`, `soil`, `sand`, `water` and `mask` are needed; without them the game makes the ground from the sprites of the 2D game, as it does without this package.
-  * `rough`, `rocks`, `snow` and `desert` are optional.
-  * `sand` is the beach and is used as it is. The game tints all others to the average colour of the matching ground sprite of the 2D game, so only the differences in colour within the image matter.
+  * `rough`, `rocks`, `snow`, `desert`, `asphalt`, `gravel` and `paving` are optional.
+  * `sand` (the beach), `asphalt` (roads), `gravel` (beside tracks) and `paving` (pavements) are used as they are. The game tints all others to the average colour of the matching ground sprite of the 2D game, so only the differences in colour within the image matter.
   * `mask` is grey: where grass grows over soil first (dark) and last (light). The same goes for snow and desert over grass.
 
 Like the models, the textures are made for this project: `make_textures.py` computes them from random numbers. Do not add photographs or textures from elsewhere without checking their licence.
