@@ -50,6 +50,8 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
   * `ship_depot`: 0, a model of both tiles, 32 long along X.
 * `model`: a file in this folder.
 * `scale`: optional; world units per unit of the model.
+* `rotor`, `rotor_at`: optional, for helicopters; the model of the main rotor, which the game turns, and where its hub is in the frame of the helicopter.
+* `parts`: optional, for buildings; parts that move, each `{ "model": ..., "at": [x, y, z], "axis": [x, y, z], "spin": radians per second, "swing": radians, "period": seconds }`. The part turns around `axis` through `at` (in the frame of the building), by `spin` all the time and back and forth by `swing`. Give the ids of a tile that is animated in the game an entry of their own when only those should move.
 
 ## Models
 

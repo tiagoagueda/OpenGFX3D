@@ -519,7 +519,37 @@ def toy_helicopter():
     m.save("air_toy_helicopter.glb")
 
 
+# Main rotors. The game spins them; the hub is at the origin, and the index says where it goes on the helicopter.
+
+
+def rotor_blade(m, material, angle, radius, width, thick=0.06, hub=0.2):
+    c, s = math.cos(angle), math.sin(angle)
+
+    def p(u, v, z):
+        return (u * c - v * s, u * s + v * c, z)
+
+    corners = [(hub, -width / 2), (radius, -width / 2), (radius, width / 2), (hub, width / 2)]
+    top = [p(u, v, thick / 2) for u, v in corners]
+    bottom = [p(u, v, -thick / 2) for u, v in corners]
+    m.quad(material, *top)
+    m.quad(material, *reversed(bottom))
+    for i in range(4):
+        j = (i + 1) % 4
+        m.quad(material, bottom[i], bottom[j], top[j], top[i])
+
+
+def rotor(filename, blades, radius, width, material="air_dark", hub_material="air_grey"):
+    m = Model()
+    zcylinder(m, hub_material, 0, 0, -0.15, 0.15, 0.3, sides=10)
+    for i in range(blades):
+        rotor_blade(m, material, 2 * math.pi * i / blades, radius, width)
+    m.save(filename)
+
+
 def build():
+    rotor("air_rotor.glb", 2, 4.6, 0.35)
+    rotor("air_rotor_large.glb", 4, 5.6, 0.42)
+    rotor("air_toy_rotor.glb", 3, 4.2, 0.6, material="air_toy_red", hub_material="air_toy_yellow")
     for f in (trimotor, turboprop_airliner, commuter_prop, early_jet, twinjet, trijet, highwing_quadjet, jumbo,
               supersonic, future_commuter, future_airliner, future_supersonic, blended_wing, helicopter,
               helicopter_large, toy_biplane, toy_jet, toy_jumbo, toy_rocket, toy_helicopter):
@@ -548,10 +578,18 @@ def build():
         ([37], "air_toy_rocket.glb", None),
         ([40], "air_toy_helicopter.glb", None),
     ]
+    # Main rotor of each helicopter, and where its hub is in the frame of the helicopter.
+    rotors = {
+        "air_helicopter.glb": ("air_rotor.glb", [0.0, 0.0, 3.5]),
+        "air_helicopter_large.glb": ("air_rotor_large.glb", [0.2, 0.0, 4.1]),
+        "air_toy_helicopter.glb": ("air_toy_rotor.glb", [-0.2, 0.0, 4.1]),
+    }
     vehicles = []
     for ids, model, scale in entries:
         e = {"type": "aircraft", "ids": ids, "model": model}
         if scale:
             e["scale"] = scale
+        if model in rotors:
+            e["rotor"], e["rotor_at"] = rotors[model]
         vehicles.append(e)
     return {"vehicles": vehicles, "buildings": []}

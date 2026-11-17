@@ -125,14 +125,26 @@
 			"ids": [
 				38
 			],
-			"model": "air_helicopter.glb"
+			"model": "air_helicopter.glb",
+			"rotor": "air_rotor.glb",
+			"rotor_at": [
+				0.0,
+				0.0,
+				3.5
+			]
 		},
 		{
 			"type": "aircraft",
 			"ids": [
 				39
 			],
-			"model": "air_helicopter_large.glb"
+			"model": "air_helicopter_large.glb",
+			"rotor": "air_rotor_large.glb",
+			"rotor_at": [
+				0.2,
+				0.0,
+				4.1
+			]
 		},
 		{
 			"type": "aircraft",
@@ -175,7 +187,13 @@
 			"ids": [
 				40
 			],
-			"model": "air_toy_helicopter.glb"
+			"model": "air_toy_helicopter.glb",
+			"rotor": "air_toy_rotor.glb",
+			"rotor_at": [
+				-0.2,
+				0.0,
+				4.1
+			]
 		},
 		{
 			"type": "road",
@@ -2582,16 +2600,6 @@
 		{
 			"type": "industry_tile",
 			"ids": [
-				29,
-				30,
-				31,
-				32
-			],
-			"model": "industry_temperate_oil_well.glb"
-		},
-		{
-			"type": "industry_tile",
-			"ids": [
 				33
 			],
 			"model": "industry_temperate_farm_house.glb"
@@ -2686,6 +2694,54 @@
 				59
 			],
 			"model": "industry_temperate_bank_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				29
+			],
+			"model": "industry_temperate_oil_well.glb",
+			"parts": [
+				{
+					"model": "industry_temperate_oil_well_beam.glb",
+					"at": [
+						0,
+						0,
+						6
+					],
+					"axis": [
+						0,
+						1,
+						0
+					]
+				}
+			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				30,
+				31,
+				32
+			],
+			"model": "industry_temperate_oil_well.glb",
+			"parts": [
+				{
+					"model": "industry_temperate_oil_well_beam.glb",
+					"at": [
+						0,
+						0,
+						6
+					],
+					"axis": [
+						0,
+						1,
+						0
+					],
+					"swing": 0.22,
+					"period": 2.4
+				}
+			]
 		},
 		{
 			"type": "industry_tile",

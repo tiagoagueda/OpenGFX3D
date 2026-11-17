@@ -729,17 +729,6 @@ def oil_well():
     for y in (-1.1, 1.1):
         beam(m, "indt_steel", (-2.5, y, 0.6), (0, y * 0.4, 6), 0.35)
         beam(m, "indt_steel", (2.0, y, 0.6), (0, y * 0.4, 6), 0.35)
-    # Walking beam with horse head at the front and counterweights at the back.
-    beam(m, "company", (-5, 0, 5.4), (4, 0, 6.6), 0.6, 0.8)
-    pts = [(3.6, 6.1), (5.2, 7.2), (5.6, 5.8), (5.0, 4.4), (3.6, 5.6)]
-    for y0, y1 in ((-0.45, 0.45),):
-        for i in range(1, len(pts) - 1):
-            m.triangle("company_dark", (pts[0][0], y0, pts[0][1]), (pts[i + 1][0], y0, pts[i + 1][1]), (pts[i][0], y0, pts[i][1]))
-            m.triangle("company_dark", (pts[0][0], y1, pts[0][1]), (pts[i][0], y1, pts[i][1]), (pts[i + 1][0], y1, pts[i + 1][1]))
-        for i in range(len(pts)):
-            a, b = pts[i], pts[(i + 1) % len(pts)]
-            poly_out(m, "company_dark", [(a[0], y0, a[1]), (b[0], y0, b[1]), (b[0], y1, b[1]), (a[0], y1, a[1])], (4.5, 0, 6))
-    beam(m, "dark", (5.0, 0, 4.4), (5.0, 0, 1.4), 0.08)  # bridle
     m.box("indt_steel", 4.6, 5.4, -0.4, 0.4, 0, 1.4)  # wellhead
     # Crank and counterweights, motor.
     for y in (-1.0, 1.0):
@@ -751,7 +740,31 @@ def oil_well():
     beam(m, "dark", (5, 0.4, 0.3), (5, 7.5, 0.3), 0.3)
     m.box("indt_steel", -6, -5, 4, 7, 0, 2.2)  # meter hut
     m.save(fname("oil_well"))
+    oil_well_beam()
     return fname("oil_well")
+
+
+# The walking beam rocks on top of the samson post while the well pumps; the game moves it.
+OIL_WELL_PIVOT = (0, 0, 6)
+
+
+def oil_well_beam():
+    m = Model()
+    # Walking beam with horse head at the front and counterweights at the back.
+    beam(m, "company", (-5, 0, 5.4), (4, 0, 6.6), 0.6, 0.8)
+    pts = [(3.6, 6.1), (5.2, 7.2), (5.6, 5.8), (5.0, 4.4), (3.6, 5.6)]
+    for y0, y1 in ((-0.45, 0.45),):
+        for i in range(1, len(pts) - 1):
+            m.triangle("company_dark", (pts[0][0], y0, pts[0][1]), (pts[i + 1][0], y0, pts[i + 1][1]), (pts[i][0], y0, pts[i][1]))
+            m.triangle("company_dark", (pts[0][0], y1, pts[0][1]), (pts[i][0], y1, pts[i][1]), (pts[i + 1][0], y1, pts[i + 1][1]))
+        for i in range(len(pts)):
+            a, b = pts[i], pts[(i + 1) % len(pts)]
+            poly_out(m, "company_dark", [(a[0], y0, a[1]), (b[0], y0, b[1]), (b[0], y1, b[1]), (a[0], y1, a[1])], (4.5, 0, 6))
+    beam(m, "dark", (5.0, 0, 4.4), (5.0, 0, 1.4), 0.08)  # bridle
+    # The part turns around its origin, so move the pivot there.
+    for positions, _ in m.parts.values():
+        positions[:] = [tuple(p[k] - OIL_WELL_PIVOT[k] for k in range(3)) for p in positions]
+    m.save(fname("oil_well_beam"))
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -1199,7 +1212,6 @@ MODELS = [
     (oilrig_derrick, [26]),
     (oilrig_quarters, [27]),
     (oilrig_tanks, [28]),
-    (oil_well, [29, 30, 31, 32]),
     (farm_house, [33]),
     (farm_barn, [34]),
     (farm_stable, [35]),
@@ -1221,5 +1233,10 @@ def build():
     buildings = []
     for fn, ids in MODELS:
         buildings.append({"type": "industry_tile", "ids": ids, "model": fn()})
+    # The beam of an oil well stands still while the well does not pump, and rocks while it does.
+    well = oil_well()
+    beam_part = {"model": fname("oil_well_beam"), "at": list(OIL_WELL_PIVOT), "axis": [0, 1, 0]}
+    buildings.append({"type": "industry_tile", "ids": [29], "model": well, "parts": [beam_part]})
+    buildings.append({"type": "industry_tile", "ids": [30, 31, 32], "model": well, "parts": [dict(beam_part, swing=0.22, period=2.4)]})
     buildings += iron_mine()
     return {"vehicles": [], "buildings": buildings}
