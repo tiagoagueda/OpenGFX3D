@@ -15,6 +15,10 @@ import os
 import sys
 
 
+# Along how many tiles the game spreads one ground texture; see make_textures.py.
+GROUND_TILES = 4
+
+
 def main():
     here = os.path.dirname(os.path.abspath(__file__))
     os.chdir(here)
@@ -42,6 +46,10 @@ def main():
                 seen[where] = entry["model"]
             if not os.path.exists(entry["model"]):
                 sys.exit(f"{entry['model']} is missing")
+    # The ground textures, made by make_textures.py: ground_<name>.png.
+    textures = {os.path.splitext(path)[0][len("ground_"):]: path for path in sorted(glob.glob("ground_*.png"))}
+    if textures:
+        index["ground"] = {"tiles": GROUND_TILES, "textures": textures}
     with open("opengfx3d.json", "w") as f:
         json.dump(index, f, indent="\t")
         f.write("\n")

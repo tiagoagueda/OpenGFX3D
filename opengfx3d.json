@@ -4898,5 +4898,19 @@
 			],
 			"model": "track_catenary_pole_tram.glb"
 		}
-	]
+	],
+	"ground": {
+		"tiles": 4,
+		"textures": {
+			"desert": "ground_desert.png",
+			"grass": "ground_grass.png",
+			"mask": "ground_mask.png",
+			"rocks": "ground_rocks.png",
+			"rough": "ground_rough.png",
+			"sand": "ground_sand.png",
+			"snow": "ground_snow.png",
+			"soil": "ground_soil.png",
+			"water": "ground_water.png"
+		}
+	}
 }

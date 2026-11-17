@@ -15,9 +15,26 @@ All models here are made for this project; do not add models copied from elsewhe
 * `make_models.py`: makes all the models and the index. Run it after changing a model.
 * `gfx3d.py`: the toolkit the models are made with: materials and the `Model` class.
 * `models_*.py`: the models, in groups (base, road, trains, ships, air, houses_north, houses_south, industry_temperate, industry_other, infra, land). Each has a `build()` that writes its models and returns its entries for the index. Each group names its .glb files and new materials with its own prefix. `make_models.py` stops when two groups give a model to the same thing.
+* `ground_*.png`: the ground textures. Each repeats without a seam, and the game spreads it over several tiles.
+* `make_textures.py`: makes the ground textures (needs numpy and Pillow). Run it, and then `make_models.py` to list them in the index.
 * `preview.py`: draws pictures of models from the angle of the 2D game and from behind, to check them without the game (needs Pillow).
 
 The build copies the package to `opengfx3d/` in the build folder. The game looks for a folder of that name in all places where it looks for its data, such as your personal OpenTTD folder.
+
+## The ground textures
+
+```json
+"ground": { "tiles": 4, "textures": { "grass": "ground_grass.png", "soil": "ground_soil.png" } }
+```
+
+* `tiles`: along how many tiles the game spreads one texture.
+* `textures`: the images by name. They must be square PNG files, all of the same size, a power of two.
+  * `grass`, `soil`, `sand`, `water` and `mask` are needed; without them the game makes the ground from the sprites of the 2D game, as it does without this package.
+  * `rough`, `rocks`, `snow` and `desert` are optional.
+  * `sand` is the beach and is used as it is. The game tints all others to the average colour of the matching ground sprite of the 2D game, so only the differences in colour within the image matter.
+  * `mask` is grey: where grass grows over soil first (dark) and last (light). The same goes for snow and desert over grass.
+
+Like the models, the textures are made for this project: `make_textures.py` computes them from random numbers. Do not add photographs or textures from elsewhere without checking their licence.
 
 ## The index
 
