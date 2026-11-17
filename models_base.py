@@ -1,4 +1,4 @@
-"""The first sample models: bus, lorry, trains of the normal railway, temperate houses, factory, station and stops."""
+"""The first sample models: bus, trains of the normal railway, temperate houses, factory, station and stops."""
 
 import math
 
@@ -32,34 +32,6 @@ def bus():
         for y in (y0 + 0.2, y1 - 0.2):
             m.wheel(x, y, 0.62, 0.45)
     m.save("bus.glb")
-
-
-def lorry():
-    m = Model()
-    length, width = 9.0, 3.1
-    x0, x1, y0, y1 = -length / 2, length / 2, -width / 2, width / 2
-    m.box("dark", x0, x1 - 0.1, y0 + 0.3, y1 - 0.3, 0.55, 1.0)  # chassis
-    # Cab.
-    m.box("company", x1 - 2.2, x1, y0, y1, 0.8, 1.9)
-    m.box("glass", x1 - 2.1, x1 - 0.06, y0 + 0.06, y1 - 0.06, 1.9, 2.75)
-    m.box("company", x1 - 2.2, x1, y0, y1, 2.75, 2.95)
-    m.box("company", x1 - 2.2, x1 - 1.9, y0, y1, 1.9, 2.75)  # back of the cab
-    for y in (y0, y1 - 0.14):
-        m.box("company", x1 - 0.14, x1, y, y + 0.14, 1.9, 2.75)
-    m.box("dark", x1, x1 + 0.15, y0, y1, 0.7, 1.05)
-    for y in (y0 + 0.2, y1 - 0.7):
-        m.box("light", x1, x1 + 0.06, y, y + 0.5, 1.2, 1.5)
-    # Load.
-    m.box("cargo", x0, x1 - 2.5, y0, y1, 1.0, 3.3)
-    m.box("cargo_dark", x0 - 0.04, x0, y0 + 0.2, y1 - 0.2, 1.2, 3.1)  # doors
-    for x in (-3.0, -1.6, 3.0):
-        for y in (y0 + 0.2, y1 - 0.2):
-            m.wheel(x, y, 0.62, 0.45)
-    m.save("lorry.glb")
-
-
-# Rail vehicles of the usual length are 8 long, half a tile; the models are a little shorter so that
-# there is a gap between them. The rails are about 2.4 apart, the floor of a carriage is at about 1.
 
 
 def rail_wheels(m, xs, radius=0.5):
@@ -443,7 +415,6 @@ def lorry_stop(drive_through=False):
 
 def build():
     bus()
-    lorry()
     steam_engine()
     diesel_engine()
     diesel_engine(electric=True)
@@ -479,18 +450,6 @@ def build():
                     3
                 ],
                 "model": "bus.glb"
-            },
-            {
-                "type": "road",
-                "ids": [
-                    7,
-                    8,
-                    9,
-                    10,
-                    11,
-                    12
-                ],
-                "model": "lorry.glb"
             },
             {
                 "type": "train",
@@ -575,10 +534,8 @@ def build():
                     29,
                     34,
                     36,
-                    43,
                     44,
-                    51,
-                    53
+                    51
                 ],
                 "model": "open_wagon.glb"
             },
@@ -598,7 +555,9 @@ def build():
                 "ids": [
                     30,
                     41,
-                    48
+                    43,
+                    48,
+                    53
                 ],
                 "model": "tanker.glb"
             }

@@ -14,7 +14,7 @@ All models here are made for this project; do not add models copied from elsewhe
 * `*.glb`: the models, as binary glTF 2.0 files.
 * `make_models.py`: makes all the models and the index. Run it after changing a model.
 * `gfx3d.py`: the toolkit the models are made with: materials and the `Model` class.
-* `models_*.py`: the models, in groups. Each has a `build()` that writes its models and returns its entries for the index.
+* `models_*.py`: the models, in groups (base, road, trains, ships, air, houses_north, houses_south, industry_temperate, industry_other, infra). Each has a `build()` that writes its models and returns its entries for the index. Each group names its .glb files and new materials with its own prefix. `make_models.py` stops when two groups give a model to the same thing.
 * `preview.py`: draws pictures of models from the angle of the 2D game and from behind, to check them without the game (needs Pillow).
 
 The build copies the package to `opengfx3d/` in the build folder. The game looks for a folder of that name in all places where it looks for its data, such as your personal OpenTTD folder.
@@ -35,7 +35,7 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
 }
 ```
 
-* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop` or `object`.
+* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`.
 * `grfid`: the ID of the NewGRF that defines the vehicles, as the eight hexadecimal digits the game shows for it. Leave it out for the vehicles of the base game.
 * `ids`: the numbers within that NewGRF. For the base game:
   * vehicles count from 0 per type, in the order of `src/table/engines.h`: road vehicle 0 is the MPS Regal Bus;
@@ -43,7 +43,11 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
   * `industry_tile`: the industry tile type, as in `src/table/build_industry.h`;
   * `rail_station`: the station tile layout divided by two: 0 plain platform, 1 platform with building, 2 and 3 platform with roof;
   * `road_stop`: 0 bus bay, 1 lorry bay, 2 drive-through bus stop, 3 drive-through lorry stop;
-  * `object`: the object type.
+  * `object`: the object type (0 transmitter, 1 lighthouse, 2 statue, 4 company headquarters);
+  * `airport_tile`: the airport tile graphics, as in `src/table/airporttile_ids.h`;
+  * `dock`: 0 the part on the slope, 1 the part on the water; it points from the land to the water like the other fronts;
+  * `buoy`, `rail_depot`, `road_depot`: 0; depots have their door to +X;
+  * `ship_depot`: 0, a model of both tiles, 32 long along X.
 * `model`: a file in this folder.
 * `scale`: optional; world units per unit of the model.
 

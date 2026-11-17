@@ -3,6 +3,181 @@
 	"description": "3D models for the experimental 3D view. Vehicles and buildings that are not listed keep the sprites of the 2D game.",
 	"vehicles": [
 		{
+			"type": "aircraft",
+			"ids": [
+				0
+			],
+			"model": "air_trimotor.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				1
+			],
+			"model": "air_turboprop_airliner.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				4
+			],
+			"model": "air_commuter_prop.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				2,
+				6,
+				7,
+				10,
+				11,
+				23
+			],
+			"model": "air_early_jet.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				12,
+				14,
+				15,
+				16,
+				18,
+				19,
+				20,
+				21
+			],
+			"model": "air_twinjet.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				8,
+				9,
+				17
+			],
+			"model": "air_trijet.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				5,
+				22
+			],
+			"model": "air_highwing_quadjet.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				13
+			],
+			"model": "air_jumbo.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				3
+			],
+			"model": "air_supersonic.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				24,
+				25,
+				26
+			],
+			"model": "air_future_commuter.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				27,
+				28,
+				29
+			],
+			"model": "air_future_airliner.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				32
+			],
+			"model": "air_future_supersonic.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				30
+			],
+			"model": "air_future_supersonic.glb",
+			"scale": 0.85
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				31
+			],
+			"model": "air_blended_wing.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				38
+			],
+			"model": "air_helicopter.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				39
+			],
+			"model": "air_helicopter_large.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				33
+			],
+			"model": "air_toy_biplane.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				34
+			],
+			"model": "air_toy_biplane.glb",
+			"scale": 1.2
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				35
+			],
+			"model": "air_toy_jet.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				36
+			],
+			"model": "air_toy_jumbo.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				37
+			],
+			"model": "air_toy_rocket.glb"
+		},
+		{
+			"type": "aircraft",
+			"ids": [
+				40
+			],
+			"model": "air_toy_helicopter.glb"
+		},
+		{
 			"type": "road",
 			"ids": [
 				0,
@@ -11,18 +186,6 @@
 				3
 			],
 			"model": "bus.glb"
-		},
-		{
-			"type": "road",
-			"ids": [
-				7,
-				8,
-				9,
-				10,
-				11,
-				12
-			],
-			"model": "lorry.glb"
 		},
 		{
 			"type": "train",
@@ -107,10 +270,8 @@
 				29,
 				34,
 				36,
-				43,
 				44,
-				51,
-				53
+				51
 			],
 			"model": "open_wagon.glb"
 		},
@@ -130,9 +291,748 @@
 			"ids": [
 				30,
 				41,
-				48
+				43,
+				48,
+				53
 			],
 			"model": "tanker.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				7,
+				8,
+				9
+			],
+			"model": "road_coal_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				10,
+				11,
+				12
+			],
+			"model": "road_mail_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				16,
+				17,
+				18
+			],
+			"model": "road_oil_tanker.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				19,
+				20,
+				21
+			],
+			"model": "road_livestock_van.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				22,
+				23,
+				24
+			],
+			"model": "road_goods_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				25,
+				26,
+				27
+			],
+			"model": "road_grain_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				28,
+				29,
+				30
+			],
+			"model": "road_wood_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				31,
+				32,
+				33
+			],
+			"model": "road_iron_ore_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				34,
+				35,
+				36
+			],
+			"model": "road_steel_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				37,
+				38,
+				39
+			],
+			"model": "road_armoured_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				40,
+				41,
+				42
+			],
+			"model": "road_food_van.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				43,
+				44,
+				45
+			],
+			"model": "road_paper_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				46,
+				47,
+				48
+			],
+			"model": "road_copper_ore_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				49,
+				50,
+				51
+			],
+			"model": "road_water_tanker.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				52,
+				53,
+				54
+			],
+			"model": "road_fruit_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				55,
+				56,
+				57
+			],
+			"model": "road_rubber_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				4,
+				5
+			],
+			"model": "road_toy_bus.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				6
+			],
+			"model": "road_toy_bus_double.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				13,
+				14,
+				15
+			],
+			"model": "road_toy_mail_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				58,
+				59,
+				60
+			],
+			"model": "road_toy_sugar_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				61,
+				62,
+				63
+			],
+			"model": "road_toy_cola_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				64,
+				65,
+				66
+			],
+			"model": "road_toy_candyfloss_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				67,
+				68,
+				69
+			],
+			"model": "road_toy_toffee_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				70,
+				71,
+				72
+			],
+			"model": "road_toy_toy_van.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				73,
+				74,
+				75
+			],
+			"model": "road_toy_sweet_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				76,
+				77,
+				78
+			],
+			"model": "road_toy_battery_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				79,
+				80,
+				81
+			],
+			"model": "road_toy_fizzy_drink_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				82,
+				83,
+				84
+			],
+			"model": "road_toy_plastic_truck.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				85,
+				86,
+				87
+			],
+			"model": "road_toy_bubble_truck.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				0
+			],
+			"model": "ships_oil_tanker_old.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				1
+			],
+			"model": "ships_oil_tanker_modern.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				2
+			],
+			"model": "ships_ferry_old.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				3
+			],
+			"model": "ships_ferry_catamaran.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				4
+			],
+			"model": "ships_hovercraft.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				5
+			],
+			"model": "ships_toy_paddle_ferry.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				6
+			],
+			"model": "ships_toy_bubble_ferry.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				7
+			],
+			"model": "ships_cargo_ship_old.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				8
+			],
+			"model": "ships_container_ship.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				9
+			],
+			"model": "ships_toy_tug_cargo.glb"
+		},
+		{
+			"type": "ship",
+			"ids": [
+				10
+			],
+			"model": "ships_toy_freighter.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				20
+			],
+			"model": "trains_turner_turbo.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				22
+			],
+			"model": "trains_hst_power_car.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				25
+			],
+			"model": "trains_tim.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				26
+			],
+			"model": "trains_asiastar.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				54
+			],
+			"model": "trains_mono_x2001.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				55
+			],
+			"model": "trains_mono_z1.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				56
+			],
+			"model": "trains_mono_z99.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				84
+			],
+			"model": "trains_maglev_leviathan.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				85
+			],
+			"model": "trains_maglev_cyclops.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				86
+			],
+			"model": "trains_maglev_pegasus.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				87
+			],
+			"model": "trains_maglev_chimaera.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				88
+			],
+			"model": "trains_maglev_rocketeer.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				57
+			],
+			"model": "trains_mono_carriage.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				58
+			],
+			"model": "trains_mono_mail.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				62,
+				69
+			],
+			"model": "trains_mono_van_goods.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				61
+			],
+			"model": "trains_mono_van_livestock.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				67
+			],
+			"model": "trains_mono_van_armoured.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				68
+			],
+			"model": "trains_mono_van_reefer.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				77,
+				79,
+				80
+			],
+			"model": "trains_mono_van_toy.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				59
+			],
+			"model": "trains_mono_open_coal.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				72
+			],
+			"model": "trains_mono_open_fruit.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				81
+			],
+			"model": "trains_mono_open_batteries.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				82
+			],
+			"model": "trains_mono_open_fizzy.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				64
+			],
+			"model": "trains_mono_flat_logs.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				66
+			],
+			"model": "trains_mono_flat_steel.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				63
+			],
+			"model": "trains_mono_hopper_grain.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				65
+			],
+			"model": "trains_mono_hopper_ore.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				70
+			],
+			"model": "trains_mono_hopper_copper.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				74
+			],
+			"model": "trains_mono_hopper_sugar.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				75
+			],
+			"model": "trains_mono_hopper_candyfloss.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				76
+			],
+			"model": "trains_mono_hopper_toffee.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				60,
+				73
+			],
+			"model": "trains_mono_tanker_oil.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				71
+			],
+			"model": "trains_mono_tanker_water.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				78,
+				83
+			],
+			"model": "trains_mono_tanker_toy.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				89
+			],
+			"model": "trains_maglev_carriage.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				90
+			],
+			"model": "trains_maglev_mail.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				94,
+				101
+			],
+			"model": "trains_maglev_van_goods.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				93
+			],
+			"model": "trains_maglev_van_livestock.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				99
+			],
+			"model": "trains_maglev_van_armoured.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				100
+			],
+			"model": "trains_maglev_van_reefer.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				109,
+				111,
+				112
+			],
+			"model": "trains_maglev_van_toy.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				91
+			],
+			"model": "trains_maglev_open_coal.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				104
+			],
+			"model": "trains_maglev_open_fruit.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				113
+			],
+			"model": "trains_maglev_open_batteries.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				114
+			],
+			"model": "trains_maglev_open_fizzy.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				96
+			],
+			"model": "trains_maglev_flat_logs.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				98
+			],
+			"model": "trains_maglev_flat_steel.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				95
+			],
+			"model": "trains_maglev_hopper_grain.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				97
+			],
+			"model": "trains_maglev_hopper_ore.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				102
+			],
+			"model": "trains_maglev_hopper_copper.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				106
+			],
+			"model": "trains_maglev_hopper_sugar.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				107
+			],
+			"model": "trains_maglev_hopper_candyfloss.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				108
+			],
+			"model": "trains_maglev_hopper_toffee.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				92,
+				105
+			],
+			"model": "trains_maglev_tanker_oil.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				103
+			],
+			"model": "trains_maglev_tanker_water.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				110,
+				115
+			],
+			"model": "trains_maglev_tanker_toy.glb"
 		}
 	],
 	"buildings": [
@@ -251,6 +1151,2223 @@
 				3
 			],
 			"model": "lorry_stop_drive_through.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				7,
+				8
+			],
+			"model": "houses_north_hotel.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				9
+			],
+			"model": "houses_north_statue.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				10
+			],
+			"model": "houses_north_fountain.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				11
+			],
+			"model": "houses_north_park_pond.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				12
+			],
+			"model": "houses_north_park_trees.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				18
+			],
+			"model": "houses_north_warehouse.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				20,
+				21,
+				22,
+				23
+			],
+			"model": "houses_north_stadium_football.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				31
+			],
+			"model": "houses_north_theatre.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				32,
+				33,
+				34,
+				35
+			],
+			"model": "houses_north_stadium_rugby.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				39
+			],
+			"model": "houses_north_cinema.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				40,
+				41,
+				42,
+				43
+			],
+			"model": "houses_north_shopping_centre.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				5
+			],
+			"model": "houses_north_office_tower_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				37
+			],
+			"model": "houses_north_stone_house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				38
+			],
+			"model": "houses_north_stone_house_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				44
+			],
+			"model": "houses_north_thatched_flats.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				45
+			],
+			"model": "houses_north_thatched_flats_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				46
+			],
+			"model": "houses_north_slate_house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				47
+			],
+			"model": "houses_north_slate_house_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				48
+			],
+			"model": "houses_north_villa.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				49
+			],
+			"model": "houses_north_villa_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				50
+			],
+			"model": "houses_north_grid_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				51
+			],
+			"model": "houses_north_grid_tower_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				52
+			],
+			"model": "houses_north_blue_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				53
+			],
+			"model": "houses_north_blue_tower_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				54
+			],
+			"model": "houses_north_stepped_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				55
+			],
+			"model": "houses_north_stepped_tower_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				56
+			],
+			"model": "houses_north_cottage.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				57
+			],
+			"model": "houses_north_cottage_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				58
+			],
+			"model": "houses_north_gabled_shops.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				59
+			],
+			"model": "houses_north_gabled_shops_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				60
+			],
+			"model": "houses_north_chapel.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				61
+			],
+			"model": "houses_north_chapel_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				62
+			],
+			"model": "houses_north_brick_house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				63
+			],
+			"model": "houses_north_brick_house_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				64
+			],
+			"model": "houses_north_tall_gabled.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				65
+			],
+			"model": "houses_north_tall_gabled_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				66,
+				67
+			],
+			"model": "houses_north_terrace.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				68,
+				69
+			],
+			"model": "houses_north_terrace_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				70
+			],
+			"model": "houses_north_stone_offices.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				71
+			],
+			"model": "houses_north_stone_offices_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				72
+			],
+			"model": "houses_north_pilotis_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				73
+			],
+			"model": "houses_north_pilotis_tower_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				74,
+				75
+			],
+			"model": "houses_north_slab_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				76,
+				77
+			],
+			"model": "houses_north_slab_tower_snow.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				78
+			],
+			"model": "houses_south_villa.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				79
+			],
+			"model": "houses_south_villa_l.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				80
+			],
+			"model": "houses_south_cottage.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				81
+			],
+			"model": "houses_south_shacks.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				82
+			],
+			"model": "houses_south_tower_flats.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				83
+			],
+			"model": "houses_south_mission_church.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				84
+			],
+			"model": "houses_south_house_garden.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				85
+			],
+			"model": "houses_south_balcony_flats.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				86
+			],
+			"model": "houses_south_band_flats.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				87,
+				88
+			],
+			"model": "houses_south_office_pair.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				89
+			],
+			"model": "houses_south_flats_tank.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				90
+			],
+			"model": "houses_south_tower_atrium.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				91
+			],
+			"model": "houses_south_toy_church.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				92
+			],
+			"model": "houses_south_toy_pink_pavilion.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				93
+			],
+			"model": "houses_south_toy_log_cabin.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				94
+			],
+			"model": "houses_south_toy_green_pavilion.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				95
+			],
+			"model": "houses_south_toy_striped_house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				96
+			],
+			"model": "houses_south_toy_brick_house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				97
+			],
+			"model": "houses_south_toy_blue_house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				98
+			],
+			"model": "houses_south_toy_office.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				99,
+				100
+			],
+			"model": "houses_south_toy_shoe.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				101
+			],
+			"model": "houses_south_toy_brick_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				102
+			],
+			"model": "houses_south_toy_igloo.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				103
+			],
+			"model": "houses_south_toy_tepees.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				104
+			],
+			"model": "houses_south_toy_candy_shop.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				105
+			],
+			"model": "houses_south_toy_bar.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				106
+			],
+			"model": "houses_south_toy_pink_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				107
+			],
+			"model": "houses_south_toy_statue.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				108
+			],
+			"model": "houses_south_toy_teapot.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				109
+			],
+			"model": "houses_south_toy_piggy_bank.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				43
+			],
+			"model": "industry_other_printing_works_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				44
+			],
+			"model": "industry_other_printing_works_right.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				45
+			],
+			"model": "industry_other_printing_works_entrance.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				46
+			],
+			"model": "industry_other_printing_works_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				47,
+				48
+			],
+			"model": "industry_other_copper_mine_tower.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				49
+			],
+			"model": "industry_other_copper_mine_smelter.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				50
+			],
+			"model": "industry_other_copper_mine_office.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				51
+			],
+			"model": "industry_other_copper_mine_ore.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				60
+			],
+			"model": "industry_other_food_plant_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				61
+			],
+			"model": "industry_other_food_plant_silos.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				62
+			],
+			"model": "industry_other_food_plant_boiler.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				63
+			],
+			"model": "industry_other_food_plant_loading.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				64
+			],
+			"model": "industry_other_paper_mill_main.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				65
+			],
+			"model": "industry_other_paper_mill_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				66
+			],
+			"model": "industry_other_paper_mill_tanks.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				67
+			],
+			"model": "industry_other_paper_mill_logs.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				68
+			],
+			"model": "industry_other_paper_mill_boiler.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				69
+			],
+			"model": "industry_other_paper_mill_conveyor.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				70
+			],
+			"model": "industry_other_paper_mill_office.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				71
+			],
+			"model": "industry_other_paper_mill_rolls.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				72
+			],
+			"model": "industry_other_gold_mine_mill.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				73
+			],
+			"model": "industry_other_gold_mine_track.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				74
+			],
+			"model": "industry_other_gold_mine_chimney.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				75
+			],
+			"model": "industry_other_gold_mine_winding.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				76
+			],
+			"model": "industry_other_gold_mine_heap_a.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				77
+			],
+			"model": "industry_other_gold_mine_carts_a.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				78
+			],
+			"model": "industry_other_gold_mine_shed_a.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				79,
+				88
+			],
+			"model": "industry_other_gold_mine_tower.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				80
+			],
+			"model": "industry_other_gold_mine_shed_b.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				81
+			],
+			"model": "industry_other_gold_mine_carts_b.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				82
+			],
+			"model": "industry_other_gold_mine_heap_b.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				83,
+				86
+			],
+			"model": "industry_other_gold_mine_pond_a.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				84
+			],
+			"model": "industry_other_gold_mine_pond_b.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				85
+			],
+			"model": "industry_other_gold_mine_heap_c.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				87
+			],
+			"model": "industry_other_gold_mine_shed_c.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				89
+			],
+			"model": "industry_other_bank_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				90
+			],
+			"model": "industry_other_bank_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				91
+			],
+			"model": "industry_other_diamond_mine_plant.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				92
+			],
+			"model": "industry_other_diamond_mine_sorting.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				93
+			],
+			"model": "industry_other_diamond_mine_office.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				94
+			],
+			"model": "industry_other_diamond_mine_crusher.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				95
+			],
+			"model": "industry_other_diamond_mine_pit_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				96
+			],
+			"model": "industry_other_diamond_mine_pit_left.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				97
+			],
+			"model": "industry_other_diamond_mine_workshop.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				98
+			],
+			"model": "industry_other_diamond_mine_pit_right.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				99
+			],
+			"model": "industry_other_diamond_mine_pit_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				116
+			],
+			"model": "industry_other_fruit_plantation.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				117
+			],
+			"model": "industry_other_rubber_plantation.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				118
+			],
+			"model": "industry_other_water_supply_pumphouse.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				119
+			],
+			"model": "industry_other_water_supply_tank.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				120
+			],
+			"model": "industry_other_water_tower.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				121
+			],
+			"model": "industry_other_factory_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				122
+			],
+			"model": "industry_other_factory_chimneys.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				123
+			],
+			"model": "industry_other_factory_doors.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				124
+			],
+			"model": "industry_other_factory_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				125
+			],
+			"model": "industry_other_lumber_mill_saw.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				126
+			],
+			"model": "industry_other_lumber_mill_logs.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				127
+			],
+			"model": "industry_other_lumber_mill_building.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				128
+			],
+			"model": "industry_other_lumber_mill_timber.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				129
+			],
+			"model": "industry_other_candyfloss_forest.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				130
+			],
+			"model": "industry_other_candyfloss_forest_harvested.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				131
+			],
+			"model": "industry_other_sweet_factory_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				132
+			],
+			"model": "industry_other_sweet_factory_chimney.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				133
+			],
+			"model": "industry_other_sweet_factory_dome.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				134
+			],
+			"model": "industry_other_sweet_factory_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				135
+			],
+			"model": "industry_other_battery_farm.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				136
+			],
+			"model": "industry_other_battery_farm_reaped.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				137
+			],
+			"model": "industry_other_cola_well.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				138
+			],
+			"model": "industry_other_toy_shop_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				139
+			],
+			"model": "industry_other_toy_shop_tower.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				140
+			],
+			"model": "industry_other_toy_shop_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				141
+			],
+			"model": "industry_other_toy_shop_corner.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				142
+			],
+			"model": "industry_other_toy_factory_hall_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				143
+			],
+			"model": "industry_other_toy_factory_press.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				144
+			],
+			"model": "industry_other_toy_factory_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				145
+			],
+			"model": "industry_other_toy_factory_hall_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				146
+			],
+			"model": "industry_other_toy_factory_office.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				147
+			],
+			"model": "industry_other_toy_factory_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				148,
+				149,
+				150,
+				151,
+				152,
+				153,
+				154,
+				155
+			],
+			"model": "industry_other_plastic_fountain.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				156
+			],
+			"model": "industry_other_fizzy_drinks_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				157
+			],
+			"model": "industry_other_fizzy_drinks_bottle.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				158
+			],
+			"model": "industry_other_fizzy_drinks_bottle_red.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				159
+			],
+			"model": "industry_other_fizzy_drinks_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				160
+			],
+			"model": "industry_other_bubble_generator_tank.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				161
+			],
+			"model": "industry_other_bubble_generator_blower.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				162
+			],
+			"model": "industry_other_bubble_generator_catcher.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				163
+			],
+			"model": "industry_other_bubble_generator_pipes.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				164
+			],
+			"model": "industry_other_toffee_quarry_slabs.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				165
+			],
+			"model": "industry_other_toffee_quarry_pit.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				166
+			],
+			"model": "industry_other_toffee_quarry_shed.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				167
+			],
+			"model": "industry_other_sugar_mine_heap_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				168
+			],
+			"model": "industry_other_sugar_mine_heap_left.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				169
+			],
+			"model": "industry_other_sugar_mine_heap_right.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				170
+			],
+			"model": "industry_other_sugar_mine_heap_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				171
+			],
+			"model": "industry_other_sugar_mine_track.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				172
+			],
+			"model": "industry_other_sugar_mine_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				173
+			],
+			"model": "industry_other_sugar_mine_shaft.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				174
+			],
+			"model": "industry_other_sugar_mine_sieve.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				0,
+				1
+			],
+			"model": "industry_temperate_coal_headframe.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				2
+			],
+			"model": "industry_temperate_coal_plant.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				3
+			],
+			"model": "industry_temperate_coal_bunker.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				4
+			],
+			"model": "industry_temperate_coal_stock.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				5
+			],
+			"model": "industry_temperate_spoil_heap.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				6
+			],
+			"model": "industry_temperate_coal_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				7
+			],
+			"model": "industry_temperate_power_boiler.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				8
+			],
+			"model": "industry_temperate_power_chimney.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				9
+			],
+			"model": "industry_temperate_power_cooling.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				10
+			],
+			"model": "industry_temperate_power_transformer.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				11
+			],
+			"model": "industry_temperate_sawmill_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				12
+			],
+			"model": "industry_temperate_sawmill_shed.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				13
+			],
+			"model": "industry_temperate_sawmill_boiler.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				14
+			],
+			"model": "industry_temperate_sawmill_logs.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				15
+			],
+			"model": "industry_temperate_sawmill_planks.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				16
+			],
+			"model": "industry_temperate_forest_trees.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				17
+			],
+			"model": "industry_temperate_forest_cleared.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				18
+			],
+			"model": "industry_temperate_refinery_tanks.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				19
+			],
+			"model": "industry_temperate_refinery_column.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				20
+			],
+			"model": "industry_temperate_refinery_flare.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				21
+			],
+			"model": "industry_temperate_refinery_columns_row.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				22
+			],
+			"model": "industry_temperate_refinery_plant.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				23
+			],
+			"model": "industry_temperate_refinery_office.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				24
+			],
+			"model": "industry_temperate_oilrig_deck.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				25
+			],
+			"model": "industry_temperate_oilrig_crane.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				26
+			],
+			"model": "industry_temperate_oilrig_derrick.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				27
+			],
+			"model": "industry_temperate_oilrig_quarters.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				28
+			],
+			"model": "industry_temperate_oilrig_tanks.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				29,
+				30,
+				31,
+				32
+			],
+			"model": "industry_temperate_oil_well.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				33
+			],
+			"model": "industry_temperate_farm_house.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				34
+			],
+			"model": "industry_temperate_farm_barn.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				35
+			],
+			"model": "industry_temperate_farm_stable.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				36
+			],
+			"model": "industry_temperate_farm_shed.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				37
+			],
+			"model": "industry_temperate_farm_silos.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				38
+			],
+			"model": "industry_temperate_farm_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				52
+			],
+			"model": "industry_temperate_steel_furnace.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				53
+			],
+			"model": "industry_temperate_steel_stoves.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				54
+			],
+			"model": "industry_temperate_steel_casthouse.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				55
+			],
+			"model": "industry_temperate_steel_yard.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				56
+			],
+			"model": "industry_temperate_steel_hall_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				57
+			],
+			"model": "industry_temperate_steel_hall_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				58
+			],
+			"model": "industry_temperate_bank_back.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				59
+			],
+			"model": "industry_temperate_bank_front.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				100
+			],
+			"model": "industry_temperate_iron_mine_00.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				101
+			],
+			"model": "industry_temperate_iron_mine_01.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				102
+			],
+			"model": "industry_temperate_iron_mine_02.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				103
+			],
+			"model": "industry_temperate_iron_mine_03.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				104
+			],
+			"model": "industry_temperate_iron_mine_10.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				105
+			],
+			"model": "industry_temperate_iron_mine_11.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				106
+			],
+			"model": "industry_temperate_iron_mine_12.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				107
+			],
+			"model": "industry_temperate_iron_mine_13.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				108
+			],
+			"model": "industry_temperate_iron_mine_20.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				109
+			],
+			"model": "industry_temperate_iron_mine_21.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				110
+			],
+			"model": "industry_temperate_iron_mine_22.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				111
+			],
+			"model": "industry_temperate_iron_mine_23.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				112
+			],
+			"model": "industry_temperate_iron_mine_30.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				113
+			],
+			"model": "industry_temperate_iron_mine_31.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				114
+			],
+			"model": "industry_temperate_iron_mine_32.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				115
+			],
+			"model": "industry_temperate_iron_mine_33.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				0
+			],
+			"model": "infra_apt_apron.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				1
+			],
+			"model": "infra_apt_apron_fence_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				2
+			],
+			"model": "infra_apt_apron_fence_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				3
+			],
+			"model": "infra_apt_stand.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				4
+			],
+			"model": "infra_apt_taxi_w.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				5
+			],
+			"model": "infra_apt_taxi_s.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				6
+			],
+			"model": "infra_apt_taxi_xing_s.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				7
+			],
+			"model": "infra_apt_taxi_xing_w.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				8
+			],
+			"model": "infra_apt_taxi_ver.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				9
+			],
+			"model": "infra_apt_taxi_xing_e.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				10
+			],
+			"model": "infra_apt_taxi_e.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				11
+			],
+			"model": "infra_apt_taxi_n.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				12
+			],
+			"model": "infra_apt_taxi_hor.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				13
+			],
+			"model": "infra_apt_taxi_n_fence_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				14
+			],
+			"model": "infra_apt_runway_exit_a.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				15
+			],
+			"model": "infra_apt_runway_fence_se.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				16
+			],
+			"model": "infra_apt_runway_exit_c.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				17
+			],
+			"model": "infra_apt_runway_exit_d.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				18
+			],
+			"model": "infra_apt_runway_end_fence_se.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				19
+			],
+			"model": "infra_apt_terminal_2.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				20
+			],
+			"model": "infra_apt_tower_fence_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				21
+			],
+			"model": "infra_apt_round_terminal.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				22
+			],
+			"model": "infra_apt_terminal_3.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				23
+			],
+			"model": "infra_apt_terminal_1.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				24
+			],
+			"model": "infra_apt_hangar.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				25
+			],
+			"model": "infra_apt_stand_jetway_1.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				26
+			],
+			"model": "infra_apt_stand_jetway_2.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				27
+			],
+			"model": "infra_apt_apron_jetway_3.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				28
+			],
+			"model": "infra_apt_pier.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				29
+			],
+			"model": "infra_apt_grass.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				30
+			],
+			"model": "infra_apt_grass_fence_ne.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				31,
+				51
+			],
+			"model": "infra_apt_radar_fence_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				32
+			],
+			"model": "infra_apt_radio_tower_fence_ne.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				33
+			],
+			"model": "infra_apt_small_building_3.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				34
+			],
+			"model": "infra_apt_small_building_2.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				35
+			],
+			"model": "infra_apt_small_building_1.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				36
+			],
+			"model": "infra_apt_grass_taxi_fence_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				37,
+				38
+			],
+			"model": "infra_apt_grass_stand.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				39,
+				73
+			],
+			"model": "infra_apt_windsock_fence_ne.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				40
+			],
+			"model": "infra_apt_small_runway_near_end.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				41
+			],
+			"model": "infra_apt_small_runway.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				42
+			],
+			"model": "infra_apt_small_runway_far_end.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				43
+			],
+			"model": "infra_apt_small_hangar.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				44
+			],
+			"model": "infra_apt_heliport.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				45
+			],
+			"model": "infra_apt_runway_end.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				46
+			],
+			"model": "infra_apt_runway.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				47
+			],
+			"model": "infra_apt_tower.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				48
+			],
+			"model": "infra_apt_apron_fence_ne.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				49
+			],
+			"model": "infra_apt_runway_end_fence_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				50
+			],
+			"model": "infra_apt_runway_fence_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				52
+			],
+			"model": "infra_apt_radar_fence_ne.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				53
+			],
+			"model": "infra_apt_helipad_fence_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				54
+			],
+			"model": "infra_apt_helipad_fence_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				55
+			],
+			"model": "infra_apt_helipad.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				56
+			],
+			"model": "infra_apt_apron_fence_ne_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				57
+			],
+			"model": "infra_apt_runway_end_fence_nw_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				58
+			],
+			"model": "infra_apt_runway_end_fence_se_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				59
+			],
+			"model": "infra_apt_runway_end_fence_ne_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				60
+			],
+			"model": "infra_apt_runway_end_fence_ne_se.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				61
+			],
+			"model": "infra_apt_helipad_fence_ne_se.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				62
+			],
+			"model": "infra_apt_apron_fence_se_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				63
+			],
+			"model": "infra_apt_low_building_fence_ne_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				64
+			],
+			"model": "infra_apt_low_building_fence_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				65
+			],
+			"model": "infra_apt_apron_fence_se.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				66
+			],
+			"model": "infra_apt_helipad_raised_fence_se_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				67
+			],
+			"model": "infra_apt_helipad_raised_fence_nw_sw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				68
+			],
+			"model": "infra_apt_helipad_raised_fence_nw.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				69
+			],
+			"model": "infra_apt_low_building.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				70
+			],
+			"model": "infra_apt_apron_fence_ne_se.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				71
+			],
+			"model": "infra_apt_apron_half_east.glb"
+		},
+		{
+			"type": "airport_tile",
+			"ids": [
+				72
+			],
+			"model": "infra_apt_apron_half_west.glb"
+		},
+		{
+			"type": "dock",
+			"ids": [
+				0
+			],
+			"model": "infra_dock_shore.glb"
+		},
+		{
+			"type": "dock",
+			"ids": [
+				1
+			],
+			"model": "infra_dock_water.glb"
+		},
+		{
+			"type": "buoy",
+			"ids": [
+				0
+			],
+			"model": "infra_buoy.glb"
+		},
+		{
+			"type": "rail_depot",
+			"ids": [
+				0
+			],
+			"model": "infra_rail_depot.glb"
+		},
+		{
+			"type": "road_depot",
+			"ids": [
+				0
+			],
+			"model": "infra_road_depot.glb"
+		},
+		{
+			"type": "ship_depot",
+			"ids": [
+				0
+			],
+			"model": "infra_ship_depot.glb"
+		},
+		{
+			"type": "object",
+			"ids": [
+				0
+			],
+			"model": "infra_transmitter.glb"
+		},
+		{
+			"type": "object",
+			"ids": [
+				1
+			],
+			"model": "infra_lighthouse.glb"
+		},
+		{
+			"type": "object",
+			"ids": [
+				2
+			],
+			"model": "infra_statue.glb"
+		},
+		{
+			"type": "object",
+			"ids": [
+				4
+			],
+			"model": "infra_company_hq.glb"
 		}
 	]
 }

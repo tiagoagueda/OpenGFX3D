@@ -31,6 +31,17 @@ def main():
         entries = module.build()
         for key in ("vehicles", "buildings"):
             index[key].extend(entries.get(key, []))
+    # Each vehicle or building may have one model only; the game would use just one of them.
+    seen = {}
+    for key in ("vehicles", "buildings"):
+        for entry in index[key]:
+            for i in entry["ids"]:
+                where = (key, entry["type"], i)
+                if where in seen:
+                    sys.exit(f"{entry['type']} {i} has two models: {seen[where]} and {entry['model']}")
+                seen[where] = entry["model"]
+            if not os.path.exists(entry["model"]):
+                sys.exit(f"{entry['model']} is missing")
     with open("opengfx3d.json", "w") as f:
         json.dump(index, f, indent="\t")
         f.write("\n")
