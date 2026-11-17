@@ -7,7 +7,8 @@ pillars from the ground up to the deck: a pillar is one unit high (from z = 0 to
 Index type `bridge`, ids: bridge type * 4 + piece, with the bridge types of the game (0 wooden, 1 concrete,
 2 girder steel, 3 suspension concrete, 4 and 5 suspension steel, 6 to 8 cantilever steel, 9 girder steel,
 10 and 11 tubular steel, 12 tubular silicon) and pieces 0 deck, 1 ramp, 2 pillar. Id 64 is the road surface
-that the game lays on road bridges.
+that the game lays on road bridges. Aqueducts, which carry canals, use bridge type 17: ids 68 deck, 69 ramp and
+70 pillar; the water surface is at z = 0.
 """
 
 import math
@@ -31,6 +32,9 @@ for name, colour in {
     "cable": (0.25, 0.25, 0.27),
     "asphalt": (0.30, 0.30, 0.32),
     "marking": (0.90, 0.90, 0.85),
+    "brick": (0.62, 0.42, 0.32),
+    "brick_dark": (0.50, 0.33, 0.25),
+    "canal_water": (0.22, 0.42, 0.62),
 }.items():
     MATERIALS[f"{GROUP}_{name}"] = colour
 
@@ -235,8 +239,53 @@ def road_surface():
     return m
 
 
+AQUEDUCT = 17
+CHANNEL = 3.6  # half the width of the water in an aqueduct
+
+
+def aqueduct_channel(m, depth):
+    """The water of the canal between two brick walls, on a deck that is `depth` deep."""
+    m.box(mat("canal_water"), X0, X1, -CHANNEL, CHANNEL, -0.4, 0)
+    m.box(mat("brick_dark"), X0, X1, -HALF, HALF, -depth, -0.4)
+    for side in (-1, 1):
+        y0, y1 = sorted((side * CHANNEL, side * HALF))
+        m.box(mat("brick"), X0, X1, y0, y1, -0.4, 0.7)
+        m.box(mat("concrete"), X0, X1, y0 - 0.05, y1 + 0.05, 0.7, 0.85)
+
+
+def aqueduct_deck():
+    m = Model()
+    aqueduct_channel(m, 1.4)
+    # The arch between two pillars, seen from the sides.
+    segments = 8
+    for k in range(segments):
+        a0, a1 = math.pi * k / segments, math.pi * (k + 1) / segments
+        x0, x1 = 6.6 * math.cos(a1), 6.6 * math.cos(a0)
+        z = -1.4 - 1.6 * (1 - math.sin((a0 + a1) / 2))
+        m.box(mat("brick"), x0, x1, -HALF + 0.2, HALF - 0.2, z, -1.4)
+    return m
+
+
+def aqueduct_ramp():
+    m = Model()
+    aqueduct_channel(m, 1.0)
+    m.box(mat("brick_dark"), X0, X1, -HALF, HALF, -3.5, -1.0)
+    return m
+
+
+def aqueduct_pillar():
+    m = Model()
+    m.box(mat("brick"), -1.4, 1.4, -HALF + 0.2, HALF - 0.2, 0, 1)
+    m.box(mat("brick_dark"), -1.6, 1.6, -HALF, HALF, 0, 0.08)
+    return m
+
+
 def build():
     buildings = []
+    for piece, (name, make) in enumerate((("deck", aqueduct_deck), ("ramp", aqueduct_ramp), ("pillar", aqueduct_pillar))):
+        filename = f"{GROUP}_aqueduct_{name}.glb"
+        make().save(filename)
+        buildings.append({"type": "bridge", "ids": [AQUEDUCT * 4 + piece], "model": filename})
     for kind, style in STYLES.items():
         for piece, (name, make) in enumerate((("deck", deck_piece), ("ramp", ramp_piece), ("pillar", pillar_piece))):
             filename = f"{GROUP}_{kind}_{name}.glb"

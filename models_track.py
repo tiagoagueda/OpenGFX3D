@@ -176,8 +176,10 @@ def build():
 # Overhead wires (catenary) for electrified railways.
 #
 # Index type `catenary`, ids: 0 a pylon beside straight track, 1 a pylon beside diagonal track, 2 the wires of
-# a straight piece, 3 the wires of a diagonal piece. A pylon stands at its origin with its arm along +x, towards the
-# track; the wires run along x like the track pieces, at the height of the contact wire above the rails.
+# a straight piece, 3 the wires of a diagonal piece; for trams and electric roads, 4 the wires from the middle of a
+# tile to one edge (along x from 0 to 8) and 5 a pole beside the road that reaches 6.4 to its middle. A pylon
+# stands at its origin with its arm along +x, towards the track; the wires run along x like the track pieces, at
+# the height of the contact wire above the rails.
 
 CONTACT = 4.7  # height of the contact wire above the ground, just above the trains
 MESSENGER = 5.5  # height of the wire it hangs from
@@ -217,9 +219,10 @@ def pylon(reach):
     return m
 
 
-def wires(length):
+def wires(length, x0=None):
     m = Model()
-    x0, x1 = -length / 2, length / 2
+    x0 = -length / 2 if x0 is None else x0
+    x1 = x0 + length
     # Thicker than real wires, so they still show from far away.
     m.box(mat("wire"), x0, x1, -0.09, 0.09, CONTACT - 0.09, CONTACT + 0.09)
     m.box(mat("wire"), x0, x1, -0.07, 0.07, MESSENGER - 0.07, MESSENGER + 0.07)
@@ -239,7 +242,9 @@ def build():
             ("pylon_straight", pylon(4.0)),
             ("pylon_diagonal", pylon(2.83)),
             ("wires_straight", wires(STRAIGHT)),
-            ("wires_diagonal", wires(DIAGONAL)))):
+            ("wires_diagonal", wires(DIAGONAL)),
+            ("wires_tram", wires(8, 0)),
+            ("pole_tram", pylon(6.4)))):
         filename = f"{GROUP}_catenary_{name}.glb"
         model.save(filename)
         entries["buildings"].append({"type": "catenary", "ids": [i], "model": filename})

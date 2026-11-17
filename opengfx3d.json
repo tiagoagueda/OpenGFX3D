@@ -1173,6 +1173,27 @@
 		{
 			"type": "bridge",
 			"ids": [
+				68
+			],
+			"model": "bridge_aqueduct_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				69
+			],
+			"model": "bridge_aqueduct_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				70
+			],
+			"model": "bridge_aqueduct_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
 				0
 			],
 			"model": "bridge_0_deck.glb"
@@ -4862,6 +4883,20 @@
 				3
 			],
 			"model": "track_catenary_wires_diagonal.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				4
+			],
+			"model": "track_catenary_wires_tram.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				5
+			],
+			"model": "track_catenary_pole_tram.glb"
 		}
 	]
 }
