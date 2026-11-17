@@ -1,0 +1,146 @@
+{
+	"name": "OpenGFX3D",
+	"description": "3D models for the experimental 3D view. Vehicles that are not listed keep the sprites of the 2D game.",
+	"vehicles": [
+		{
+			"type": "road",
+			"ids": [
+				0,
+				1,
+				2,
+				3
+			],
+			"model": "bus.glb"
+		},
+		{
+			"type": "road",
+			"ids": [
+				7,
+				8,
+				9,
+				10,
+				11,
+				12
+			],
+			"model": "lorry.glb"
+		}
+	],
+	"buildings": [
+		{
+			"type": "house",
+			"ids": [
+				6,
+				24,
+				25,
+				26
+			],
+			"model": "house.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				1,
+				2,
+				13,
+				19,
+				27,
+				36
+			],
+			"model": "flats.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				0,
+				4,
+				17,
+				28
+			],
+			"model": "office_tower.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				14,
+				15,
+				16,
+				29,
+				30
+			],
+			"model": "shops.glb"
+		},
+		{
+			"type": "house",
+			"ids": [
+				3
+			],
+			"model": "church.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				39,
+				40,
+				41
+			],
+			"model": "factory_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				42
+			],
+			"model": "factory_chimney.glb"
+		},
+		{
+			"type": "rail_station",
+			"ids": [
+				0
+			],
+			"model": "station_platform.glb"
+		},
+		{
+			"type": "rail_station",
+			"ids": [
+				1
+			],
+			"model": "station_building.glb"
+		},
+		{
+			"type": "rail_station",
+			"ids": [
+				2,
+				3
+			],
+			"model": "station_roof.glb"
+		},
+		{
+			"type": "road_stop",
+			"ids": [
+				0
+			],
+			"model": "bus_stop.glb"
+		},
+		{
+			"type": "road_stop",
+			"ids": [
+				1
+			],
+			"model": "lorry_stop.glb"
+		},
+		{
+			"type": "road_stop",
+			"ids": [
+				2
+			],
+			"model": "bus_stop_drive_through.glb"
+		},
+		{
+			"type": "road_stop",
+			"ids": [
+				3
+			],
+			"model": "lorry_stop_drive_through.glb"
+		}
+	]
+}
