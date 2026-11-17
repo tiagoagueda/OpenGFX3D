@@ -35,7 +35,7 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
 }
 ```
 
-* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`.
+* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`.
 * `grfid`: the ID of the NewGRF that defines the vehicles, as the eight hexadecimal digits the game shows for it. Leave it out for the vehicles of the base game.
 * `ids`: the numbers within that NewGRF. For the base game:
   * vehicles count from 0 per type, in the order of `src/table/engines.h`: road vehicle 0 is the MPS Regal Bus;
@@ -51,6 +51,7 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
   * `tree`: the tree type, as in `src/tree_map.h` (0x00 temperate, 0x0C sub-arctic, 0x14 rainforest, 0x1B cactus, 0x1C sub-tropical, 0x20 toyland); sub-arctic trees above the snow line are the type + 0x40. One tree with its foot at the origin; the game puts up to four on a tile, turns each its own way and scales the growing ones.
   * `field`: the state of a farm field, 0 ploughed to 6 ripe, 7 harvested, 8 harvested with hay.
   * `rough`, `rocks`: versions 0 to 3; the game picks one for each tile and turns it by quarter turns. Fields, rough land and rocks cover the tile (16 x 16) and are tilted along its slope.
+  * Infrastructure: the ids are described at the top of `models_track.py` (`track`, `signal`, `catenary`), `models_fences.py` (`fence`), `models_bridges.py` (`bridge`, `tunnel`, `crossing`) and `models_roadside.py` (`roadside`).
 * `model`: a file in this folder.
 * `scale`: optional; world units per unit of the model.
 * `rotor`, `rotor_at`: optional, for helicopters; the model of the main rotor, which the game turns, and where its hub is in the frame of the helicopter.
