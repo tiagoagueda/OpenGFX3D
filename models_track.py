@@ -5,7 +5,9 @@ Each piece runs along x with its middle at the origin and the ground at z = 0. S
 piece for each track on a tile, tilted along slopes.
 
 Index type `track`, ids: 0 and 1 normal railway (also electrified), 2 and 3 monorail, 4 and 5 maglev; the even
-id is the straight piece, the odd one the diagonal piece.
+id is the straight piece, the odd one the diagonal piece. 6, 7 and 8 are joints for the three kinds, which the game puts
+where straight track meets diagonal track: a short piece that turns left by 45 degrees at the origin, from along
+-22.5 degrees to along +22.5 degrees, mitred there; for a turn to the right the game puts it the other way around.
 
 Signals: index type `signal`, id = type * 4 + variant * 2 + state, with the type as in the game (0 block, 1 entry,
 2 exit, 3 combo, 4 path, 5 one-way path), variant 0 light and 1 semaphore, state 0 red and 1 green. A signal stands
@@ -70,6 +72,74 @@ def rail_piece(length):
     for y in (-1.2, 1.2):
         m.box(mat("rail_side"), x0, x1, y - 0.12, y + 0.12, 0.34, 0.5)
         m.box(mat("rail"), x0, x1, y - 0.13, y + 0.13, 0.5, 0.56)
+    return m
+
+
+JOINT = 1.6  # how far a joint reaches along each of the two pieces it joins
+BEND = math.radians(22.5)  # half the turn where straight track meets diagonal track
+
+
+def _face(m, material, points, outward):
+    """A flat face with its front towards `outward`."""
+    a, b, c = points[0], points[1], points[2]
+    u = [b[i] - a[i] for i in range(3)]
+    v = [c[i] - a[i] for i in range(3)]
+    n = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]]
+    if sum(n[i] * outward[i] for i in range(3)) < 0:
+        points = list(reversed(points))
+    if len(points) == 3:
+        m.triangle(material, *points)
+    else:
+        m.quad(material, *points)
+
+
+def bent_strip(m, material, bottom, top, z0, z1):
+    """A strip along a bend that turns left by 2 * BEND at the origin, mitred there, reaching JOINT along both sides of
+    it; `bottom` and `top` are its edges (from right to left of the way along) at the bottom and at the top."""
+    c, s = math.cos(BEND), math.sin(BEND)
+    d1, n1 = (c, -s), (s, c)
+    d2, n2 = (c, s), (-s, c)
+
+    def at(o, z, part):
+        if part == 0:
+            return (-JOINT * d1[0] + o * n1[0], -JOINT * d1[1] + o * n1[1], z)
+        if part == 1:
+            return (0.0, o / c, z)
+        return (JOINT * d2[0] + o * n2[0], JOINT * d2[1] + o * n2[1], z)
+
+    for part in (0, 1):
+        n = n1 if part == 0 else n2
+        _face(m, material, [at(top[0], z1, part), at(top[0], z1, part + 1), at(top[1], z1, part + 1), at(top[1], z1, part)], (0, 0, 1))
+        _face(m, material, [at(bottom[1], z0, part), at(bottom[1], z0, part + 1), at(top[1], z1, part + 1), at(top[1], z1, part)], (n[0], n[1], 0))
+        _face(m, material, [at(bottom[0], z0, part), at(bottom[0], z0, part + 1), at(top[0], z1, part + 1), at(top[0], z1, part)], (-n[0], -n[1], 0))
+    _face(m, material, [at(bottom[0], z0, 0), at(bottom[1], z0, 0), at(top[1], z1, 0), at(top[0], z1, 0)], (-d1[0], -d1[1], 0))
+    _face(m, material, [at(bottom[0], z0, 2), at(bottom[1], z0, 2), at(top[1], z1, 2), at(top[0], z1, 2)], (d2[0], d2[1], 0))
+
+
+def rail_joint():
+    """The bed and rails where straight track turns into diagonal track, without sleepers of its own."""
+    m = Model()
+    bent_strip(m, mat("ballast"), (-3.7, 3.7), (-2.7, 2.7), -0.05, 0.22)
+    for y in (-1.2, 1.2):
+        bent_strip(m, mat("rail_side"), (y - 0.12, y + 0.12), (y - 0.12, y + 0.12), 0.34, 0.5)
+        bent_strip(m, mat("rail"), (y - 0.13, y + 0.13), (y - 0.13, y + 0.13), 0.5, 0.56)
+    return m
+
+
+def monorail_joint():
+    m = Model()
+    bent_strip(m, mat("concrete"), (-0.45, 0.45), (-0.45, 0.45), 0.2, 0.62)
+    bent_strip(m, mat("guide"), (-0.47, 0.47), (-0.47, 0.47), 0.62, 0.68)
+    return m
+
+
+def maglev_joint():
+    m = Model()
+    bent_strip(m, mat("concrete"), (-1.6, 1.6), (-1.6, 1.6), -0.05, 0.15)
+    bent_strip(m, mat("concrete"), (-0.9, 0.9), (-0.9, 0.9), 0.15, 0.72)
+    for y in (-0.92, 0.92):
+        bent_strip(m, mat("guide"), (y - 0.06, y + 0.06), (y - 0.06, y + 0.06), 0.3, 0.7)
+    bent_strip(m, mat("guide"), (-0.5, 0.5), (-0.5, 0.5), 0.72, 0.76)
     return m
 
 
@@ -169,6 +239,11 @@ def build():
             name = f"{GROUP}_{kind}_{shape}.glb"
             make(length).save(name)
             buildings.append({"type": "track", "ids": [base + offset], "model": name})
+    # Where straight track meets diagonal track, a short piece turned halfway between them fills the gap.
+    for kind, (make, base) in {"rail": (rail_joint, 6), "monorail": (monorail_joint, 7), "maglev": (maglev_joint, 8)}.items():
+        name = f"{GROUP}_{kind}_joint.glb"
+        make().save(name)
+        buildings.append({"type": "track", "ids": [base], "model": name})
     return {"vehicles": [], "buildings": buildings}
 
 

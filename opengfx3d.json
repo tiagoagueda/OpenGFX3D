@@ -4082,6 +4082,13 @@
 			"model": "interface_cursor_bracket.glb"
 		},
 		{
+			"type": "interface",
+			"ids": [
+				5
+			],
+			"model": "interface_tile_mark.glb"
+		},
+		{
 			"type": "tree",
 			"ids": [
 				0
@@ -4893,6 +4900,27 @@
 				5
 			],
 			"model": "track_maglev_diagonal.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				6
+			],
+			"model": "track_rail_joint.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				7
+			],
+			"model": "track_monorail_joint.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				8
+			],
+			"model": "track_maglev_joint.glb"
 		},
 		{
 			"type": "catenary",

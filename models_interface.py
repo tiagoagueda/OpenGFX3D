@@ -3,7 +3,9 @@
 Ids: 0 the post under a town name, station name or sign, one unit tall (the game stretches it);
 1 a bar along one edge of the selected tiles, from x = 0 to 1 (the game stretches it from corner to corner);
 2 a post at a corner of the selected tiles; 3 the arrow that hovers over the tile below the cursor, its tip
-at the origin; 4 a bracket for a corner of the tile below the cursor when no tool is in use, along +x and +y.
+at the origin; 4 a bracket for a corner of the tile below the cursor when no tool is in use, along +x and +y;
+5 half of a plate that marks a tile, such as one in the catchment area of a station: the triangle from the
+origin to x = 1 and y = 1, flat (the game puts two of them on each tile, tilted to follow the ground).
 All but the post take the colour the game gives them.
 """
 
@@ -51,6 +53,12 @@ def bracket():
     return save(m, "cursor_bracket")
 
 
+def mark():
+    m = Model()
+    m.triangle("company", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    return save(m, "tile_mark")
+
+
 def build():
-    models = [post(), edge(), corner(), arrow(), bracket()]
+    models = [post(), edge(), corner(), arrow(), bracket(), mark()]
     return {"vehicles": [], "buildings": [{"type": "interface", "ids": [i], "model": model} for i, model in enumerate(models)]}
