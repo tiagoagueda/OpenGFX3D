@@ -23,6 +23,116 @@
 				12
 			],
 			"model": "lorry.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				0,
+				2,
+				3,
+				4,
+				7,
+				8,
+				9,
+				10
+			],
+			"model": "steam_engine.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				1,
+				5,
+				6,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				21
+			],
+			"model": "diesel_engine.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				23,
+				24
+			],
+			"model": "electric_engine.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				11,
+				12
+			],
+			"model": "railcar.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				27
+			],
+			"model": "passenger_carriage.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				28
+			],
+			"model": "mail_van.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				31,
+				32,
+				37,
+				38,
+				39,
+				42,
+				47,
+				49,
+				50,
+				52
+			],
+			"model": "goods_van.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				29,
+				34,
+				36,
+				43,
+				44,
+				51,
+				53
+			],
+			"model": "open_wagon.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				33,
+				35,
+				40,
+				45,
+				46
+			],
+			"model": "hopper.glb"
+		},
+		{
+			"type": "train",
+			"ids": [
+				30,
+				41,
+				48
+			],
+			"model": "tanker.glb"
 		}
 	],
 	"buildings": [

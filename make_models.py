@@ -37,6 +37,10 @@ MATERIALS = {
     "platform": (0.64, 0.62, 0.58),
     "edge": (0.90, 0.82, 0.30),
     "grass": (0.30, 0.48, 0.20),
+    "boiler": (0.14, 0.15, 0.16),
+    "brass": (0.80, 0.64, 0.30),
+    "wood": (0.50, 0.36, 0.22),
+    "rust": (0.42, 0.30, 0.24),
 }
 
 
@@ -105,6 +109,24 @@ class Model:
             self.quad("tyre", (ax, y1, az), (ax, y0, az), (bx, y0, bz), (bx, y1, bz))
             self.triangle("hub", (x, y1, radius), (ax, y1, az), (bx, y1, bz))
             self.triangle("hub", (x, y0, radius), (bx, y0, bz), (ax, y0, az))
+
+    def cylinder(self, material, x0, x1, y, z, radius, sides=14, caps=None):
+        """A cylinder lying along x; the ends take the material caps, or the same material."""
+        caps = caps or material
+        ring = [(y + radius * math.cos(2 * math.pi * i / sides), z + radius * math.sin(2 * math.pi * i / sides)) for i in range(sides)]
+        for i in range(sides):
+            (ay, az), (by, bz) = ring[i], ring[(i + 1) % sides]
+            self.quad(material, (x0, ay, az), (x1, ay, az), (x1, by, bz), (x0, by, bz))
+            self.triangle(caps, (x1, y, z), (x1, by, bz), (x1, ay, az))
+            self.triangle(caps, (x0, y, z), (x0, ay, az), (x0, by, bz))
+
+    def chimney(self, material, x, y, z0, z1, radius, sides=10):
+        """A cylinder standing upright, open at the top."""
+        ring = [(x + radius * math.cos(2 * math.pi * i / sides), y + radius * math.sin(2 * math.pi * i / sides)) for i in range(sides)]
+        for i in range(sides):
+            (ax, ay), (bx, by) = ring[i], ring[(i + 1) % sides]
+            self.quad(material, (ax, ay, z0), (bx, by, z0), (bx, by, z1), (ax, ay, z1))
+            self.triangle("boiler", (x, y, z1 - 0.3), (ax, ay, z1), (bx, by, z1))
 
     def save(self, filename):
         binary = bytearray()
@@ -200,6 +222,200 @@ def lorry():
         for y in (y0 + 0.2, y1 - 0.2):
             m.wheel(x, y, 0.62, 0.45)
     m.save("lorry.glb")
+
+
+# Rail vehicles of the usual length are 8 long, half a tile; the models are a little shorter so that
+# there is a gap between them. The rails are about 2.4 apart, the floor of a carriage is at about 1.
+
+
+def rail_wheels(m, xs, radius=0.5):
+    for x in xs:
+        for y in (-1.2, 1.2):
+            m.wheel(x, y, radius, 0.25)
+
+
+def bogie(m, x):
+    m.box("dark", x - 1.1, x + 1.1, -1.05, 1.05, 0.35, 0.8)
+    rail_wheels(m, (x - 0.6, x + 0.6), 0.42)
+
+
+def buffers(m, x0, x1, z=1.05):
+    for x, d in ((x0, -0.35), (x1, 0.35)):
+        m.box("dark", min(x, x + d), max(x, x + d), -1.5, 1.5, z - 0.25, z + 0.25)
+        for y in (-1.0, 1.0):
+            m.box("metal", min(x + d, x + 1.6 * d), max(x + d, x + 1.6 * d), y - 0.18, y + 0.18, z - 0.18, z + 0.18)
+
+
+def steam_engine():
+    """A tank engine: boiler in front, cab at the back, three coupled driving wheels."""
+    m = Model()
+    x0, x1 = -3.6, 3.6
+    m.box("dark", x0, x1, -1.45, 1.45, 0.9, 1.25)  # running board
+    m.box("dark", x0 + 0.3, x1 - 0.3, -0.8, 0.8, 0.45, 0.9)  # frame
+    m.cylinder("company", -0.4, 3.0, 0, 2.05, 0.95, caps="boiler")
+    m.cylinder("boiler", 3.0, 3.6, 0, 2.05, 1.0)  # smokebox
+    for x in (0.4, 1.6):
+        m.cylinder("brass", x - 0.08, x + 0.08, 0, 2.05, 0.98)  # bands
+    m.chimney("boiler", 3.15, 0, 2.6, 3.9, 0.32)
+    m.chimney("brass", 1.3, 0, 2.6, 3.35, 0.38)  # dome
+    # Side tanks along the boiler.
+    for y0, y1 in ((-1.4, -0.75), (0.75, 1.4)):
+        m.box("company_dark", 0.0, 2.4, y0, y1, 1.25, 2.4)
+    # Cab and coal bunker.
+    m.box("company", -2.6, -0.4, -1.45, 1.45, 1.25, 3.1)
+    m.box("glass", -1.6, -0.6, -1.5, 1.5, 2.2, 2.9)
+    m.box("glass", -0.45, -0.35, -1.0, -0.4, 2.3, 2.9)
+    m.box("glass", -0.45, -0.35, 0.4, 1.0, 2.3, 2.9)
+    m.box("roof", -2.8, -0.2, -1.55, 1.55, 3.1, 3.35)
+    m.box("company_dark", x0, -2.6, -1.3, 1.3, 1.25, 2.4)
+    m.box("boiler", x0 + 0.1, -2.7, -1.1, 1.1, 2.4, 2.65)  # coal
+    m.box("light", x1, x1 + 0.08, -0.25, 0.25, 2.5, 2.9)
+    rail_wheels(m, (-2.9,), 0.45)
+    rail_wheels(m, (-1.5, 0.0, 1.5), 0.68)
+    rail_wheels(m, (3.0,), 0.45)
+    # Rods joining the driving wheels.
+    for y in (-1.36, 1.36):
+        m.box("metal", -1.5, 1.5, y - 0.04, y + 0.04, 0.6, 0.72)
+    buffers(m, x0, x1)
+    m.save("steam_engine.glb")
+
+
+def diesel_engine(electric=False):
+    """A diesel with a cab at each end; with electric, a pantograph on the roof."""
+    m = Model()
+    x0, x1 = -3.8, 3.8
+    m.box("dark", x0, x1, -1.4, 1.4, 0.85, 1.15)  # frame
+    m.box("company", x0 + 0.1, x1 - 0.1, -1.45, 1.45, 1.15, 3.2)
+    m.box("company_dark", x0 + 0.1, x1 - 0.1, -1.47, 1.47, 1.15, 1.6)  # stripe at the bottom
+    m.box("roof", x0 + 0.3, x1 - 0.3, -1.25, 1.25, 3.2, 3.5)
+    for x, d in ((x0 + 0.1, -1), (x1 - 0.1, 1)):
+        m.box("glass", min(x, x + 0.06 * d), max(x, x + 0.06 * d), -1.2, 1.2, 2.3, 2.95)  # windscreen
+        m.box("glass", min(x, x - 0.9 * d), max(x, x - 0.9 * d), -1.5, 1.5, 2.3, 2.9)  # side windows of the cab
+        m.box("light", min(x, x + 0.08 * d), max(x, x + 0.08 * d), -1.0, -0.6, 1.5, 1.8)
+        m.box("light", min(x, x + 0.08 * d), max(x, x + 0.08 * d), 0.6, 1.0, 1.5, 1.8)
+    # Grilles along the engine room.
+    for i in range(5):
+        x = -1.9 + i * 0.85
+        m.box("dark", x, x + 0.5, -1.5, 1.5, 2.4, 2.9)
+    if electric:
+        m.box("dark", -0.6, 0.6, -0.6, 0.6, 3.5, 3.65)
+        m.quad("metal", (-0.5, -0.5, 3.65), (0.5, -0.5, 3.65), (0.1, -0.5, 4.6), (-0.1, -0.5, 4.6))
+        m.quad("metal", (0.5, 0.5, 3.65), (-0.5, 0.5, 3.65), (-0.1, 0.5, 4.6), (0.1, 0.5, 4.6))
+        m.box("metal", -0.12, 0.12, -0.9, 0.9, 4.55, 4.7)
+    else:
+        m.chimney("dark", 0.5, 0, 3.5, 3.8, 0.2)  # exhaust
+    bogie(m, -2.4)
+    bogie(m, 2.4)
+    buffers(m, x0, x1)
+    m.save("electric_engine.glb" if electric else "diesel_engine.glb")
+
+
+def carriage(m, x0, x1, cab=False):
+    """The body of a passenger carriage, with a row of windows."""
+    m.box("dark", x0 + 0.2, x1 - 0.2, -1.3, 1.3, 0.85, 1.1)
+    m.box("company", x0, x1, -1.45, 1.45, 1.1, 2.1)
+    m.box("glass", x0 + 0.05, x1 - 0.05, -1.43, 1.43, 2.1, 2.8)
+    m.box("company", x0, x1, -1.45, 1.45, 2.8, 3.1)
+    # Pillars between the windows.
+    count = 7
+    for i in range(count + 1):
+        x = x0 + i * (x1 - x0 - 0.25) / count
+        m.box("company", x, x + 0.25, -1.45, 1.45, 2.1, 2.8)
+    m.prism_roof("roof", "roof", x0, x1, -1.45, 1.45, 3.1, 3.55)
+    if cab:
+        m.box("glass", x1, x1 + 0.06, -1.1, 1.1, 2.15, 2.75)
+        m.box("light", x1, x1 + 0.08, -1.0, -0.6, 1.4, 1.7)
+        m.box("light", x1, x1 + 0.08, 0.6, 1.0, 1.4, 1.7)
+
+
+def passenger_carriage():
+    m = Model()
+    carriage(m, -3.7, 3.7)
+    bogie(m, -2.5)
+    bogie(m, 2.5)
+    buffers(m, -3.7, 3.7)
+    m.save("passenger_carriage.glb")
+
+
+def railcar():
+    """A diesel railcar: a carriage with a driving cab at the front."""
+    m = Model()
+    carriage(m, -3.7, 3.7, cab=True)
+    m.box("dark", -1.2, 1.2, -1.0, 1.0, 0.45, 0.85)  # engine below the floor
+    bogie(m, -2.5)
+    bogie(m, 2.5)
+    buffers(m, -3.7, 3.7)
+    m.save("railcar.glb")
+
+
+def van(material, filename, doors="company_dark", vents=False):
+    """A covered goods van with a curved roof and sliding doors."""
+    m = Model()
+    x0, x1 = -3.6, 3.6
+    m.box("dark", x0, x1, -1.3, 1.3, 0.85, 1.1)
+    m.box(material, x0 + 0.1, x1 - 0.1, -1.4, 1.4, 1.1, 3.0)
+    m.prism_roof("roof", material, x0, x1, -1.5, 1.5, 3.0, 3.4)
+    m.box(doors, -0.8, 0.8, -1.46, 1.46, 1.2, 2.85)
+    if vents:
+        for x in (-2.6, -1.8, 1.8, 2.6):
+            m.box("dark", x - 0.25, x + 0.25, -1.45, 1.45, 2.4, 2.8)
+    # The company's colour as a stripe.
+    m.box("company", x0 + 0.1, x1 - 0.1, -1.42, 1.42, 1.1, 1.3)
+    rail_wheels(m, (-2.2, 2.2))
+    buffers(m, x0, x1)
+    m.save(filename)
+
+
+def open_wagon():
+    """An open wagon with low sides, for coal, wood and steel."""
+    m = Model()
+    x0, x1 = -3.6, 3.6
+    m.box("dark", x0, x1, -1.3, 1.3, 0.85, 1.1)
+    m.box("rust", x0 + 0.1, x1 - 0.1, -1.4, 1.4, 1.1, 1.3)  # floor
+    for y0, y1 in ((-1.4, -1.25), (1.25, 1.4)):
+        m.box("company_dark", x0 + 0.1, x1 - 0.1, y0, y1, 1.3, 2.3)
+    for xa, xb in ((x0 + 0.1, x0 + 0.25), (x1 - 0.25, x1 - 0.1)):
+        m.box("company_dark", xa, xb, -1.25, 1.25, 1.3, 2.3)
+    for x in (-2.0, 0.0, 2.0):
+        for y in (-1.45, 1.4):
+            m.box("dark", x - 0.1, x + 0.1, y, y + 0.05, 1.3, 2.3)  # ribs
+    rail_wheels(m, (-2.2, 2.2))
+    buffers(m, x0, x1)
+    m.save("open_wagon.glb")
+
+
+def hopper():
+    """A hopper wagon for grain and ore, with sloping ends and chutes below."""
+    m = Model()
+    x0, x1 = -3.6, 3.6
+    m.box("dark", x0, x1, -1.2, 1.2, 0.85, 1.1)
+    m.box("company_dark", x0 + 0.6, x1 - 0.6, -1.4, 1.4, 1.1, 2.9)
+    # Sloping ends.
+    for xa, xb in ((x0 + 0.1, x0 + 0.6), (x1 - 0.6, x1 - 0.1)):
+        top_out, bottom_in = (xa, xb) if xa < 0 else (xb, xa)
+        m.quad("company_dark", (top_out, -1.4, 2.9), (bottom_in, -1.4, 1.4), (bottom_in, 1.4, 1.4), (top_out, 1.4, 2.9))
+        m.quad("company_dark", (top_out, 1.4, 2.9), (bottom_in, 1.4, 1.4), (bottom_in, -1.4, 1.4), (top_out, -1.4, 2.9))
+    m.box("dark", x0 + 0.6, x1 - 0.6, -1.42, 1.42, 2.75, 2.95)  # top edge
+    for x in (-1.0, 1.0):
+        m.box("dark", x - 0.4, x + 0.4, -0.6, 0.6, 0.6, 1.1)  # chutes
+    rail_wheels(m, (-2.6, 2.6))
+    buffers(m, x0, x1)
+    m.save("hopper.glb")
+
+
+def tanker():
+    """A tank wagon."""
+    m = Model()
+    x0, x1 = -3.6, 3.6
+    m.box("dark", x0, x1, -1.2, 1.2, 0.85, 1.25)
+    m.cylinder("boiler", x0 + 0.2, x1 - 0.2, 0, 2.2, 1.05, sides=16)
+    m.cylinder("company", -0.15, 0.15, 0, 2.2, 1.08, sides=16)  # band in the company colour
+    m.chimney("boiler", 0, 0, 3.0, 3.45, 0.4)  # filler
+    for x in (-2.0, 2.0):
+        m.box("dark", x - 0.1, x + 0.1, -1.15, 1.15, 1.2, 1.6)  # cradles
+    rail_wheels(m, (-2.3, 2.3))
+    buffers(m, x0, x1)
+    m.save("tanker.glb")
 
 
 # Buildings stand on a whole tile, 16 by 16, with the middle of the tile at the origin.
@@ -386,6 +602,16 @@ def lorry_stop(drive_through=False):
 if __name__ == "__main__":
     bus()
     lorry()
+    steam_engine()
+    diesel_engine()
+    diesel_engine(electric=True)
+    passenger_carriage()
+    railcar()
+    van("company_dark", "mail_van.glb", doors="dark")
+    van("wood", "goods_van.glb", vents=True)
+    open_wagon()
+    hopper()
+    tanker()
     house()
     flats()
     office_tower()
