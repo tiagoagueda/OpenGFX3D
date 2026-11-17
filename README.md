@@ -54,6 +54,7 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
 * `model`: a file in this folder.
 * `scale`: optional; world units per unit of the model.
 * `rotor`, `rotor_at`: optional, for helicopters; the model of the main rotor, which the game turns, and where its hub is in the frame of the helicopter.
+* `far`: optional; a simpler model to draw far from the camera, or "" to leave the model out there (small details).
 * `snow`: optional, for industry tiles; the model to use in the sub-arctic climate, where the 2D game draws the tile with snow (forests).
 * `parts`: optional, for buildings; parts that move, each `{ "model": ..., "at": [x, y, z], "axis": [x, y, z], "spin": radians per second, "swing": radians, "period": seconds, "lift": world units }`. The part turns around `axis` through `at` (in the frame of the building), by `spin` all the time and back and forth by `swing`, and moves `lift` along `axis` and back once per `period` (a press, rising bubbles). Draw the part with the point it turns around at its origin. Give the ids of a tile that is animated in the game an entry of their own when only those should move.
 

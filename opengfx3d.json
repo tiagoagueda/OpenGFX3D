@@ -1171,6 +1171,28 @@
 			"model": "lorry_stop_drive_through.glb"
 		},
 		{
+			"type": "effect",
+			"ids": [
+				0,
+				1,
+				2,
+				4,
+				6,
+				10,
+				11
+			],
+			"model": "effects_puff.glb",
+			"scale": 3.0
+		},
+		{
+			"type": "effect",
+			"ids": [
+				3
+			],
+			"model": "effects_spark.glb",
+			"scale": 3.0
+		},
+		{
 			"type": "house",
 			"ids": [
 				7,
@@ -3656,7 +3678,8 @@
 				0
 			],
 			"model": "land_tree_oak.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_oak_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3664,7 +3687,8 @@
 				1
 			],
 			"model": "land_tree_fir.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_fir_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3672,7 +3696,8 @@
 				2
 			],
 			"model": "land_tree_lime.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_lime_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3680,7 +3705,8 @@
 				3
 			],
 			"model": "land_tree_birch.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_birch_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3688,7 +3714,8 @@
 				4
 			],
 			"model": "land_tree_poplar.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_poplar_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3696,7 +3723,8 @@
 				5
 			],
 			"model": "land_tree_red_maple.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_red_maple_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3704,7 +3732,8 @@
 				6
 			],
 			"model": "land_tree_golden_beech.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_golden_beech_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3712,7 +3741,8 @@
 				7
 			],
 			"model": "land_tree_blue_spruce.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_blue_spruce_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3720,7 +3750,8 @@
 				8
 			],
 			"model": "land_tree_orange_elm.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_orange_elm_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3728,7 +3759,8 @@
 				9
 			],
 			"model": "land_tree_pine.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_pine_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3736,7 +3768,8 @@
 				10
 			],
 			"model": "land_tree_chestnut.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_chestnut_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3744,7 +3777,8 @@
 				11
 			],
 			"model": "land_tree_young_ash.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_young_ash_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3752,7 +3786,8 @@
 				12
 			],
 			"model": "land_tree_arctic_fir.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_fir_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3760,7 +3795,8 @@
 				13
 			],
 			"model": "land_tree_arctic_spruce.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_spruce_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3768,7 +3804,8 @@
 				14
 			],
 			"model": "land_tree_arctic_pine.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_pine_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3776,7 +3813,8 @@
 				15
 			],
 			"model": "land_tree_arctic_birch.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_birch_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3784,7 +3822,8 @@
 				16
 			],
 			"model": "land_tree_arctic_larch.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_larch_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3792,7 +3831,8 @@
 				17
 			],
 			"model": "land_tree_arctic_bare.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_bare_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3800,7 +3840,8 @@
 				18
 			],
 			"model": "land_tree_arctic_round.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_round_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3808,7 +3849,8 @@
 				19
 			],
 			"model": "land_tree_arctic_tall_fir.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_tall_fir_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3816,7 +3858,8 @@
 				20
 			],
 			"model": "land_tree_jungle_tall.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_jungle_tall_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3824,7 +3867,8 @@
 				21
 			],
 			"model": "land_tree_jungle_palm.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_jungle_palm_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3832,7 +3876,8 @@
 				22
 			],
 			"model": "land_tree_jungle_broad.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_jungle_broad_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3840,7 +3885,8 @@
 				23
 			],
 			"model": "land_tree_banana.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_banana_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3848,7 +3894,8 @@
 				24
 			],
 			"model": "land_tree_jungle_round.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_jungle_round_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3856,7 +3903,8 @@
 				25
 			],
 			"model": "land_tree_flowering_bush.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_flowering_bush_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3864,7 +3912,8 @@
 				26
 			],
 			"model": "land_tree_tall_palm.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_tall_palm_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3872,7 +3921,8 @@
 				27
 			],
 			"model": "land_tree_cactus.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_cactus_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3880,7 +3930,8 @@
 				28
 			],
 			"model": "land_tree_date_palm.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_date_palm_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3888,7 +3939,8 @@
 				29
 			],
 			"model": "land_tree_acacia.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_acacia_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3896,7 +3948,8 @@
 				30
 			],
 			"model": "land_tree_dry_bush.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_dry_bush_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3904,7 +3957,8 @@
 				31
 			],
 			"model": "land_tree_olive.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_olive_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3912,7 +3966,8 @@
 				32
 			],
 			"model": "land_tree_toy_lollipop_pink.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_lollipop_pink_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3920,7 +3975,8 @@
 				33
 			],
 			"model": "land_tree_toy_cone_green.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_cone_green_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3928,7 +3984,8 @@
 				34
 			],
 			"model": "land_tree_toy_cube_blue.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_cube_blue_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3936,7 +3993,8 @@
 				35
 			],
 			"model": "land_tree_toy_lollipop_yellow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_lollipop_yellow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3944,7 +4002,8 @@
 				36
 			],
 			"model": "land_tree_toy_stack.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_stack_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3952,7 +4011,8 @@
 				37
 			],
 			"model": "land_tree_toy_cone_purple.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_cone_purple_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3960,7 +4020,8 @@
 				38
 			],
 			"model": "land_tree_toy_lollipop_red.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_lollipop_red_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3968,7 +4029,8 @@
 				39
 			],
 			"model": "land_tree_toy_cube_yellow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_cube_yellow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3976,7 +4038,8 @@
 				40
 			],
 			"model": "land_tree_toy_stack_green.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_toy_stack_green_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3984,7 +4047,8 @@
 				76
 			],
 			"model": "land_tree_arctic_fir_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_fir_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -3992,7 +4056,8 @@
 				77
 			],
 			"model": "land_tree_arctic_spruce_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_spruce_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -4000,7 +4065,8 @@
 				78
 			],
 			"model": "land_tree_arctic_pine_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_pine_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -4008,7 +4074,8 @@
 				79
 			],
 			"model": "land_tree_arctic_birch_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_birch_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -4016,7 +4083,8 @@
 				80
 			],
 			"model": "land_tree_arctic_larch_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_larch_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -4024,7 +4092,8 @@
 				81
 			],
 			"model": "land_tree_arctic_bare_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_bare_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -4032,7 +4101,8 @@
 				82
 			],
 			"model": "land_tree_arctic_round_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_round_snow_far.glb"
 		},
 		{
 			"type": "tree",
@@ -4040,7 +4110,8 @@
 				83
 			],
 			"model": "land_tree_arctic_tall_fir_snow.glb",
-			"scale": 1.3
+			"scale": 1.3,
+			"far": "land_tree_arctic_tall_fir_snow_far.glb"
 		},
 		{
 			"type": "field",
@@ -4110,56 +4181,64 @@
 			"ids": [
 				0
 			],
-			"model": "land_rough_0.glb"
+			"model": "land_rough_0.glb",
+			"far": ""
 		},
 		{
 			"type": "rough",
 			"ids": [
 				1
 			],
-			"model": "land_rough_1.glb"
+			"model": "land_rough_1.glb",
+			"far": ""
 		},
 		{
 			"type": "rough",
 			"ids": [
 				2
 			],
-			"model": "land_rough_2.glb"
+			"model": "land_rough_2.glb",
+			"far": ""
 		},
 		{
 			"type": "rough",
 			"ids": [
 				3
 			],
-			"model": "land_rough_3.glb"
+			"model": "land_rough_3.glb",
+			"far": ""
 		},
 		{
 			"type": "rocks",
 			"ids": [
 				0
 			],
-			"model": "land_rocks_0.glb"
+			"model": "land_rocks_0.glb",
+			"far": ""
 		},
 		{
 			"type": "rocks",
 			"ids": [
 				1
 			],
-			"model": "land_rocks_1.glb"
+			"model": "land_rocks_1.glb",
+			"far": ""
 		},
 		{
 			"type": "rocks",
 			"ids": [
 				2
 			],
-			"model": "land_rocks_2.glb"
+			"model": "land_rocks_2.glb",
+			"far": ""
 		},
 		{
 			"type": "rocks",
 			"ids": [
 				3
 			],
-			"model": "land_rocks_3.glb"
+			"model": "land_rocks_3.glb",
+			"far": ""
 		}
 	]
 }

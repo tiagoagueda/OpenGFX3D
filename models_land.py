@@ -347,6 +347,35 @@ TREE_SCALE = 1.3  # the trees of the 2D game are a little bigger than these mode
 
 
 # ---------------------------------------------------------------------------------------------------------------
+# Far away versions: each material of a tree becomes one simple shape of the same size and colour.
+
+
+def far_version(model):
+    """A version of a model with a few triangles per material: a cone for cone-like parts, else a double cone."""
+    far = Model()
+    sides = 5
+    for material, (positions, _) in model.parts.items():
+        xs = [p[0] for p in positions]
+        ys = [p[1] for p in positions]
+        zs = [p[2] for p in positions]
+        x, y = (min(xs) + max(xs)) / 2, (min(ys) + max(ys)) / 2
+        z0, z1 = min(zs), max(zs)
+        r = max(max(xs) - min(xs), max(ys) - min(ys)) / 2
+        if r < 0.05 or z1 - z0 < 0.05:
+            continue
+        # Where is it widest? Cones are widest near the bottom.
+        widest = max(positions, key=lambda p: (p[0] - x) ** 2 + (p[1] - y) ** 2)[2]
+        zw = min(max(widest, z0), z1)
+        ring = [(x + r * math.cos(2 * math.pi * i / sides), y + r * math.sin(2 * math.pi * i / sides)) for i in range(sides)]
+        for i in range(sides):
+            (ax, ay), (bx, by) = ring[i], ring[(i + 1) % sides]
+            far.triangle(material, (ax, ay, zw), (bx, by, zw), (x, y, z1))
+            if zw - z0 > 0.05:
+                far.triangle(material, (bx, by, zw), (ax, ay, zw), (x, y, z0))
+    return far
+
+
+# ---------------------------------------------------------------------------------------------------------------
 
 
 def build():
@@ -355,7 +384,9 @@ def build():
         m = Model()
         draw(m)
         m.save(fname("tree_" + name))
-        buildings.append({"type": "tree", "ids": [tree_type], "model": fname("tree_" + name), "scale": TREE_SCALE})
+        far_version(m).save(fname("tree_" + name + "_far"))
+        buildings.append({"type": "tree", "ids": [tree_type], "model": fname("tree_" + name), "scale": TREE_SCALE,
+                          "far": fname("tree_" + name + "_far")})
     for state in range(9):
         m = Model()
         field(m, state)
@@ -366,5 +397,6 @@ def build():
             m = Model()
             draw(m, v)
             m.save(fname(f"{kind}_{v}"))
-            buildings.append({"type": kind, "ids": [v], "model": fname(f"{kind}_{v}")})
+            # Small stones and tufts are left out far away.
+            buildings.append({"type": kind, "ids": [v], "model": fname(f"{kind}_{v}"), "far": ""})
     return {"vehicles": [], "buildings": buildings}
