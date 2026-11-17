@@ -53,6 +53,7 @@ The build copies the package to `opengfx3d/` in the build folder. The game looks
 * Fronts: houses, industry tiles and objects face the south-west edge of the map view. Stations and drive-through stops lie along their track or road; the side to -X is the side with the station building. Bay stops face their road.
 * Triangles take the base colour of their material. Textures, animations and skins are not read yet.
 * A material with a name that starts with `company` takes a colour from the game, multiplied with its base colour: white becomes that colour, grey a darker shade of it. For vehicles, stations, stops and objects it is the owner's company colour; houses and industries use the colour the game picked for them.
+* Triangles of a material with a name that starts with `load` are the cargo of a vehicle. They are drawn only when the vehicle carries cargo, and sink into the vehicle as it gets emptier, by up to their own height; so make the load as high as the part that should disappear, and let the sides of the vehicle hide it.
 * Each wagon or part of a vehicle is drawn with the model of its own vehicle ID.
 * Houses and industries are replaced only when they are finished; while being built they keep their sprites.
 

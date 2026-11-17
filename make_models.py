@@ -14,6 +14,8 @@ import math
 import struct
 
 # Colours as seen on screen, 0 to 1. "company" is multiplied with the colour of the owner.
+# Materials named "load..." are the cargo: the game draws them only when the vehicle is loaded, and lets
+# them sink into the vehicle as it gets emptier, by up to their own height.
 MATERIALS = {
     "company": (1.00, 1.00, 1.00),
     "company_dark": (0.72, 0.72, 0.72),
@@ -41,6 +43,8 @@ MATERIALS = {
     "brass": (0.80, 0.64, 0.30),
     "wood": (0.50, 0.36, 0.22),
     "rust": (0.42, 0.30, 0.24),
+    "load_coal": (0.17, 0.16, 0.16),
+    "load_ore": (0.56, 0.42, 0.30),
 }
 
 
@@ -379,6 +383,9 @@ def open_wagon():
     for x in (-2.0, 0.0, 2.0):
         for y in (-1.45, 1.4):
             m.box("dark", x - 0.1, x + 0.1, y, y + 0.05, 1.3, 2.3)  # ribs
+    # The load: a heap that fills the wagon.
+    m.box("load_coal", x0 + 0.25, x1 - 0.25, -1.25, 1.25, 1.3, 2.2)
+    m.prism_roof("load_coal", "load_coal", x0 + 0.25, x1 - 0.25, -1.25, 1.25, 2.2, 2.7)
     rail_wheels(m, (-2.2, 2.2))
     buffers(m, x0, x1)
     m.save("open_wagon.glb")
@@ -389,13 +396,18 @@ def hopper():
     m = Model()
     x0, x1 = -3.6, 3.6
     m.box("dark", x0, x1, -1.2, 1.2, 0.85, 1.1)
-    m.box("company_dark", x0 + 0.6, x1 - 0.6, -1.4, 1.4, 1.1, 2.9)
+    # Open at the top: sides, a floor below the load, and sloping ends.
+    m.box("company_dark", x0 + 0.6, x1 - 0.6, -1.4, -1.25, 1.1, 2.9)
+    m.box("company_dark", x0 + 0.6, x1 - 0.6, 1.25, 1.4, 1.1, 2.9)
+    m.box("company_dark", x0 + 0.6, x1 - 0.6, -1.25, 1.25, 1.1, 1.5)
     # Sloping ends.
     for xa, xb in ((x0 + 0.1, x0 + 0.6), (x1 - 0.6, x1 - 0.1)):
         top_out, bottom_in = (xa, xb) if xa < 0 else (xb, xa)
         m.quad("company_dark", (top_out, -1.4, 2.9), (bottom_in, -1.4, 1.4), (bottom_in, 1.4, 1.4), (top_out, 1.4, 2.9))
         m.quad("company_dark", (top_out, 1.4, 2.9), (bottom_in, 1.4, 1.4), (bottom_in, -1.4, 1.4), (top_out, -1.4, 2.9))
     m.box("dark", x0 + 0.6, x1 - 0.6, -1.42, 1.42, 2.75, 2.95)  # top edge
+    m.box("load_ore", x0 + 0.7, x1 - 0.7, -1.3, 1.3, 2.2, 2.9)  # the load
+    m.prism_roof("load_ore", "load_ore", x0 + 0.7, x1 - 0.7, -1.3, 1.3, 2.9, 3.3)
     for x in (-1.0, 1.0):
         m.box("dark", x - 0.4, x + 0.4, -0.6, 0.6, 0.6, 1.1)  # chutes
     rail_wheels(m, (-2.6, 2.6))
