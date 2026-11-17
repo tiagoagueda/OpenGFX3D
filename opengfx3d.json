@@ -2660,20 +2660,6 @@
 		{
 			"type": "industry_tile",
 			"ids": [
-				16
-			],
-			"model": "industry_temperate_forest_trees.glb"
-		},
-		{
-			"type": "industry_tile",
-			"ids": [
-				17
-			],
-			"model": "industry_temperate_forest_cleared.glb"
-		},
-		{
-			"type": "industry_tile",
-			"ids": [
 				18
 			],
 			"model": "industry_temperate_refinery_tanks.glb"
@@ -2965,6 +2951,22 @@
 					"period": 2.4
 				}
 			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				16
+			],
+			"model": "industry_temperate_forest_trees.glb",
+			"snow": "industry_temperate_forest_trees_snow.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				17
+			],
+			"model": "industry_temperate_forest_cleared.glb",
+			"snow": "industry_temperate_forest_cleared_snow.glb"
 		},
 		{
 			"type": "industry_tile",

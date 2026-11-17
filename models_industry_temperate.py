@@ -10,6 +10,8 @@ import math
 
 from gfx3d import MATERIALS, Model, rotated_z
 
+MATERIALS["indt_snow"] = (0.90, 0.93, 0.97)
+
 GROUP = "industry_temperate"
 
 MATERIALS.update({
@@ -143,10 +145,14 @@ def lattice_tower(m, material, x, y, z0, z1, r0, r1, bays=4, w=0.3):
             beam(m, material, p(a, f0), p(b, f1), w * 0.5)
 
 
-def conifer(m, x, y, h, r):
+def conifer(m, x, y, h, r, snow=False):
     beam(m, "indt_bark", (x, y, 0), (x, y, h * 0.35), r * 0.25)
     frustum(m, "indt_leaf_dark", x, y, h * 0.2, h * 0.7, r, 0, 7, rot=x)
     frustum(m, "indt_leaf", x, y, h * 0.5, h, r * 0.7, 0, 7, rot=y)
+    if snow:
+        # Snow on the upper half of both cones, a little outside them.
+        frustum(m, "indt_snow", x, y, h * 0.45, h * 0.71, r * 0.5 + 0.12, 0, 7, rot=x)
+        frustum(m, "indt_snow", x, y, h * 0.75, h + 0.05, r * 0.35 + 0.1, 0, 7, rot=y)
 
 
 def broadleaf(m, x, y, h, r):
@@ -491,29 +497,31 @@ def sawmill_planks():
 # Forest: 16 trees, 17 a cleared patch with stumps and a log pile.
 
 
-def forest_trees():
+def forest_trees(snow=False):
     m = Model()
-    ground(m, "grass")
+    ground(m, "indt_snow" if snow else "grass")
     trees = [(-5, -5, 11, 2.4), (-5.5, 1, 12, 2.6), (-4.5, 6, 10, 2.2), (0, -2, 13, 2.8), (0.5, 4.5, 11.5, 2.4),
              (5, -5.5, 10, 2.2), (4.5, 0.5, 12, 2.5), (5.5, 5.5, 9.5, 2.1), (-1.5, -6.5, 9, 2.0)]
     for x, y, h, r in trees:
-        conifer(m, x, y, h, r)
-    m.save(fname("forest_trees"))
-    return fname("forest_trees")
+        conifer(m, x, y, h, r, snow)
+    name = fname("forest_trees_snow" if snow else "forest_trees")
+    m.save(name)
+    return name
 
 
-def forest_cleared():
+def forest_cleared(snow=False):
     m = Model()
-    ground(m, "indt_earth")
+    ground(m, "indt_snow" if snow else "indt_earth")
     for (x, y) in ((-5, -5), (-4, 3), (0, -1), (3, 5), (5, -4), (-1, 6)):
         frustum(m, "indt_bark", x, y, 0, 0.7, 0.55, 0.5, 7, top="indt_logend")
     for k, y in enumerate((-2.5, -1.3, -0.1)):
         log(m, -6, 4, y, 0.55, 0.55)
     for y in (-1.9, -0.7):
         log(m, -6, 4, y, 1.5, 0.55)
-    conifer(m, 6, 6, 8, 1.8)
-    m.save(fname("forest_cleared"))
-    return fname("forest_cleared")
+    conifer(m, 6, 6, 8, 1.8, snow)
+    name = fname("forest_cleared_snow" if snow else "forest_cleared")
+    m.save(name)
+    return name
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -1205,8 +1213,6 @@ MODELS = [
     (sawmill_boiler, [13]),
     (sawmill_logs, [14]),
     (sawmill_planks, [15]),
-    (forest_trees, [16]),
-    (forest_cleared, [17]),
     (refinery_tanks, [18]),
     (refinery_column, [19]),
     (refinery_flare, [20]),
@@ -1251,5 +1257,8 @@ def build():
     buildings.append({"type": "industry_tile", "ids": [0], "model": fname("coal_headframe"), "parts": sheaves})
     buildings.append({"type": "industry_tile", "ids": [1], "model": fname("coal_headframe"), "parts": [dict(p, spin=2.5) for p in sheaves]})
     buildings.append({"type": "industry_tile", "ids": [30, 31, 32], "model": well, "parts": [dict(beam_part, swing=0.22, period=2.4)]})
+    # Forests: the 2D game draws them with snow in the sub-arctic climate.
+    for fn, gfx in ((forest_trees, 16), (forest_cleared, 17)):
+        buildings.append({"type": "industry_tile", "ids": [gfx], "model": fn(), "snow": fn(snow=True)})
     buildings += iron_mine()
     return {"vehicles": [], "buildings": buildings}
