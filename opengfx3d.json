@@ -1193,6 +1193,55 @@
 			"scale": 3.0
 		},
 		{
+			"type": "fence",
+			"ids": [
+				0
+			],
+			"model": "fence_rail.glb"
+		},
+		{
+			"type": "fence",
+			"ids": [
+				1
+			],
+			"model": "fence_hedge.glb"
+		},
+		{
+			"type": "fence",
+			"ids": [
+				2
+			],
+			"model": "fence_hedge_gate.glb"
+		},
+		{
+			"type": "fence",
+			"ids": [
+				3
+			],
+			"model": "fence_wooden.glb"
+		},
+		{
+			"type": "fence",
+			"ids": [
+				4
+			],
+			"model": "fence_hedge_yellow.glb"
+		},
+		{
+			"type": "fence",
+			"ids": [
+				5
+			],
+			"model": "fence_hedge_red.glb"
+		},
+		{
+			"type": "fence",
+			"ids": [
+				6
+			],
+			"model": "fence_stone_wall.glb"
+		},
+		{
 			"type": "house",
 			"ids": [
 				7,
