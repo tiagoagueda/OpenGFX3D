@@ -36,8 +36,9 @@ def spark():
 
 def build():
     # Effect vehicle types: 0 chimney smoke, 1 steam, 2 diesel smoke, 3 electric spark, 4 crash smoke,
-    # 6 breakdown smoke, 10 breakdown smoke of aircraft, 11 copper mine smoke.
+    # 5 large explosion, 6 breakdown smoke, 7 small explosion, 9 bubble, 10 breakdown smoke of aircraft,
+    # 11 copper mine smoke. The bulldozer (8) is in models_works.
     return {"vehicles": [], "buildings": [
-        {"type": "effect", "ids": [0, 1, 2, 4, 6, 10, 11], "model": puff(), "scale": 3.0},
+        {"type": "effect", "ids": [0, 1, 2, 4, 5, 6, 7, 9, 10, 11], "model": puff(), "scale": 3.0},
         {"type": "effect", "ids": [3], "model": spark(), "scale": 3.0},
     ]}

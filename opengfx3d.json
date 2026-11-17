@@ -1499,7 +1499,10 @@
 				1,
 				2,
 				4,
+				5,
 				6,
+				7,
+				9,
 				10,
 				11
 			],
@@ -4897,6 +4900,195 @@
 				5
 			],
 			"model": "track_catenary_pole_tram.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				0
+			],
+			"model": "works_site_0_1x1.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				1
+			],
+			"model": "works_site_0_2x1.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				2
+			],
+			"model": "works_site_0_1x2.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				3
+			],
+			"model": "works_site_0_2x2.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				4
+			],
+			"model": "works_site_1_1x1.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				5
+			],
+			"model": "works_site_1_2x1.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				6
+			],
+			"model": "works_site_1_1x2.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				7
+			],
+			"model": "works_site_1_2x2.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				8
+			],
+			"model": "works_site_2_1x1.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				9
+			],
+			"model": "works_site_2_2x1.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				10
+			],
+			"model": "works_site_2_1x2.glb"
+		},
+		{
+			"type": "construction",
+			"ids": [
+				11
+			],
+			"model": "works_site_2_2x2.glb"
+		},
+		{
+			"type": "waypoint",
+			"ids": [
+				0
+			],
+			"model": "works_waypoint_rail.glb"
+		},
+		{
+			"type": "waypoint",
+			"ids": [
+				1
+			],
+			"model": "works_waypoint_road.glb"
+		},
+		{
+			"type": "lock",
+			"ids": [
+				0
+			],
+			"model": "works_lock_middle.glb"
+		},
+		{
+			"type": "lock",
+			"ids": [
+				1
+			],
+			"model": "works_lock_lower.glb"
+		},
+		{
+			"type": "lock",
+			"ids": [
+				2
+			],
+			"model": "works_lock_upper.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				0
+			],
+			"model": "works_zeppelin.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				2
+			],
+			"model": "works_ufo_small.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				4
+			],
+			"model": "works_jet.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				6
+			],
+			"model": "works_helicopter.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				8
+			],
+			"model": "works_helicopter_rotor.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				9
+			],
+			"model": "works_ufo_big.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				11
+			],
+			"model": "works_jet_destroyer.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				13
+			],
+			"model": "works_submarine_small.glb"
+		},
+		{
+			"type": "disaster",
+			"ids": [
+				14
+			],
+			"model": "works_submarine_big.glb"
+		},
+		{
+			"type": "effect",
+			"ids": [
+				8
+			],
+			"model": "works_bulldozer.glb"
 		}
 	],
 	"ground": {
