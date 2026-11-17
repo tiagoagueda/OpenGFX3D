@@ -4047,6 +4047,41 @@
 			"model": "infra_company_hq.glb"
 		},
 		{
+			"type": "interface",
+			"ids": [
+				0
+			],
+			"model": "interface_label_post.glb"
+		},
+		{
+			"type": "interface",
+			"ids": [
+				1
+			],
+			"model": "interface_cursor_edge.glb"
+		},
+		{
+			"type": "interface",
+			"ids": [
+				2
+			],
+			"model": "interface_cursor_corner.glb"
+		},
+		{
+			"type": "interface",
+			"ids": [
+				3
+			],
+			"model": "interface_cursor_arrow.glb"
+		},
+		{
+			"type": "interface",
+			"ids": [
+				4
+			],
+			"model": "interface_cursor_bracket.glb"
+		},
+		{
 			"type": "tree",
 			"ids": [
 				0

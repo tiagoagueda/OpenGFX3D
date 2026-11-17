@@ -52,7 +52,7 @@ Like the models, the textures are made for this project: `make_textures.py` comp
 }
 ```
 
-* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`; `construction` for building sites, `waypoint`, `lock` for canal locks and `disaster` for disaster vehicles.
+* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`; `construction` for building sites, `waypoint`, `lock` for canal locks and `disaster` for disaster vehicles; `interface` for the posts of labels and the parts of the cursor (see `models_interface.py`).
 * `grfid`: the ID of the NewGRF that defines the vehicles, as the eight hexadecimal digits the game shows for it. Leave it out for the vehicles of the base game.
 * `ids`: the numbers within that NewGRF. For the base game:
   * vehicles count from 0 per type, in the order of `src/table/engines.h`: road vehicle 0 is the MPS Regal Bus;
