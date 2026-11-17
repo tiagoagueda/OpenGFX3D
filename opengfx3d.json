@@ -4239,6 +4239,48 @@
 			],
 			"model": "land_rocks_3.glb",
 			"far": ""
+		},
+		{
+			"type": "track",
+			"ids": [
+				0
+			],
+			"model": "track_rail_straight.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				1
+			],
+			"model": "track_rail_diagonal.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				2
+			],
+			"model": "track_monorail_straight.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				3
+			],
+			"model": "track_monorail_diagonal.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				4
+			],
+			"model": "track_maglev_straight.glb"
+		},
+		{
+			"type": "track",
+			"ids": [
+				5
+			],
+			"model": "track_maglev_diagonal.glb"
 		}
 	]
 }
