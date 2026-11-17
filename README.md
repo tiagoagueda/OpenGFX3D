@@ -12,7 +12,10 @@ All models here are made for this project; do not add models copied from elsewhe
 
 * `opengfx3d.json`: the index. It lists which model replaces which vehicles and buildings.
 * `*.glb`: the models, as binary glTF 2.0 files.
-* `make_models.py`: makes all the sample models from simple shapes (it needs only Python 3). Run it in this folder after changing it.
+* `make_models.py`: makes all the models and the index. Run it after changing a model.
+* `gfx3d.py`: the toolkit the models are made with: materials and the `Model` class.
+* `models_*.py`: the models, in groups. Each has a `build()` that writes its models and returns its entries for the index.
+* `preview.py`: draws pictures of models from the angle of the 2D game and from behind, to check them without the game (needs Pillow).
 
 The build copies the package to `opengfx3d/` in the build folder. The game looks for a folder of that name in all places where it looks for its data, such as your personal OpenTTD folder.
 

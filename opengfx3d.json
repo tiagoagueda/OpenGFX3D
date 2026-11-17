@@ -1,6 +1,6 @@
 {
 	"name": "OpenGFX3D",
-	"description": "3D models for the experimental 3D view. Vehicles that are not listed keep the sprites of the 2D game.",
+	"description": "3D models for the experimental 3D view. Vehicles and buildings that are not listed keep the sprites of the 2D game.",
 	"vehicles": [
 		{
 			"type": "road",
