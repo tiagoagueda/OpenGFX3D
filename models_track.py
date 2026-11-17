@@ -6,6 +6,10 @@ piece for each track on a tile, tilted along slopes.
 
 Index type `track`, ids: 0 and 1 normal railway (also electrified), 2 and 3 monorail, 4 and 5 maglev; the even
 id is the straight piece, the odd one the diagonal piece.
+
+Signals: index type `signal`, id = type * 4 + variant * 2 + state, with the type as in the game (0 block, 1 entry,
+2 exit, 3 combo, 4 path, 5 one-way path), variant 0 light and 1 semaphore, state 0 red and 1 green. A signal stands
+at the origin and faces +x, towards the trains it is for; the track is on its -y side.
 """
 
 import math
@@ -21,6 +25,16 @@ for name, colour in {
     "rail_side": (0.36, 0.30, 0.26),
     "concrete": (0.70, 0.69, 0.66),
     "guide": (0.30, 0.31, 0.34),
+    "post": (0.52, 0.53, 0.55),
+    "head": (0.12, 0.12, 0.13),
+    "red_on": (1.00, 0.16, 0.10),
+    "red_off": (0.30, 0.08, 0.07),
+    "green_on": (0.25, 1.00, 0.35),
+    "green_off": (0.07, 0.22, 0.10),
+    "white": (0.92, 0.92, 0.88),
+    "yellow": (0.95, 0.78, 0.15),
+    "orange": (0.95, 0.45, 0.10),
+    "arm_red": (0.80, 0.12, 0.10),
 }.items():
     MATERIALS[f"{GROUP}_{name}"] = colour
 
@@ -83,8 +97,73 @@ def maglev_piece(length):
     return m
 
 
+SIGNAL_HEIGHT = 5.2
+
+
+def type_marks(m, kind, z):
+    """Bands and plates on the post that tell the kinds of signals apart, below the head at height z."""
+    if kind in (1, 3):  # entry: yellow band; combo: yellow and orange
+        m.box(mat("yellow"), -0.17, 0.17, -0.17, 0.17, z - 0.9, z - 0.55)
+    if kind in (2, 3):  # exit: orange band
+        m.box(mat("orange"), -0.17, 0.17, -0.17, 0.17, z - 1.4, z - 1.05)
+    if kind in (4, 5):  # path signals: a white plate with a black edge on the front
+        m.box(mat("head"), 0.15, 0.2, -0.42, 0.42, z - 1.45, z - 0.55)
+        m.box(mat("white"), 0.2, 0.24, -0.34, 0.34, z - 1.37, z - 0.63)
+    if kind == 5:  # one-way path signal: a no-entry disc on the back
+        m.box(mat("arm_red"), -0.24, -0.15, -0.36, 0.36, z - 1.36, z - 0.64)
+        m.box(mat("white"), -0.27, -0.24, -0.26, 0.26, z - 1.06, z - 0.94)
+
+
+def light_signal(kind, green):
+    m = Model()
+    top = SIGNAL_HEIGHT
+    m.box(mat("concrete"), -0.4, 0.4, -0.4, 0.4, -0.05, 0.25)
+    m.box(mat("post"), -0.12, 0.12, -0.12, 0.12, 0.25, top - 1.6)
+    head0, head1 = top - 1.8, top
+    m.box(mat("head"), -0.25, 0.25, -0.38, 0.38, head0, head1)
+    m.box(mat("head"), 0.25, 0.3, -0.45, 0.45, head1 - 0.05, head1 + 0.05)  # sun shade
+    for colour, z, on in (("red", head1 - 0.48, not green), ("green", head0 + 0.48, green)):
+        m.box(mat(f"{colour}_{'on' if on else 'off'}"), 0.25, 0.32, -0.24, 0.24, z - 0.24, z + 0.24)
+    type_marks(m, kind, head0)
+    return m
+
+
+def semaphore_signal(kind, green):
+    m = Model()
+    top = SIGNAL_HEIGHT
+    m.box(mat("concrete"), -0.4, 0.4, -0.4, 0.4, -0.05, 0.25)
+    m.box(mat("sleeper"), -0.11, 0.11, -0.11, 0.11, 0.25, top + 0.3)
+    m.pyramid(mat("head"), -0.15, 0.15, -0.15, 0.15, top + 0.3, top + 0.6)
+    # The arm turns around a pivot on the front of the post; it points towards the track (-y).
+    pivot_z = top - 0.4
+    angle = math.radians(40 if green else 0)
+    c, s = math.cos(angle), math.sin(angle)
+
+    arm = Model()
+    arm.box(mat("arm_red"), 0.13, 0.22, -2.0, 0.0, -0.2, 0.2)
+    arm.box(mat("white"), 0.22, 0.24, -1.75, -1.55, -0.2, 0.2)
+    # Raising the arm turns its far end (-y) up, around the x axis.
+    for material, (positions, normals) in arm.parts.items():
+        turn = lambda p: (p[0], p[1] * c + p[2] * s, p[2] * c - p[1] * s)
+        target_p, target_n = m.parts.setdefault(material, ([], []))
+        target_p.extend((q[0], q[1], q[2] + pivot_z) for q in map(turn, positions))
+        target_n.extend(map(turn, normals))
+    # The lamp below the pivot shows the colour too.
+    lamp = pivot_z - 0.7
+    m.box(mat("head"), 0.11, 0.3, -0.18, 0.18, lamp - 0.2, lamp + 0.2)
+    m.box(mat("green_on" if green else "red_on"), 0.3, 0.34, -0.12, 0.12, lamp - 0.12, lamp + 0.12)
+    type_marks(m, kind, lamp - 0.3)
+    return m
+
+
 def build():
     buildings = []
+    for kind in range(6):
+        for variant, make in enumerate((light_signal, semaphore_signal)):
+            for green in (0, 1):
+                name = f"{GROUP}_signal_{kind}_{'semaphore' if variant else 'light'}_{'green' if green else 'red'}.glb"
+                make(kind, green).save(name)
+                buildings.append({"type": "signal", "ids": [kind * 4 + variant * 2 + green], "model": name})
     for kind, (make, base) in {"rail": (rail_piece, 0), "monorail": (monorail_piece, 2), "maglev": (maglev_piece, 4)}.items():
         for shape, length, offset in (("straight", STRAIGHT, 0), ("diagonal", DIAGONAL, 1)):
             name = f"{GROUP}_{kind}_{shape}.glb"

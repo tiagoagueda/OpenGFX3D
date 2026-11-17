@@ -4241,6 +4241,174 @@
 			"far": ""
 		},
 		{
+			"type": "signal",
+			"ids": [
+				0
+			],
+			"model": "track_signal_0_light_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				1
+			],
+			"model": "track_signal_0_light_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				2
+			],
+			"model": "track_signal_0_semaphore_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				3
+			],
+			"model": "track_signal_0_semaphore_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				4
+			],
+			"model": "track_signal_1_light_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				5
+			],
+			"model": "track_signal_1_light_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				6
+			],
+			"model": "track_signal_1_semaphore_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				7
+			],
+			"model": "track_signal_1_semaphore_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				8
+			],
+			"model": "track_signal_2_light_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				9
+			],
+			"model": "track_signal_2_light_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				10
+			],
+			"model": "track_signal_2_semaphore_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				11
+			],
+			"model": "track_signal_2_semaphore_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				12
+			],
+			"model": "track_signal_3_light_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				13
+			],
+			"model": "track_signal_3_light_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				14
+			],
+			"model": "track_signal_3_semaphore_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				15
+			],
+			"model": "track_signal_3_semaphore_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				16
+			],
+			"model": "track_signal_4_light_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				17
+			],
+			"model": "track_signal_4_light_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				18
+			],
+			"model": "track_signal_4_semaphore_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				19
+			],
+			"model": "track_signal_4_semaphore_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				20
+			],
+			"model": "track_signal_5_light_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				21
+			],
+			"model": "track_signal_5_light_green.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				22
+			],
+			"model": "track_signal_5_semaphore_red.glb"
+		},
+		{
+			"type": "signal",
+			"ids": [
+				23
+			],
+			"model": "track_signal_5_semaphore_green.glb"
+		},
+		{
 			"type": "track",
 			"ids": [
 				0
