@@ -4498,6 +4498,34 @@
 				5
 			],
 			"model": "track_maglev_diagonal.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				0
+			],
+			"model": "track_catenary_pylon_straight.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				1
+			],
+			"model": "track_catenary_pylon_diagonal.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				2
+			],
+			"model": "track_catenary_wires_straight.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				3
+			],
+			"model": "track_catenary_wires_diagonal.glb"
 		}
 	]
 }

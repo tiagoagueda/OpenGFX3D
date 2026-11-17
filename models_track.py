@@ -170,3 +170,77 @@ def build():
             make(length).save(name)
             buildings.append({"type": "track", "ids": [base + offset], "model": name})
     return {"vehicles": [], "buildings": buildings}
+
+
+# ---------------------------------------------------------------------------------------------------
+# Overhead wires (catenary) for electrified railways.
+#
+# Index type `catenary`, ids: 0 a pylon beside straight track, 1 a pylon beside diagonal track, 2 the wires of
+# a straight piece, 3 the wires of a diagonal piece. A pylon stands at its origin with its arm along +x, towards the
+# track; the wires run along x like the track pieces, at the height of the contact wire above the rails.
+
+CONTACT = 4.7  # height of the contact wire above the ground, just above the trains
+MESSENGER = 5.5  # height of the wire it hangs from
+PYLON_TOP = 6.2
+
+for _name, _colour in {
+    "mast": (0.42, 0.45, 0.42),
+    "wire": (0.30, 0.27, 0.24),
+    "insulator": (0.62, 0.40, 0.28),
+}.items():
+    MATERIALS[f"{GROUP}_{_name}"] = _colour
+
+
+def pylon(reach):
+    m = Model()
+    m.box(mat("concrete"), -0.35, 0.35, -0.35, 0.35, -0.05, 0.3)
+    # A lattice mast: four corner posts with cross pieces.
+    for x in (-0.18, 0.18):
+        for y in (-0.18, 0.18):
+            m.box(mat("mast"), x - 0.05, x + 0.05, y - 0.05, y + 0.05, 0.3, PYLON_TOP)
+    z = 0.8
+    while z < PYLON_TOP - 0.2:
+        m.box(mat("mast"), -0.2, 0.2, -0.2, 0.2, z, z + 0.06)
+        z += 0.7
+    # The arm reaches over the track; a stay holds the far end up, a short drop carries the contact wire.
+    m.box(mat("mast"), 0.0, reach + 0.3, -0.06, 0.06, MESSENGER - 0.06, MESSENGER + 0.06)
+    m.box(mat("mast"), 0.0, reach * 0.8, -0.04, 0.04, CONTACT + 0.1, CONTACT + 0.18)
+    m.box(mat("insulator"), 0.1, 0.4, -0.08, 0.08, MESSENGER - 0.08, MESSENGER + 0.08)
+    m.box(mat("insulator"), 0.1, 0.35, -0.07, 0.07, CONTACT + 0.07, CONTACT + 0.21)
+    steps = 6
+    for i in range(steps):
+        x0 = i * reach / steps
+        z0 = PYLON_TOP - 0.1 - i * (PYLON_TOP - MESSENGER - 0.1) / steps
+        z1 = PYLON_TOP - 0.1 - (i + 1) * (PYLON_TOP - MESSENGER - 0.1) / steps
+        m.box(mat("mast"), x0, x0 + reach / steps, -0.04, 0.04, min(z0, z1) - 0.04, max(z0, z1) + 0.04)
+    m.box(mat("wire"), reach - 0.03, reach + 0.03, -0.03, 0.03, CONTACT, MESSENGER)
+    return m
+
+
+def wires(length):
+    m = Model()
+    x0, x1 = -length / 2, length / 2
+    # Thicker than real wires, so they still show from far away.
+    m.box(mat("wire"), x0, x1, -0.09, 0.09, CONTACT - 0.09, CONTACT + 0.09)
+    m.box(mat("wire"), x0, x1, -0.07, 0.07, MESSENGER - 0.07, MESSENGER + 0.07)
+    count = max(1, round(length / 2.4))
+    for i in range(count):
+        x = x0 + (i + 0.5) * length / count
+        m.box(mat("wire"), x - 0.04, x + 0.04, -0.04, 0.04, CONTACT, MESSENGER)
+    return m
+
+
+_build_track = build
+
+
+def build():
+    entries = _build_track()
+    for i, (name, model) in enumerate((
+            ("pylon_straight", pylon(4.0)),
+            ("pylon_diagonal", pylon(2.83)),
+            ("wires_straight", wires(STRAIGHT)),
+            ("wires_diagonal", wires(DIAGONAL)))):
+        filename = f"{GROUP}_catenary_{name}.glb"
+        model.save(filename)
+        entries["buildings"].append({"type": "catenary", "ids": [i], "model": filename})
+    return entries
