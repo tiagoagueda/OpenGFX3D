@@ -4591,6 +4591,41 @@
 			"far": ""
 		},
 		{
+			"type": "roadside",
+			"ids": [
+				0
+			],
+			"model": "roadside_lamp.glb"
+		},
+		{
+			"type": "roadside",
+			"ids": [
+				1
+			],
+			"model": "roadside_tree.glb"
+		},
+		{
+			"type": "roadside",
+			"ids": [
+				2
+			],
+			"model": "roadside_pavement.glb"
+		},
+		{
+			"type": "roadside",
+			"ids": [
+				3
+			],
+			"model": "roadside_pavement_corner.glb"
+		},
+		{
+			"type": "roadside",
+			"ids": [
+				4
+			],
+			"model": "roadside_tram_rails.glb"
+		},
+		{
 			"type": "signal",
 			"ids": [
 				0
