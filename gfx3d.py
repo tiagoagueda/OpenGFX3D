@@ -130,6 +130,34 @@ class Model:
             self.quad(material, (ax, ay, z0), (bx, by, z0), (bx, by, z1), (ax, ay, z1))
             self.triangle("boiler", (x, y, z1 - 0.3), (ax, ay, z1), (bx, by, z1))
 
+    def sheave(self, rim, spokes, radius, width, count=6, sides=16):
+        """A spoked wheel (a winding wheel, a sheave) turning around the x axis, centred on the origin."""
+        x0, x1 = -width / 2, width / 2
+        inner = radius * 0.8
+        ring = [(math.cos(2 * math.pi * i / sides), math.sin(2 * math.pi * i / sides)) for i in range(sides)]
+        for i in range(sides):
+            (ac, as_), (bc, bs) = ring[i], ring[(i + 1) % sides]
+            self.quad(rim, (x0, radius * ac, radius * as_), (x1, radius * ac, radius * as_), (x1, radius * bc, radius * bs), (x0, radius * bc, radius * bs))
+            self.quad(rim, (x1, inner * ac, inner * as_), (x0, inner * ac, inner * as_), (x0, inner * bc, inner * bs), (x1, inner * bc, inner * bs))
+            for x, sign in ((x1, 1), (x0, -1)):
+                a, b = (x, radius * ac, radius * as_), (x, radius * bc, radius * bs)
+                c, d = (x, inner * bc, inner * bs), (x, inner * ac, inner * as_)
+                if sign > 0:
+                    self.quad(rim, d, c, b, a)
+                else:
+                    self.quad(rim, a, b, c, d)
+        for k in range(count):
+            ang = math.pi * k / count
+            ca, sa = math.cos(ang), math.sin(ang)
+            w = 0.12 * radius
+            # A flat spoke across the whole wheel, drawn on both faces.
+            p = [(-inner * ca - w * sa, -inner * sa + w * ca), (inner * ca - w * sa, inner * sa + w * ca),
+                 (inner * ca + w * sa, inner * sa - w * ca), (-inner * ca + w * sa, -inner * sa - w * ca)]
+            xs = width * 0.15
+            self.quad(spokes, *[(xs, a, b) for a, b in p[::-1]])
+            self.quad(spokes, *[(-xs, a, b) for a, b in p])
+        self.box(spokes, -width * 0.4, width * 0.4, -0.15 * radius, 0.15 * radius, -0.15 * radius, 0.15 * radius)
+
     def save(self, filename):
         binary = bytearray()
         views, accessors, materials, primitives = [], [], [], []
@@ -171,3 +199,17 @@ class Model:
             f.write(struct.pack("<III", 0x46546C67, 2, 12 + 8 + len(text) + 8 + len(binary)))
             f.write(struct.pack("<II", len(text), 0x4E4F534A) + text)
             f.write(struct.pack("<II", len(binary), 0x004E4942) + bytes(binary))
+
+
+def move_origin(model, at):
+    """Moves a model drawn in the frame of a building so that the point at becomes its origin (for moving parts)."""
+    for positions, _ in model.parts.values():
+        positions[:] = [tuple(p[k] - at[k] for k in range(3)) for p in positions]
+
+
+def rotated_z(model, quarter_turns):
+    """Turns a model by quarter turns around the z axis (counter-clockwise seen from above)."""
+    for positions, normals in model.parts.values():
+        for lst in (positions, normals):
+            for _ in range(quarter_turns % 4):
+                lst[:] = [(-p[1], p[0], p[2]) for p in lst]

@@ -9,7 +9,7 @@ south-west) and the second along y (to the left of the model, south-east), so ti
 import math
 import random
 
-from gfx3d import MATERIALS, Model
+from gfx3d import MATERIALS, Model, move_origin
 
 GROUP = "industry_other"
 
@@ -430,7 +430,6 @@ def gold_mine(m, gfx):
         m.box("stone", -5, 5, -5, 5, 0, 1.2)
         m.box("dark", -2, 2, -2, 2, 1.2, 1.25)
         lattice_tower(m, "rust", 0, 0, 4, 1.2, 17, levels=5)
-        m.cylinder("rust", -0.25, 0.25, 0, 17.2, 2.2, sides=12, caps="dark")
         m.box("rust", -2.6, 2.6, -2.6, 2.6, 17, 17.4)
         rod(m, "rust", (-4, 0, 1.2), (-1.2, 0, 15.5), 0.3, 4)  # back strut towards the winding house
         rod(m, "dark", (0, 2.2, 17.2), (0, 2.2, 1.2), 0.05, 4)
@@ -534,7 +533,6 @@ def copper_mine(m, gfx):
         m.box("brick", -5, 3, -5, 3, 0, 5)
         m.box("dark", -5.2, 3.2, -5.2, 3.2, 5, 5.3)
         lattice_tower(m, "boiler", -1, -1, 3.2, 5.3, 17, levels=4)
-        m.cylinder("boiler", -1.25, -0.75, -1, 17.2, 2.2, sides=12, caps="dark")
         m.box("boiler", -3.2, 1.2, -3.2, 1.2, 17, 17.4)
         rod(m, "boiler", (6.5, -1, 0), (-0.5, -1, 16), 0.3, 4)
         rod(m, "boiler", (6.5, 1, 0), (-0.5, 1, 16), 0.3, 4)
@@ -923,9 +921,10 @@ def toy_factory(m, gfx):
             m.triangle("io_yellow", (x1, y0, 8.5), (x1, y1, 8.5), (x1, 0, 11))
             m.box("dark", x1, x1 + 0.1, -2.5, 2.5, 0, 5)
         if gfx == 143:  # the press: a tower with a big stamp
-            m.box("metal", -2.5, 2.5, -2.5, 2.5, 0, 15)
+            for (px, py) in ((-2.4, -2.4), (-2.4, 2.4), (2.4, -2.4), (2.4, 2.4)):
+                m.box("metal", px - 0.5, px + 0.5, py - 0.5, py + 0.5, 0, 15)
             m.box("io_purple", -3, 3, -3, 3, 15, 16)
-            m.box("io_red", -1.5, 1.5, -1.5, 1.5, 11, 15)
+            m.box("metal", -2, 2, -2, 2, 11, 11.8)  # anvil; the stamp above it moves (press_stamp)
         if gfx == 144:
             tank(m, "io_yellow", 0, 4, 8, 13, 1.0, sides=10, top="dark")
         if gfx == 142:
@@ -942,9 +941,7 @@ def plastic_fountain(m):
         r = 0.9 - 0.12 * k
         tank(m, cols[k], 0, 0, z, z + 2.0, r, sides=10)
         z += 2.0
-    sphere(m, "io_yellow", 0, 0, z + 0.6, 1.6, seg=10, rings=6)
-    for k, (dx, dy) in enumerate(((1, 0), (0, 1), (-1, 0), (0, -1))):
-        rod(m, cols[k], (dx * 1.5, dy * 1.5, z), (dx * 4.2, dy * 4.2, 1.1), 0.35, 6)
+    # The ball on top and the four spouts turn (fountain_top).
 
 
 def fizzy_drinks(m, gfx):
@@ -1019,9 +1016,7 @@ def bubble_generator(m, gfx):
         tank(m, "io_bubble", 0, 0, 2, 9, 1.6, sides=14, top="metal")
         tank(m, "metal", 0, 0, 9, 10, 1.3, sides=12)
         cone(m, "io_cola", 0, 0, 10, 17, 0.8, 3.0, sides=14, top="dark")
-        rnd = random.Random(161)
-        for k in range(5):
-            sphere(m, "io_bubble", rnd.uniform(-3, 3), rnd.uniform(-3, 3), 18.5 + k * 1.6, 0.6 + 0.2 * (k % 3), seg=8, rings=6)
+        # The bubbles rise and drift around (bubbles).
 
 
 def toffee_quarry(m, gfx):
@@ -1045,9 +1040,7 @@ def toffee_quarry(m, gfx):
         m.box("io_yellow", 0, 4, -1.6, 1.6, 0.5, 2.5)
         m.box("io_battery", 0, 4, -1.8, 1.8, 0.1, 0.5)
         m.box("glass", 2.4, 4.05, -1.4, 0.2, 1.8, 2.4)
-        rod(m, "io_yellow", (2, 0, 2.2), (-2, 0, 5.5), 0.3, 4)
-        rod(m, "io_yellow", (-2, 0, 5.5), (-3.5, 0, 2.5), 0.25, 4)
-        m.box("dark", -4.3, -3, -0.8, 0.8, 1.8, 2.8)
+        # The digger's arm moves (toffee_digger_arm).
     elif gfx == 166:
         pad(m, "io_toffee_dark")
         m.box("io_pink", -2, 6, -6, 2, 0, 5)
@@ -1087,10 +1080,66 @@ def sugar_mine(m, gfx):
         m.box("concrete", -6, 6, -6, 6, 0, 0.5)
         for (x, y) in ((-3.5, -3.5), (-3.5, 3.5), (3.5, -3.5), (3.5, 3.5)):
             m.box("metal", x - 0.3, x + 0.3, y - 0.3, y + 0.3, 0.5, 8)
-        m.box("company", -4.5, 4.5, -4.5, 4.5, 8, 11)
-        m.box("metal", -4.6, 4.6, -4.6, 4.6, 11, 11.3)
+        # The hopper shakes (sugar_sieve_hopper).
         mound(m, "io_sugar", 0, 0, 3, 3, 2.2)
         rod(m, "metal", (-4.5, 0, 10), (-8, 0, 3), 0.45, 4)
+
+
+# ---------------------------------------------------------------------------------------------------------------
+# Moving parts. Each is drawn where it belongs on its tile; the build moves its origin to the point it turns around.
+
+
+def winding_wheel(material, at):
+    def draw(m):
+        w = Model()
+        w.sheave(material, "dark", 2.2, 0.5, count=5, sides=16)
+        for mat, (positions, _) in w.parts.items():
+            for i in range(0, len(positions), 3):
+                m.triangle(mat, *[tuple(p[k] + at[k] for k in range(3)) for p in positions[i:i + 3]])
+    return draw
+
+
+def press_stamp(m):
+    m.box("io_red", -1.5, 1.5, -1.5, 1.5, 13, 14.6)
+    m.box("metal", -0.4, 0.4, -0.4, 0.4, 14.6, 15)
+
+
+def toffee_digger_arm(m):
+    rod(m, "io_yellow", (2, 0, 2.2), (-2, 0, 5.5), 0.3, 4)
+    rod(m, "io_yellow", (-2, 0, 5.5), (-3.5, 0, 2.5), 0.25, 4)
+    m.box("dark", -4.3, -3, -0.8, 0.8, 1.8, 2.8)
+
+
+def sugar_sieve_hopper(m):
+    m.box("company", -4.5, 4.5, -4.5, 4.5, 8, 11)
+    m.box("metal", -4.6, 4.6, -4.6, 4.6, 11, 11.3)
+
+
+def fountain_top(m):
+    cols = ("io_red", "io_yellow", "io_green", "io_blue")
+    z = 13
+    sphere(m, "io_yellow", 0, 0, z + 0.6, 1.6, seg=10, rings=6)
+    for k, (dx, dy) in enumerate(((1, 0), (0, 1), (-1, 0), (0, -1))):
+        rod(m, cols[k], (dx * 1.5, dy * 1.5, z), (dx * 4.2, dy * 4.2, 1.1), 0.35, 6)
+
+
+def bubbles(m):
+    rnd = random.Random(161)
+    for k in range(5):
+        sphere(m, "io_bubble", rnd.uniform(-3, 3), rnd.uniform(-3, 3), 18.5 + k * 1.6, 0.6 + 0.2 * (k % 3), seg=8, rings=6)
+
+
+# tile name -> [(part name, drawing function, pivot, how it moves, gfx ids that move or None for all)]
+# Tiles whose moving and still ids differ get one entry for each.
+PARTS = {
+    "copper_mine_tower": [("copper_wheel", winding_wheel("boiler", (-1, -1, 17.2)), (-1, -1, 17.2), {"axis": [1, 0, 0], "spin": 2.5}, [48])],
+    "gold_mine_tower": [("gold_wheel", winding_wheel("rust", (0, 0, 17.2)), (0, 0, 17.2), {"axis": [1, 0, 0], "spin": 2.5}, [88])],
+    "toy_factory_press": [("press_stamp", press_stamp, (0, 0, 0), {"axis": [0, 0, 1], "lift": -1.2, "period": 1.2}, None)],
+    "toffee_quarry_pit": [("toffee_digger_arm", toffee_digger_arm, (2, 0, 2.2), {"axis": [0, 1, 0], "swing": 0.3, "period": 3.5}, None)],
+    "sugar_mine_sieve": [("sugar_sieve_hopper", sugar_sieve_hopper, (0, 0, 8), {"axis": [1, 0, 0], "swing": 0.03, "period": 0.35}, None)],
+    "plastic_fountain": [("fountain_top", fountain_top, (0, 0, 0), {"axis": [0, 0, 1], "spin": 1.2}, None)],
+    "bubble_generator_blower": [("bubbles", bubbles, (0, 0, 0), {"axis": [0, 0, 1], "spin": 0.7, "lift": 2.5, "period": 3.0}, None)],
+}
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -1244,13 +1293,35 @@ def build():
         m = Model()
         fn(m)
         m.save(filename(name))
-        buildings.append({"type": "industry_tile", "ids": ids, "model": filename(name)})
+        if name not in PARTS:
+            buildings.append({"type": "industry_tile", "ids": ids, "model": filename(name)})
+            continue
+        still, moving = [], []
+        for part_name, draw, at, motion, moving_ids in PARTS[name]:
+            p = Model()
+            draw(p)
+            move_origin(p, at)
+            p.save(filename(part_name))
+            entry = {"model": filename(part_name), "at": list(at), "axis": motion["axis"]}
+            still.append((entry, moving_ids))
+            moving.append(dict(entry, **motion))
+        moving_ids = set(g for _, ids_ in still if ids_ for g in ids_) or set(ids)
+        still_ids = [g for g in ids if g not in moving_ids]
+        if still_ids:
+            buildings.append({"type": "industry_tile", "ids": still_ids, "model": filename(name), "parts": [e for e, _ in still]})
+        buildings.append({"type": "industry_tile", "ids": sorted(moving_ids), "model": filename(name), "parts": moving})
     return {"vehicles": [], "buildings": buildings}
 
 
 def build_layouts(folder):
     """Writes one model per industry with all its tiles in place, to look at the industry as a whole."""
-    by_gfx = {g: fn for _, ids, fn in TILES for g in ids}
+    def with_parts(name, fn):
+        def draw(m):
+            fn(m)
+            for _, part, _, _, _ in PARTS.get(name, []):
+                part(m)
+        return draw
+    by_gfx = {g: with_parts(name, fn) for name, ids, fn in TILES for g in ids}
     paths = []
     for name, layout in LAYOUTS.items():
         base = Model()

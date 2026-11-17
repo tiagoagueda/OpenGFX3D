@@ -8,7 +8,7 @@ fit together that way. Animated tiles keep one static model.
 
 import math
 
-from gfx3d import MATERIALS, Model
+from gfx3d import MATERIALS, Model, rotated_z
 
 GROUP = "industry_temperate"
 
@@ -202,13 +202,7 @@ def coal_headframe():
     m.box("indt_redsteel", sx - 1.5, sx + 1.5, sy - 1.5, sy + 1.5, 15.3, 15.8)
     for yy in (sy - 0.7, sy + 0.7):
         m.cylinder("indt_steel", sx - 1.1, sx + 1.1, yy, 16.6, 0.25, sides=6)  # stand
-        m_ring = [(sx + 1.3 * math.cos(2 * math.pi * i / 12), 16.8 + 1.3 * math.sin(2 * math.pi * i / 12)) for i in range(12)]
-        for i in range(12):
-            (ax, az), (bx, bz) = m_ring[i], m_ring[(i + 1) % 12]
-            for y0, y1 in ((yy - 0.15, yy + 0.15),):
-                m.quad("dark", (ax, y1, az), (ax, y0, az), (bx, y0, bz), (bx, y1, bz))
-                m.triangle("indt_steel", (sx, y1, 16.8), (ax, y1, az), (bx, y1, bz))
-                m.triangle("indt_steel", (sx, y0, 16.8), (bx, y0, bz), (ax, y0, az))
+    # The sheave wheels themselves are a moving part, see coal_sheave().
     # Ropes down to the winding house.
     for yy in (sy - 0.7, sy + 0.7):
         beam(m, "dark", (sx - 1.2, yy, 16.8), (-2.0, yy, 4.0), 0.08)
@@ -218,6 +212,18 @@ def coal_headframe():
     m.box("door", sx + 4.5, sx + 4.6, sy + 4.5, sy + 6.2, 0, 2.4)
     m.save(fname("coal_headframe"))
     return fname("coal_headframe")
+
+
+COAL_SHEAVES = [(2.5, -1.5 - 0.7, 16.8), (2.5, -1.5 + 0.7, 16.8)]
+
+
+def coal_sheave():
+    """One sheave wheel on top of the coal mine's headframe, turning around y while the mine works."""
+    m = Model()
+    m.sheave("dark", "indt_steel", 1.3, 0.3, count=4, sides=14)
+    rotated_z(m, 1)
+    m.save(fname("coal_sheave"))
+    return fname("coal_sheave")
 
 
 def coal_plant():
@@ -1184,7 +1190,7 @@ def iron_mine():
 
 
 MODELS = [
-    (coal_headframe, [0, 1]),
+    (coal_headframe, []),
     (coal_plant, [2]),
     (coal_bunker, [3]),
     (coal_stock, [4]),
@@ -1232,11 +1238,18 @@ MODELS = [
 def build():
     buildings = []
     for fn, ids in MODELS:
-        buildings.append({"type": "industry_tile", "ids": ids, "model": fn()})
+        model = fn()
+        if ids:  # tiles with moving parts get their entries below
+            buildings.append({"type": "industry_tile", "ids": ids, "model": model})
     # The beam of an oil well stands still while the well does not pump, and rocks while it does.
     well = oil_well()
     beam_part = {"model": fname("oil_well_beam"), "at": list(OIL_WELL_PIVOT), "axis": [0, 1, 0]}
     buildings.append({"type": "industry_tile", "ids": [29], "model": well, "parts": [beam_part]})
+    # The coal mine's headframe: 0 stands still, 1 is the one the game animates while the mine works.
+    sheave = coal_sheave()
+    sheaves = [{"model": sheave, "at": list(at), "axis": [0, 1, 0]} for at in COAL_SHEAVES]
+    buildings.append({"type": "industry_tile", "ids": [0], "model": fname("coal_headframe"), "parts": sheaves})
+    buildings.append({"type": "industry_tile", "ids": [1], "model": fname("coal_headframe"), "parts": [dict(p, spin=2.5) for p in sheaves]})
     buildings.append({"type": "industry_tile", "ids": [30, 31, 32], "model": well, "parts": [dict(beam_part, swing=0.22, period=2.4)]})
     buildings += iron_mine()
     return {"vehicles": [], "buildings": buildings}

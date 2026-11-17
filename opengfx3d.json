@@ -1735,10 +1735,47 @@
 		{
 			"type": "industry_tile",
 			"ids": [
-				47,
+				47
+			],
+			"model": "industry_other_copper_mine_tower.glb",
+			"parts": [
+				{
+					"model": "industry_other_copper_wheel.glb",
+					"at": [
+						-1,
+						-1,
+						17.2
+					],
+					"axis": [
+						1,
+						0,
+						0
+					]
+				}
+			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
 				48
 			],
-			"model": "industry_other_copper_mine_tower.glb"
+			"model": "industry_other_copper_mine_tower.glb",
+			"parts": [
+				{
+					"model": "industry_other_copper_wheel.glb",
+					"at": [
+						-1,
+						-1,
+						17.2
+					],
+					"axis": [
+						1,
+						0,
+						0
+					],
+					"spin": 2.5
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -1897,10 +1934,47 @@
 		{
 			"type": "industry_tile",
 			"ids": [
-				79,
+				79
+			],
+			"model": "industry_other_gold_mine_tower.glb",
+			"parts": [
+				{
+					"model": "industry_other_gold_wheel.glb",
+					"at": [
+						0,
+						0,
+						17.2
+					],
+					"axis": [
+						1,
+						0,
+						0
+					]
+				}
+			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
 				88
 			],
-			"model": "industry_other_gold_mine_tower.glb"
+			"model": "industry_other_gold_mine_tower.glb",
+			"parts": [
+				{
+					"model": "industry_other_gold_wheel.glb",
+					"at": [
+						0,
+						0,
+						17.2
+					],
+					"axis": [
+						1,
+						0,
+						0
+					],
+					"spin": 2.5
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -2223,7 +2297,24 @@
 			"ids": [
 				143
 			],
-			"model": "industry_other_toy_factory_press.glb"
+			"model": "industry_other_toy_factory_press.glb",
+			"parts": [
+				{
+					"model": "industry_other_press_stamp.glb",
+					"at": [
+						0,
+						0,
+						0
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"lift": -1.2,
+					"period": 1.2
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -2265,7 +2356,23 @@
 				154,
 				155
 			],
-			"model": "industry_other_plastic_fountain.glb"
+			"model": "industry_other_plastic_fountain.glb",
+			"parts": [
+				{
+					"model": "industry_other_fountain_top.glb",
+					"at": [
+						0,
+						0,
+						0
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"spin": 1.2
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -2307,7 +2414,25 @@
 			"ids": [
 				161
 			],
-			"model": "industry_other_bubble_generator_blower.glb"
+			"model": "industry_other_bubble_generator_blower.glb",
+			"parts": [
+				{
+					"model": "industry_other_bubbles.glb",
+					"at": [
+						0,
+						0,
+						0
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"spin": 0.7,
+					"lift": 2.5,
+					"period": 3.0
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -2335,7 +2460,24 @@
 			"ids": [
 				165
 			],
-			"model": "industry_other_toffee_quarry_pit.glb"
+			"model": "industry_other_toffee_quarry_pit.glb",
+			"parts": [
+				{
+					"model": "industry_other_toffee_digger_arm.glb",
+					"at": [
+						2,
+						0,
+						2.2
+					],
+					"axis": [
+						0,
+						1,
+						0
+					],
+					"swing": 0.3,
+					"period": 3.5
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -2398,15 +2540,24 @@
 			"ids": [
 				174
 			],
-			"model": "industry_other_sugar_mine_sieve.glb"
-		},
-		{
-			"type": "industry_tile",
-			"ids": [
-				0,
-				1
-			],
-			"model": "industry_temperate_coal_headframe.glb"
+			"model": "industry_other_sugar_mine_sieve.glb",
+			"parts": [
+				{
+					"model": "industry_other_sugar_sieve_hopper.glb",
+					"at": [
+						0,
+						0,
+						8
+					],
+					"axis": [
+						1,
+						0,
+						0
+					],
+					"swing": 0.03,
+					"period": 0.35
+				}
+			]
 		},
 		{
 			"type": "industry_tile",
@@ -2714,6 +2865,78 @@
 						1,
 						0
 					]
+				}
+			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				0
+			],
+			"model": "industry_temperate_coal_headframe.glb",
+			"parts": [
+				{
+					"model": "industry_temperate_coal_sheave.glb",
+					"at": [
+						2.5,
+						-2.2,
+						16.8
+					],
+					"axis": [
+						0,
+						1,
+						0
+					]
+				},
+				{
+					"model": "industry_temperate_coal_sheave.glb",
+					"at": [
+						2.5,
+						-0.8,
+						16.8
+					],
+					"axis": [
+						0,
+						1,
+						0
+					]
+				}
+			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				1
+			],
+			"model": "industry_temperate_coal_headframe.glb",
+			"parts": [
+				{
+					"model": "industry_temperate_coal_sheave.glb",
+					"at": [
+						2.5,
+						-2.2,
+						16.8
+					],
+					"axis": [
+						0,
+						1,
+						0
+					],
+					"spin": 2.5
+				},
+				{
+					"model": "industry_temperate_coal_sheave.glb",
+					"at": [
+						2.5,
+						-0.8,
+						16.8
+					],
+					"axis": [
+						0,
+						1,
+						0
+					],
+					"spin": 2.5
 				}
 			]
 		},
@@ -3424,6 +3647,517 @@
 				4
 			],
 			"model": "infra_company_hq.glb"
+		},
+		{
+			"type": "tree",
+			"ids": [
+				0
+			],
+			"model": "land_tree_oak.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				1
+			],
+			"model": "land_tree_fir.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				2
+			],
+			"model": "land_tree_lime.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				3
+			],
+			"model": "land_tree_birch.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				4
+			],
+			"model": "land_tree_poplar.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				5
+			],
+			"model": "land_tree_red_maple.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				6
+			],
+			"model": "land_tree_golden_beech.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				7
+			],
+			"model": "land_tree_blue_spruce.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				8
+			],
+			"model": "land_tree_orange_elm.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				9
+			],
+			"model": "land_tree_pine.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				10
+			],
+			"model": "land_tree_chestnut.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				11
+			],
+			"model": "land_tree_young_ash.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				12
+			],
+			"model": "land_tree_arctic_fir.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				13
+			],
+			"model": "land_tree_arctic_spruce.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				14
+			],
+			"model": "land_tree_arctic_pine.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				15
+			],
+			"model": "land_tree_arctic_birch.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				16
+			],
+			"model": "land_tree_arctic_larch.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				17
+			],
+			"model": "land_tree_arctic_bare.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				18
+			],
+			"model": "land_tree_arctic_round.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				19
+			],
+			"model": "land_tree_arctic_tall_fir.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				20
+			],
+			"model": "land_tree_jungle_tall.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				21
+			],
+			"model": "land_tree_jungle_palm.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				22
+			],
+			"model": "land_tree_jungle_broad.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				23
+			],
+			"model": "land_tree_banana.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				24
+			],
+			"model": "land_tree_jungle_round.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				25
+			],
+			"model": "land_tree_flowering_bush.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				26
+			],
+			"model": "land_tree_tall_palm.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				27
+			],
+			"model": "land_tree_cactus.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				28
+			],
+			"model": "land_tree_date_palm.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				29
+			],
+			"model": "land_tree_acacia.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				30
+			],
+			"model": "land_tree_dry_bush.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				31
+			],
+			"model": "land_tree_olive.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				32
+			],
+			"model": "land_tree_toy_lollipop_pink.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				33
+			],
+			"model": "land_tree_toy_cone_green.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				34
+			],
+			"model": "land_tree_toy_cube_blue.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				35
+			],
+			"model": "land_tree_toy_lollipop_yellow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				36
+			],
+			"model": "land_tree_toy_stack.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				37
+			],
+			"model": "land_tree_toy_cone_purple.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				38
+			],
+			"model": "land_tree_toy_lollipop_red.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				39
+			],
+			"model": "land_tree_toy_cube_yellow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				40
+			],
+			"model": "land_tree_toy_stack_green.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				76
+			],
+			"model": "land_tree_arctic_fir_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				77
+			],
+			"model": "land_tree_arctic_spruce_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				78
+			],
+			"model": "land_tree_arctic_pine_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				79
+			],
+			"model": "land_tree_arctic_birch_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				80
+			],
+			"model": "land_tree_arctic_larch_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				81
+			],
+			"model": "land_tree_arctic_bare_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				82
+			],
+			"model": "land_tree_arctic_round_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "tree",
+			"ids": [
+				83
+			],
+			"model": "land_tree_arctic_tall_fir_snow.glb",
+			"scale": 1.3
+		},
+		{
+			"type": "field",
+			"ids": [
+				0
+			],
+			"model": "land_field_0.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				1
+			],
+			"model": "land_field_1.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				2
+			],
+			"model": "land_field_2.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				3
+			],
+			"model": "land_field_3.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				4
+			],
+			"model": "land_field_4.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				5
+			],
+			"model": "land_field_5.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				6
+			],
+			"model": "land_field_6.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				7
+			],
+			"model": "land_field_7.glb"
+		},
+		{
+			"type": "field",
+			"ids": [
+				8
+			],
+			"model": "land_field_8.glb"
+		},
+		{
+			"type": "rough",
+			"ids": [
+				0
+			],
+			"model": "land_rough_0.glb"
+		},
+		{
+			"type": "rough",
+			"ids": [
+				1
+			],
+			"model": "land_rough_1.glb"
+		},
+		{
+			"type": "rough",
+			"ids": [
+				2
+			],
+			"model": "land_rough_2.glb"
+		},
+		{
+			"type": "rough",
+			"ids": [
+				3
+			],
+			"model": "land_rough_3.glb"
+		},
+		{
+			"type": "rocks",
+			"ids": [
+				0
+			],
+			"model": "land_rocks_0.glb"
+		},
+		{
+			"type": "rocks",
+			"ids": [
+				1
+			],
+			"model": "land_rocks_1.glb"
+		},
+		{
+			"type": "rocks",
+			"ids": [
+				2
+			],
+			"model": "land_rocks_2.glb"
+		},
+		{
+			"type": "rocks",
+			"ids": [
+				3
+			],
+			"model": "land_rocks_3.glb"
 		}
 	]
 }
