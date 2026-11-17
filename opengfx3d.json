@@ -1171,6 +1171,307 @@
 			"model": "lorry_stop_drive_through.glb"
 		},
 		{
+			"type": "bridge",
+			"ids": [
+				0
+			],
+			"model": "bridge_0_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				1
+			],
+			"model": "bridge_0_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				2
+			],
+			"model": "bridge_0_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				4
+			],
+			"model": "bridge_1_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				5
+			],
+			"model": "bridge_1_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				6
+			],
+			"model": "bridge_1_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				8
+			],
+			"model": "bridge_2_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				9
+			],
+			"model": "bridge_2_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				10
+			],
+			"model": "bridge_2_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				12
+			],
+			"model": "bridge_3_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				13
+			],
+			"model": "bridge_3_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				14
+			],
+			"model": "bridge_3_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				16
+			],
+			"model": "bridge_4_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				17
+			],
+			"model": "bridge_4_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				18
+			],
+			"model": "bridge_4_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				20
+			],
+			"model": "bridge_5_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				21
+			],
+			"model": "bridge_5_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				22
+			],
+			"model": "bridge_5_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				24
+			],
+			"model": "bridge_6_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				25
+			],
+			"model": "bridge_6_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				26
+			],
+			"model": "bridge_6_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				28
+			],
+			"model": "bridge_7_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				29
+			],
+			"model": "bridge_7_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				30
+			],
+			"model": "bridge_7_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				32
+			],
+			"model": "bridge_8_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				33
+			],
+			"model": "bridge_8_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				34
+			],
+			"model": "bridge_8_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				36
+			],
+			"model": "bridge_9_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				37
+			],
+			"model": "bridge_9_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				38
+			],
+			"model": "bridge_9_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				40
+			],
+			"model": "bridge_10_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				41
+			],
+			"model": "bridge_10_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				42
+			],
+			"model": "bridge_10_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				44
+			],
+			"model": "bridge_11_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				45
+			],
+			"model": "bridge_11_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				46
+			],
+			"model": "bridge_11_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				48
+			],
+			"model": "bridge_12_deck.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				49
+			],
+			"model": "bridge_12_ramp.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				50
+			],
+			"model": "bridge_12_pillar.glb"
+		},
+		{
+			"type": "bridge",
+			"ids": [
+				64
+			],
+			"model": "bridge_road.glb"
+		},
+		{
+			"type": "tunnel",
+			"ids": [
+				0
+			],
+			"model": "tunnel_portal.glb"
+		},
+		{
+			"type": "crossing",
+			"ids": [
+				0
+			],
+			"model": "crossing_open.glb"
+		},
+		{
+			"type": "crossing",
+			"ids": [
+				1
+			],
+			"model": "crossing_closed.glb"
+		},
+		{
 			"type": "effect",
 			"ids": [
 				0,
