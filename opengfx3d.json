@@ -4706,6 +4706,78 @@
 			"model": "power_cable_view.glb"
 		},
 		{
+			"type": "industry_tile",
+			"ids": [
+				175
+			],
+			"model": "power_plant_oil_hall.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				176
+			],
+			"model": "power_plant_oil_tanks.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				177
+			],
+			"model": "power_plant_solar_panels.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				178
+			],
+			"model": "power_plant_solar_inverter.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				179
+			],
+			"model": "power_plant_wind_tower.glb",
+			"parts": [
+				{
+					"model": "power_plant_wind_rotor.glb",
+					"at": [
+						1.9,
+						0.0,
+						34.0
+					],
+					"axis": [
+						1,
+						0,
+						0
+					],
+					"spin": 1.6
+				}
+			]
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				180
+			],
+			"model": "power_plant_dam_x.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				181
+			],
+			"model": "power_plant_dam_y.glb"
+		},
+		{
+			"type": "industry_tile",
+			"ids": [
+				182
+			],
+			"model": "power_plant_powerhouse.glb"
+		},
+		{
 			"type": "roadside",
 			"ids": [
 				0

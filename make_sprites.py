@@ -17,6 +17,9 @@ The order of the sprites must match SPR_POWER_* in the game (src/table/sprites.h
   23    cable marker post, in the middle of the tile
   24-31 underground cable as the power network view shows it, from the middle of a tile to its edge,
         towards N, NE, E, SE, S, SW, W, NW
+  32-39 industry tiles 175 to 182 of the power plants (models_power_plants.py), without their ground plate:
+        oil turbine hall, oil tanks, solar panels, solar inverter house, wind turbine (rotor standing still),
+        dam across a river along x, dam across a river along y, hydro powerhouse
 
 Sprites are drawn relative to the north corner of their tile at the height of its foot (the game
 draws them with that point as their origin). Wires are drawn with their conductors at height 0;
@@ -233,6 +236,19 @@ def subjects():
         heading = math.atan2(d[1], d[0])
         scaled = [(tuple((p[0] * length / 16 + length / 2, p[1], p[2]) for p in tri), colour) for tri, colour in cable]
         out.append((f"cable_{i}", rotated(scaled, heading, (8.0, 8.0, 0.0))))
+    # Industry tiles of the power plants; the game draws their ground with a ground sprite of its own.
+    import models_power_plants as plants
+
+    def without_ground(tris):
+        return [(tri, colour) for tri, colour in tris if max(p[2] for p in tri) > 0.07 or min(p[2] for p in tri) < -0.01]
+
+    for name in ("oil_hall", "oil_tanks", "solar_panels", "solar_inverter", "wind_tower", "dam_x", "dam_y", "powerhouse"):
+        tris = without_ground(read_glb(plants.fname(name)))
+        if name == "wind_tower":
+            hub = plants.WIND_HUB
+            rotor = [(tuple((p[0] + hub[0], p[1] + hub[1], p[2] + hub[2]) for p in tri), colour) for tri, colour in read_glb(plants.fname("wind_rotor"))]
+            tris = tris + rotor
+        out.append((f"plant_{name}", rotated(tris, 0.0, (8.0, 8.0, 0.0))))
     return out
 
 
