@@ -252,7 +252,11 @@ def build():
 #
 # Index type `catenary`, ids: 0 a pylon beside straight track, 1 a pylon beside diagonal track, 2 the wires of
 # a straight piece, 3 the wires of a diagonal piece; for trams and electric roads, 4 the wires from the middle of a
-# tile to one edge (along x from 0 to 8) and 5 a pole beside the road that reaches 6.4 to its middle. A pylon
+# tile to one edge (along x from 0 to 8) and 5 a pole beside the road that reaches 6.4 to its middle; for trolleybuses
+# on electrified road, 6 the wire pairs over both lanes from the middle of a tile to one edge, 7 a pole beside the
+# road whose arm holds both pairs (6.4 - 3 and 6.4 + 3 from the pole), 8 the frogs and span wires hung over the middle
+# of a junction, 9 the insulated crossing over the middle of a tile where tram wire meets trolleybus wires, and 10
+# the wire pairs across a whole tile, centred like id 2, for bridges. A
 # stands at its origin with its arm along +x, towards the track; the wires run along x like the track pieces, at
 # the height of the contact wire above the rails.
 
@@ -308,6 +312,81 @@ def wires(length, x0=None):
     return m
 
 
+LANE = 3.0  # road vehicles drive 3 either side of the middle of the road
+PAIR = 0.45  # each trolleybus wire is this far either side of the middle of its lane
+
+
+def trolley_wires(length, x0=None):
+    """Two pairs of trolleybus wires, one over each lane, hung from a thinner messenger wire every few metres."""
+    m = Model()
+    x0 = -length / 2 if x0 is None else x0
+    x1 = x0 + length
+    for lane in (-LANE, LANE):
+        for side in (-PAIR, PAIR):
+            y = lane + side
+            m.box(mat("wire"), x0, x1, y - 0.07, y + 0.07, CONTACT - 0.07, CONTACT + 0.07)
+        count = max(1, round(length / 2.4))
+        for i in range(count):
+            x = x0 + (i + 0.5) * length / count
+            # A spreader bar keeps the two wires of a pair apart, with an insulator over each wire.
+            m.box(mat("mast"), x - 0.06, x + 0.06, lane - PAIR - 0.12, lane + PAIR + 0.12, CONTACT + 0.07, CONTACT + 0.16)
+            for side in (-PAIR, PAIR):
+                m.box(mat("insulator"), x - 0.08, x + 0.08, lane + side - 0.08, lane + side + 0.08, CONTACT + 0.04, CONTACT + 0.12)
+    return m
+
+
+def trolley_pole():
+    """A pole beside the road, at the origin, with a bracket arm along +x that holds the wire pairs of both lanes."""
+    m = Model()
+    near, far = 6.4 - LANE, 6.4 + LANE
+    m.box(mat("concrete"), -0.3, 0.3, -0.3, 0.3, -0.05, 0.25)
+    m.box(mat("mast"), -0.14, 0.14, -0.14, 0.14, 0.25, PYLON_TOP)
+    m.box(mat("mast"), -0.18, 0.18, -0.18, 0.18, PYLON_TOP, PYLON_TOP + 0.12)
+    # The arm, a tie rod from the top of the pole, and a hanger with a spreader bar over each lane.
+    m.box(mat("mast"), 0.0, far + 0.4, -0.06, 0.06, CONTACT + 0.5, CONTACT + 0.62)
+    steps = 8
+    for i in range(steps):
+        x0 = i * far / steps
+        z0 = PYLON_TOP - 0.1 - i * (PYLON_TOP - CONTACT - 0.7) / steps
+        z1 = PYLON_TOP - 0.1 - (i + 1) * (PYLON_TOP - CONTACT - 0.7) / steps
+        m.box(mat("mast"), x0, x0 + far / steps, -0.04, 0.04, min(z0, z1) - 0.04, max(z0, z1) + 0.04)
+    for x in (near, far):
+        m.box(mat("insulator"), x - 0.1, x + 0.1, -0.1, 0.1, CONTACT + 0.3, CONTACT + 0.5)
+        m.box(mat("wire"), x - 0.03, x + 0.03, -0.03, 0.03, CONTACT + 0.16, CONTACT + 0.3)
+        m.box(mat("mast"), x - PAIR - 0.12, x + PAIR + 0.12, -0.06, 0.06, CONTACT + 0.07, CONTACT + 0.16)
+    return m
+
+
+def trolley_junction():
+    """Frogs where the wire pairs of a junction split and cross, hung from span wires across the middle of the tile."""
+    m = Model()
+    span = CONTACT + 0.45
+    for a in (-LANE, LANE):
+        m.box(mat("wire"), -8.0, 8.0, a - 0.04, a + 0.04, span - 0.04, span + 0.04)
+        m.box(mat("wire"), a - 0.04, a + 0.04, -8.0, 8.0, span - 0.04, span + 0.04)
+    for x in (-LANE, LANE):
+        for y in (-LANE, LANE):
+            # A frog: a flat box where two pairs meet, under its hanger.
+            m.box(mat("mast"), x - 0.65, x + 0.65, y - 0.65, y + 0.65, CONTACT + 0.05, CONTACT + 0.2)
+            m.box(mat("insulator"), x - 0.35, x + 0.35, y - 0.35, y + 0.35, CONTACT + 0.2, CONTACT + 0.3)
+            m.box(mat("wire"), x - 0.03, x + 0.03, y - 0.03, y + 0.03, CONTACT + 0.3, span)
+    return m
+
+
+def tram_trolley_crossing():
+    """An insulated crossing where a tram wire passes under trolleybus wires: a frame with insulators round it."""
+    m = Model()
+    span = CONTACT + 0.45
+    m.box(mat("mast"), -LANE - 0.8, LANE + 0.8, -0.5, 0.5, CONTACT + 0.08, CONTACT + 0.18)
+    m.box(mat("mast"), -0.5, 0.5, -LANE - 0.8, LANE + 0.8, CONTACT + 0.08, CONTACT + 0.18)
+    for x, y in ((-LANE, 0), (LANE, 0), (0, -LANE), (0, LANE), (0, 0)):
+        m.box(mat("insulator"), x - 0.3, x + 0.3, y - 0.3, y + 0.3, CONTACT + 0.18, CONTACT + 0.3)
+        m.box(mat("wire"), x - 0.03, x + 0.03, y - 0.03, y + 0.03, CONTACT + 0.3, span)
+    m.box(mat("wire"), -8.0, 8.0, -0.04, 0.04, span - 0.04, span + 0.04)
+    m.box(mat("wire"), -0.04, 0.04, -8.0, 8.0, span - 0.04, span + 0.04)
+    return m
+
+
 _build_track = build
 
 
@@ -319,7 +398,12 @@ def build():
             ("wires_straight", wires(STRAIGHT)),
             ("wires_diagonal", wires(DIAGONAL)),
             ("wires_tram", wires(8, 0)),
-            ("pole_tram", pylon(6.4)))):
+            ("pole_tram", pylon(6.4)),
+            ("wires_trolley", trolley_wires(8, 0)),
+            ("pole_trolley", trolley_pole()),
+            ("junction_trolley", trolley_junction()),
+            ("crossing_tram_trolley", tram_trolley_crossing()),
+            ("wires_trolley_straight", trolley_wires(STRAIGHT)))):
         filename = f"{GROUP}_catenary_{name}.glb"
         model.save(filename)
         entries["buildings"].append({"type": "catenary", "ids": [i], "model": filename})

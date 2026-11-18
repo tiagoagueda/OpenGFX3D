@@ -4965,6 +4965,41 @@
 			"model": "track_catenary_pole_tram.glb"
 		},
 		{
+			"type": "catenary",
+			"ids": [
+				6
+			],
+			"model": "track_catenary_wires_trolley.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				7
+			],
+			"model": "track_catenary_pole_trolley.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				8
+			],
+			"model": "track_catenary_junction_trolley.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				9
+			],
+			"model": "track_catenary_crossing_tram_trolley.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				10
+			],
+			"model": "track_catenary_wires_trolley_straight.glb"
+		},
+		{
 			"type": "construction",
 			"ids": [
 				0
