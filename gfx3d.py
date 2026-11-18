@@ -9,6 +9,7 @@ Shapes are described with x towards the front of the vehicle, y to its left and 
 
 import json
 import math
+import re
 import struct
 
 # Colours as seen on screen, 0 to 1. "company" is multiplied with the colour of the owner.
@@ -44,6 +45,102 @@ MATERIALS = {
     "load_coal": (0.17, 0.16, 0.16),
     "load_ore": (0.56, 0.42, 0.30),
 }
+
+# The surface textures of make_model_textures.py: name -> how many world units one repeat covers.
+# The file is tex_<name>.png. The game multiplies the texture with the colour of the material.
+TEXTURES = {
+    "brick": 4.0,
+    "stone": 6.0,
+    "rubble": 4.0,
+    "rooftiles": 4.0,
+    "slate": 4.0,
+    "thatch": 4.0,
+    "planks": 4.0,
+    "bark": 3.0,
+    "concrete": 8.0,
+    "plaster": 8.0,
+    "panel": 4.0,
+    "metal": 4.0,
+    "corrugated": 2.0,
+    "paving": 4.0,
+    "asphalt": 4.0,
+    "gravel": 3.0,
+    "foliage": 5.0,
+    "grass": 4.0,
+    "soil": 4.0,
+    "crops": 2.0,
+    "glass": 4.0,
+    "glass_grid": 3.3,
+    "water": 6.0,
+    "snow": 6.0,
+    "fabric": 2.0,
+    "rust": 4.0,
+}
+
+# The average brightness of every texture; save() makes the colour of the material lighter by as much.
+TEXTURE_MEAN = 0.88
+
+# Which texture a material gets: the first rule whose pattern is found in the name of the material.
+# None is a plain colour. Materials that match no rule stay plain too (lamps, markings, toys, ...).
+TEXTURE_RULES = [
+    (r"toy|lamp|^light$|marking|line$|glow|_on$|_off$|wire|cable|insulator|flag|crowd|seats|flower", None),
+    (r"wood_end|logend|drum|bottle|battery|bubble|cow|fruit|toffee|candyfloss|cola|paper", None),
+    (r"glass_(blue|dark|roof)", "glass_grid"),
+    (r"glass|ice$", "glass"),
+    (r"brick", "brick"),
+    (r"fence_stone|land_stone", "rubble"),
+    (r"stone", "stone"),
+    (r"thatch|hay|stubble|wheat", "thatch"),
+    (r"slate|bluetile|bluedark|roofblue", "slate"),
+    (r"corrugated", "corrugated"),
+    (r"tiles|[a-z]_roof$|redroof|brownroof|sandroof|ceramic", "rooftiles"),
+    (r"bark|trunk", "bark"),
+    (r"plank|wood|sleeper|crate|^door$|logs?$|ships_deck", "planks"),
+    (r"concrete|platform|kerb|planter", "concrete"),
+    (r"paving|path$", "paving"),
+    (r"asphalt|tarmac|runway", "asphalt"),
+    (r"ballast|gravel", "gravel"),
+    (r"crop|corn", "crops"),
+    (r"leaf|leaves|foliage|hedge|conifer|cactus|tuft|sprout", "foliage"),
+    (r"grass|pitch$", "grass"),
+    (r"soil|earth|dirt|spoil|coal|ore$|ore_|copper$|sand$|grain", "soil"),
+    (r"snow|sugar", "snow"),
+    (r"water", "water"),
+    (r"canvas|envelope", "fabric"),
+    (r"rust|steel_brown", "rust"),
+    (r"^company|^roof$|^cargo|hull|skirt|armour|antifoul|^(ships|air|trains|road|works|indt|io|infra)_(white|red|yellow|silver|grey|black|orange|blue|green)$", "panel"),
+    (r"steel|metal|boiler|chrome|silver|mast|track_post|pole|rail", "metal"),
+    (r"^wall$|stucco|beige|cream|pink$|houses_[a-z]+_(white|green|red|yellow)$", "plaster"),
+]
+
+_texture_of = {}
+
+
+def texture_of(material):
+    """The texture of a material, or None for a plain colour."""
+    if material not in _texture_of:
+        _texture_of[material] = next((texture for pattern, texture in TEXTURE_RULES if re.search(pattern, material)), None)
+    return _texture_of[material]
+
+
+def texture_coordinates(positions, normals, size):
+    """Where each corner is in a texture that repeats every `size` world units.
+
+    The texture is laid flat on each surface: on walls its top points up, on sloping surfaces up the slope,
+    and on level ones to +y; it carries on across surfaces that lie in the same plane."""
+    result = []
+    for p, n in zip(positions, normals):
+        length = math.hypot(n[0], n[1])
+        if abs(n[2]) > 0.999 or length < 1e-6:
+            u, v = p[0], p[1]
+        else:
+            ux, uy = -n[1] / length, n[0] / length  # Level, along the surface.
+            vx, vy, vz = -n[2] * uy, n[2] * ux, n[0] * uy - n[1] * ux  # Up the surface.
+            u = p[0] * ux + p[1] * uy
+            v = p[0] * vx + p[1] * vy + p[2] * vz
+        # In glTF the top of the image is at 0.
+        result.append((u / size, -v / size))
+    return result
 
 
 class Model:
@@ -161,6 +258,7 @@ class Model:
     def save(self, filename):
         binary = bytearray()
         views, accessors, materials, primitives = [], [], [], []
+        images, textures = [], {}
 
         def add(vectors):
             # glTF has x to the left, y up and z to the front.
@@ -175,11 +273,30 @@ class Model:
             })
             return len(accessors) - 1
 
+        def add_coordinates(coordinates):
+            data = b"".join(struct.pack("<2f", *c) for c in coordinates)
+            views.append({"buffer": 0, "byteOffset": len(binary), "byteLength": len(data)})
+            binary.extend(data)
+            accessors.append({"bufferView": len(views) - 1, "componentType": 5126, "count": len(coordinates), "type": "VEC2"})
+            return len(accessors) - 1
+
         for name, (positions, normals) in self.parts.items():
+            attributes = {"POSITION": add(positions), "NORMAL": add(normals)}
+            colour = MATERIALS[name]
+            surface = {"metallicFactor": 0.0, "roughnessFactor": 0.8}
+            texture = texture_of(name)
+            if texture is not None:
+                # The texture is multiplied with the colour and is darker than white on average; make up for that.
+                colour = [min(c / TEXTURE_MEAN, 1.0) for c in colour]
+                if texture not in textures:
+                    textures[texture] = len(images)
+                    images.append({"uri": f"tex_{texture}.png"})
+                surface["baseColorTexture"] = {"index": textures[texture]}
+                attributes["TEXCOORD_0"] = add_coordinates(texture_coordinates(positions, normals, TEXTURES[texture]))
             # glTF stores colours as amounts of light, not as seen on screen.
-            colour = [round(c ** 2.2, 4) for c in MATERIALS[name]] + [1.0]
-            materials.append({"name": name, "pbrMetallicRoughness": {"baseColorFactor": colour, "metallicFactor": 0.0, "roughnessFactor": 0.8}})
-            primitives.append({"attributes": {"POSITION": add(positions), "NORMAL": add(normals)}, "material": len(materials) - 1})
+            surface["baseColorFactor"] = [round(c ** 2.2, 4) for c in colour] + [1.0]
+            materials.append({"name": name, "pbrMetallicRoughness": surface})
+            primitives.append({"attributes": attributes, "material": len(materials) - 1})
 
         scene = {
             "asset": {"version": "2.0", "generator": "OpenGFX3D make_models.py"},
@@ -192,6 +309,11 @@ class Model:
             "bufferViews": views,
             "buffers": [{"byteLength": len(binary)}],
         }
+        if images:
+            # The images are files of the package that the models share, not copies inside each model.
+            scene["images"] = images
+            scene["textures"] = [{"source": i, "sampler": 0} for i in range(len(images))]
+            scene["samplers"] = [{"wrapS": 10497, "wrapT": 10497}]
         text = json.dumps(scene, separators=(",", ":")).encode()
         text += b" " * (-len(text) % 4)
         binary += b"\0" * (-len(binary) % 4)

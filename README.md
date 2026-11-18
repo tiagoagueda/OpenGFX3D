@@ -17,6 +17,8 @@ All models here are made for this project; do not add models copied from elsewhe
 * `models_*.py`: the models, in groups (base, road, trains, ships, air, houses_north, houses_south, industry_temperate, industry_other, infra, land). Each has a `build()` that writes its models and returns its entries for the index. Each group names its .glb files and new materials with its own prefix. `make_models.py` stops when two groups give a model to the same thing.
 * `ground_*.png`: the ground textures. Each repeats without a seam, and the game spreads it over several tiles.
 * `make_textures.py`: makes the ground textures (needs numpy and Pillow). Run it, and then `make_models.py` to list them in the index.
+* `tex_*.png`: the surface textures of the models: brickwork, roof tiles, planks, sheet metal, leaves and so on, in shades of grey. The models refer to them by file name, so all models share them.
+* `make_model_textures.py`: makes the surface textures (needs numpy and Pillow). Run it, and then `make_models.py`.
 * `preview.py`: draws pictures of models from the angle of the 2D game and from behind, to check them without the game (needs Pillow).
 
 The build copies the package to `opengfx3d/` in the build folder. The game looks for a folder of that name in all places where it looks for its data, such as your personal OpenTTD folder.
@@ -84,11 +86,22 @@ Like the models, the textures are made for this project: `make_textures.py` comp
 * One unit is one sixteenth of a tile. A road vehicle is about 9 long, 3 wide and 3.5 high; a one-tile building fits in 16 by 16.
 * A building model covers its whole footprint (a 2 by 2 house is 32 by 32) and stands on the highest corner of it. On sloped ground the game adds a stone foundation under it.
 * Fronts: houses, industry tiles and objects face the south-west edge of the map view. Stations and drive-through stops lie along their track or road; the side to -X is the side with the station building. Bay stops face their road.
-* Triangles take the base colour of their material. Textures, animations and skins are not read yet.
+* Triangles take the base colour of their material, multiplied with its base colour texture if it has one. Normal maps and other textures, animations and skins are not read.
+* A texture is a PNG image, either inside the model or a file in this folder that the model names (`"uri": "tex_brick.png"`); models that name the same file share it. Textures always repeat, and only the first set of texture coordinates is read. The game brings all textures to one size, that of the largest (at most 1024 by 1024), so keep them square and of one size; it can hold 256 of them.
 * A material with a name that starts with `company` takes a colour from the game, multiplied with its base colour: white becomes that colour, grey a darker shade of it. For vehicles, stations, stops and objects it is the owner's company colour; houses and industries use the colour the game picked for them.
 * Triangles of a material with a name that starts with `load` are the cargo of a vehicle. They are drawn only when the vehicle carries cargo, and sink into the vehicle as it gets emptier, by up to their own height; so make the load as high as the part that should disappear, and let the sides of the vehicle hide it.
 * Each wagon or part of a vehicle is drawn with the model of its own vehicle ID.
 * Houses and industries are replaced only when they are finished; while being built they keep their sprites.
+
+## The surface textures
+
+The models made by `make_models.py` get their textures by the names of their materials: `TEXTURE_RULES` in `gfx3d.py` says which words in a name give which texture (`brick` gives brickwork, `roof` roof tiles, `company` painted sheet metal with seams and rivets). Materials that match no rule keep a plain colour.
+
+The textures are grey and the game multiplies them with the colour of the material, so one texture serves all colours of brick, and the parts in company colour stay in company colour. `Model.save()` lays each texture flat on every surface at a fixed size (`TEXTURES` in `gfx3d.py`: world units per repeat) with its top pointing up the surface, so models need no texture coordinates of their own.
+
+To give a material another surface, add a rule or name the material to match one; for a new kind of surface, add a function to `make_model_textures.py` and its name and size to `TEXTURES`.
+
+Like the models, the textures are computed from random numbers; do not add photographs or textures from elsewhere without checking their licence.
 
 ## Licence
 
