@@ -6,7 +6,9 @@ Index type `power`, ids:
   1 an overhead substation, wires arriving at its gantry along x;
   2 an underground substation, the same yard without a gantry;
   3 a transition pylon, where an overhead line along x goes into the ground;
-  4 one piece of conductor, 16 long along x, centred on the origin; the game stretches it from pylon to pylon.
+  4 one piece of conductor, 16 long along x, centred on the origin; the game stretches it from pylon to pylon;
+  5 a cable marker post, set over underground cables;
+  6 one piece of underground cable as the power network view shows it: a bright strip on the ground, 16 long along x.
 
 The game hangs three conductors from every pylon and gantry, at WIRE_Z above its foot and PHASE apart
 across the line (y = -PHASE, 0, +PHASE), and an earth wire from the top of the pylon. These numbers must
@@ -37,6 +39,9 @@ for _name, _colour in {
     "door": (0.36, 0.30, 0.24),
     "fence": (0.50, 0.52, 0.52),
     "warning": (0.92, 0.78, 0.18),
+    "marker": (0.95, 0.55, 0.10),
+    "marker_post": (0.88, 0.86, 0.80),
+    "cable": (1.00, 0.45, 0.05),
 }.items():
     MATERIALS[f"{GROUP}_{_name}"] = _colour
 
@@ -178,6 +183,21 @@ def conductor():
     return m
 
 
+def cable_marker():
+    """A short marker post with an orange cap, as set along buried power cables."""
+    m = Model()
+    m.box(mat("marker_post"), -0.3, 0.3, -0.3, 0.3, 0.0, 2.0)
+    m.box(mat("marker"), -0.4, 0.4, -0.4, 0.4, 2.0, 2.9)
+    m.box(mat("steel_dark"), -0.41, 0.41, -0.08, 0.08, 2.25, 2.65)
+    return m
+
+
+def cable_view():
+    m = Model()
+    m.box(mat("cable"), -8.0, 8.0, -0.45, 0.45, 0.0, 0.25)
+    return m
+
+
 def build():
     buildings = []
     for i, (name, model) in enumerate((
@@ -185,7 +205,9 @@ def build():
             ("substation_overhead", substation(True)),
             ("substation_underground", substation(False)),
             ("pylon_transition", transition_pylon()),
-            ("conductor", conductor()))):
+            ("conductor", conductor()),
+            ("cable_marker", cable_marker()),
+            ("cable_view", cable_view()))):
         filename = f"{GROUP}_{name}.glb"
         model.save(filename)
         buildings.append({"type": "power", "ids": [i], "model": filename})

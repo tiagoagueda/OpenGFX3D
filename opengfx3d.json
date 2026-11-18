@@ -4692,6 +4692,20 @@
 			"model": "power_conductor.glb"
 		},
 		{
+			"type": "power",
+			"ids": [
+				5
+			],
+			"model": "power_cable_marker.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				6
+			],
+			"model": "power_cable_view.glb"
+		},
+		{
 			"type": "roadside",
 			"ids": [
 				0

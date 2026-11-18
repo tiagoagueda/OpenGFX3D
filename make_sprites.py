@@ -14,6 +14,9 @@ The order of the sprites must match SPR_POWER_* in the game (src/table/sprites.h
   7-10  transition pylon, in the same four directions as the pylon
   11-14 wires over one tile: along x, along y, along the N-S diagonal, along the E-W diagonal
   15-22 wires from the middle of a tile to its edge, towards N, NE, E, SE, S, SW, W, NW
+  23    cable marker post, in the middle of the tile
+  24-31 underground cable as the power network view shows it, from the middle of a tile to its edge,
+        towards N, NE, E, SE, S, SW, W, NW
 
 Sprites are drawn relative to the north corner of their tile at the height of its foot (the game
 draws them with that point as their origin). Wires are drawn with their conductors at height 0;
@@ -221,6 +224,15 @@ def subjects():
     # Half wires from the middle of a pylon tile to its edge, in the order of the game's Direction: N, NE, E, SE, S, SW, W, NW.
     for i, d in enumerate(((-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1))):
         out.append((f"half_wire_{i}", wire_triangles(d, half=True)))
+    marker = read_glb("power_cable_marker.glb")
+    out.append(("cable_marker", rotated(marker, 0.0, (8.0, 8.0, 0.0))))
+    cable = read_glb("power_cable_view.glb")
+    for i, d in enumerate(((-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1))):
+        # The piece is 16 long and centred; scale it to reach from the middle of the tile to its edge or corner.
+        length = math.hypot(*d) * 8
+        heading = math.atan2(d[1], d[0])
+        scaled = [(tuple((p[0] * length / 16 + length / 2, p[1], p[2]) for p in tri), colour) for tri, colour in cable]
+        out.append((f"cable_{i}", rotated(scaled, heading, (8.0, 8.0, 0.0))))
     return out
 
 
