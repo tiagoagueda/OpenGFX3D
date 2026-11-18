@@ -5084,6 +5084,20 @@
 			"model": "works_lock_upper.glb"
 		},
 		{
+			"type": "lock",
+			"ids": [
+				3
+			],
+			"model": "works_lock_gate_lower.glb"
+		},
+		{
+			"type": "lock",
+			"ids": [
+				4
+			],
+			"model": "works_lock_gate_upper.glb"
+		},
+		{
 			"type": "disaster",
 			"ids": [
 				0

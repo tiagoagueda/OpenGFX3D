@@ -7,9 +7,10 @@ The model is centred on the plot, a tile is 16 across.
 
 Waypoints: 0 on a railway, 1 on a road; the track or road runs along x.
 
-Canal locks, by part: 0 the middle (the chamber, on the slope), 1 the lower end, 2 the upper end.
-The water rises towards +x. The game puts each part at the height of its highest corner, so the middle part
-reaches down by one height level (H) towards -x.
+Canal locks, by part: 0 the middle (on the slope), 1 the lower end, 2 the upper end; 3 a leaf of the lower
+gates and 4 a leaf of the upper gates. The water rises towards +x. The game puts each part at the height of its
+highest corner. The three parts make one long chamber, as ships are longer than a tile; the game draws the
+water in it and turns the gate leaves around their hinges as ships pass.
 
 Disasters, by disaster vehicle type, front to +x like other vehicles.
 """
@@ -239,55 +240,72 @@ def road_waypoint():
 
 # Canal locks ---------------------------------------------------------------------------------------
 
-def lock_gate(m, x, z0, z1):
-    """A pair of mitre gates across the canal at x, with a walkway on top and the winding gear on both sides."""
-    for side in (-1, 1):
-        # Each leaf points a little upstream, towards +x, where they meet in the middle.
-        m.quad("wood", (x, side * 6.4, z0), (x + 1.0, 0, z0), (x + 1.0, 0, z1), (x, side * 6.4, z1))
-        m.quad("wood", (x + 1.0, 0, z0), (x, side * 6.4, z0), (x, side * 6.4, z1), (x + 1.0, 0, z1))
-        beam(m, "works_white", (x, side * 6.4, z1 + 0.6), (x + 1.0, 0, z1 + 0.6), 0.08)
-        m.box("dark", x - 0.6, x + 0.2, side * 7.2 - 0.4, side * 7.2 + 0.4, z1, z1 + 0.8)
-        m.box("works_white", x + 0.3, x + 2.8, side * 7.2 - 0.06, side * 7.2 + 0.06, z1 + 0.4, z1 + 0.5)  # balance beam
+DEPTH = 0.5 * H  # how deep the bed is below the lower water
+TOP = 0.8  # how far the walls stand above the upper water
+LEAF = 6.5  # length of a gate leaf
 
 
-def lock_walls(m, x0, x1, top0, top1, bottom):
-    """The walls on both sides of the canal, their tops going from top0 at x0 to top1 at x1."""
+def lock_gate_leaf(z0, z1):
+    """One leaf of a pair of mitre gates, hinged at the origin and reaching along +x, from z0 up to z1.
+    The game turns it open and closed. A walkway with a railing runs along the top, and the balance beam
+    reaches back from the hinge over the wall."""
+    m = Model()
+    m.box("wood", 0.0, LEAF, -0.25, 0.25, z0, z1)
+    # Planks across the face, a little darker every so often.
+    for k in range(1, int((z1 - z0) / 1.2)):
+        z = z0 + k * 1.2
+        m.box("dark", 0.0, LEAF, -0.27, 0.27, z - 0.06, z + 0.06)
+    m.box("wood", 0.0, LEAF, -0.55, 0.25, z1 - 0.12, z1)  # walkway
+    for x in (0.4, LEAF / 2, LEAF - 0.3):
+        m.box("works_white", x - 0.05, x + 0.05, -0.55, -0.45, z1, z1 + 0.6)
+    beam(m, "works_white", (0.2, -0.5, z1 + 0.6), (LEAF - 0.3, -0.5, z1 + 0.6), 0.05)
+    # The balance beam, painted white with a black end.
+    m.box("works_white", -3.6, 0.3, -0.18, 0.18, z1 + 0.15, z1 + 0.55)
+    m.box("dark", -4.0, -3.6, -0.2, 0.2, z1 + 0.13, z1 + 0.57)
+    return m
+
+
+def lock_walls(m, x0, x1, top, bottom):
+    """The walls on both sides of the chamber, from x0 to x1."""
     for y0, y1 in ((-8.0, -6.4), (6.4, 8.0)):
-        m.quad("stone", (x0, y0, bottom), (x1, y0, bottom), (x1, y0, top1), (x0, y0, top0))
-        m.quad("stone", (x1, y1, bottom), (x0, y1, bottom), (x0, y1, top0), (x1, y1, top1))
-        m.quad("concrete", (x0, y0, top0), (x1, y0, top1), (x1, y1, top1), (x0, y1, top0))
-        m.quad("stone", (x0, y1, bottom), (x0, y0, bottom), (x0, y0, top0), (x0, y1, top0))
-        m.quad("stone", (x1, y0, bottom), (x1, y1, bottom), (x1, y1, top1), (x1, y0, top1))
+        m.quad("stone", (x0, y0, bottom), (x1, y0, bottom), (x1, y0, top), (x0, y0, top))
+        m.quad("stone", (x1, y1, bottom), (x0, y1, bottom), (x0, y1, top), (x1, y1, top))
+        m.quad("concrete", (x0, y0, top), (x1, y0, top), (x1, y1, top), (x0, y1, top))
+        m.quad("stone", (x0, y1, bottom), (x0, y0, bottom), (x0, y0, top), (x0, y1, top))
+        m.quad("stone", (x1, y0, bottom), (x1, y1, bottom), (x1, y1, top), (x1, y0, top))
 
 
 def lock(part):
+    """The three tiles of a lock are one long chamber, with high walls all along: from the bed below the lower
+    water to above the upper water. The gates are models of their own (ids 3 and 4), which the game opens and
+    closes as ships pass, and it draws the water in the chamber too."""
     m = Model()
-    if part == 0:
-        # The chamber: high walls all along, from the lower water (-H) up past the upper water (0).
-        lock_walls(m, -8, 8, 0.8, 0.8, -H - 0.6)
-        lock_gate(m, -7.4, -H - 0.3, 0.8)
-        lock_gate(m, 6.2, -0.4, 0.8)
-        # Bollards along the top.
-        for x in (-4, 0, 4):
-            for y in (-6.8, 6.8):
-                m.box("dark", x - 0.2, x + 0.2, y - 0.2, y + 0.2, 0.8, 1.3)
-        m.box("works_white", -2.2, 1.0, 7.0, 8.0, 0.8, 2.8)  # the lock keeper's hut
-        m.prism_roof("works_red", "works_white", -2.4, 1.2, 6.8, 8.2, 2.8, 3.6)
-    elif part == 1:
-        # The lower end: low walls that rise to meet the chamber.
-        lock_walls(m, -8, 2, 0.6, 0.6, -0.6)
-        lock_walls(m, 2, 8, 0.6, H + 0.8, -0.6)
+    # Each part stands at the height of its highest corner: the lower part at the lower water, the others at the upper.
+    base = H if part == 1 else 0.0
+    top, bottom = base + TOP, base - H - DEPTH
+    lock_walls(m, -8, 8, top, bottom)
+    for x in (-4, 0, 4):
         for y in (-6.8, 6.8):
-            m.box("dark", -4.2, -3.8, y - 0.2, y + 0.2, 0.6, 1.1)
+            m.box("dark", x - 0.2, x + 0.2, y - 0.2, y + 0.2, top, top + 0.5)  # bollards
+    if part == 0:
+        m.box("works_white", -2.2, 1.0, 7.0, 8.0, top, top + 2.0)  # the lock keeper's hut
+        m.prism_roof("works_red", "works_white", -2.4, 1.2, 6.8, 8.2, top + 2.0, top + 2.8)
     else:
-        # The upper end: low walls, a ladder and bollards.
-        lock_walls(m, -8, 8, 0.6, 0.6, -0.6)
-        for x in (-2, 4):
-            for y in (-6.8, 6.8):
-                m.box("dark", x - 0.2, x + 0.2, y - 0.2, y + 0.2, 0.6, 1.1)
+        # Ladders down the walls.
+        for y in (-6.45, 6.45):
+            m.box("metal", 1.6, 1.7, y - 0.05, y + 0.05, bottom, top)
+            m.box("metal", 2.5, 2.6, y - 0.05, y + 0.05, bottom, top)
     name = f"{GROUP}_lock_{['middle', 'lower', 'upper'][part]}.glb"
     m.save(name)
     return name
+
+
+def lock_gates():
+    """The leaves of the lower gates, from the bed of the chamber to above the upper water, and of the upper gates,
+    which stand on the sill at the bed of the canal above. Each stands at the height of the water outside it."""
+    lock_gate_leaf(-DEPTH, H + TOP).save(f"{GROUP}_lock_gate_lower.glb")
+    lock_gate_leaf(-DEPTH, TOP).save(f"{GROUP}_lock_gate_upper.glb")
+    return f"{GROUP}_lock_gate_lower.glb", f"{GROUP}_lock_gate_upper.glb"
 
 
 # Disasters -----------------------------------------------------------------------------------------
@@ -429,6 +447,9 @@ def build():
     buildings.append({"type": "waypoint", "ids": [1], "model": road_waypoint()})
     for part in range(3):
         buildings.append({"type": "lock", "ids": [part], "model": lock(part)})
+    lower_gate, upper_gate = lock_gates()
+    buildings.append({"type": "lock", "ids": [3], "model": lower_gate})
+    buildings.append({"type": "lock", "ids": [4], "model": upper_gate})
     # Disaster vehicle types: 0 zeppelin, 2 small UFO, 4 plane, 6 helicopter, 8 its rotor, 9 big UFO,
     # 11 the plane that shoots the big UFO, 13 and 14 submarines. The others are shadows.
     disasters = [
