@@ -4089,6 +4089,13 @@
 			"model": "interface_tile_mark.glb"
 		},
 		{
+			"type": "interface",
+			"ids": [
+				6
+			],
+			"model": "interface_road_piece.glb"
+		},
+		{
 			"type": "tree",
 			"ids": [
 				0
