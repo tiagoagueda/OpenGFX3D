@@ -1051,6 +1051,126 @@
 				115
 			],
 			"model": "trains_maglev_tanker_toy.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				100
+			],
+			"model": "tram_horse.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				101
+			],
+			"model": "tram_albion.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				102
+			],
+			"model": "tram_corridor.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				103
+			],
+			"model": "tram_meridian_front.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				104
+			],
+			"model": "tram_meridian_rear.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				105
+			],
+			"model": "tram_vela_front.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				106
+			],
+			"model": "tram_vela_middle.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				107
+			],
+			"model": "tram_vela_rear.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				108
+			],
+			"model": "tram_works_mail.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				109
+			],
+			"model": "trolleybus_penrose.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				110
+			],
+			"model": "trolleybus_castor.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				111
+			],
+			"model": "trolleybus_lyra_front.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				112
+			],
+			"model": "trolleybus_lyra_rear.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				113
+			],
+			"model": "tram_toy.glb"
+		},
+		{
+			"type": "road",
+			"grfid": "4F473354",
+			"ids": [
+				114
+			],
+			"model": "trolleybus_toy.glb"
 		}
 	],
 	"buildings": [
@@ -4012,6 +4132,20 @@
 			"model": "infra_road_depot.glb"
 		},
 		{
+			"type": "road_depot",
+			"ids": [
+				1
+			],
+			"model": "infra_trolley_depot.glb"
+		},
+		{
+			"type": "road_depot",
+			"ids": [
+				2
+			],
+			"model": "infra_tram_depot.glb"
+		},
+		{
 			"type": "ship_depot",
 			"ids": [
 				0
@@ -4998,6 +5132,13 @@
 				10
 			],
 			"model": "track_catenary_wires_trolley_straight.glb"
+		},
+		{
+			"type": "catenary",
+			"ids": [
+				11
+			],
+			"model": "track_catenary_wires_tram_straight.glb"
 		},
 		{
 			"type": "construction",

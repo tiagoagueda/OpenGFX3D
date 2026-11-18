@@ -1,0 +1,14 @@
+##grflangid 0x01
+STR_GRF_NAME :OpenGFX3D Trams and Trolleybuses
+STR_GRF_DESC :Trams and trolleybuses of the OpenTTD 3D fork, drawn from its 3D models. Trams run on street tramway, horse tramway and reserved tramway; trolleybuses need electrified road.
+STR_NAME_HORSE_TRAM :Hackney Horse Tram
+STR_NAME_ALBION_TRAM :Albion Tram
+STR_NAME_CORRIDOR_TRAM :Corridor Bogie Tram
+STR_NAME_MERIDIAN_TRAM :Meridian Articulated Tram
+STR_NAME_VELA_TRAM :Vela Low-Floor Tram
+STR_NAME_WORKS_MAIL_TRAM :Works Mail Tram
+STR_NAME_PENROSE_TROLLEYBUS :Penrose Trolleybus
+STR_NAME_CASTOR_TROLLEYBUS :Castor Trolleybus
+STR_NAME_LYRA_TROLLEYBUS :Lyra Articulated Trolleybus
+STR_NAME_TOY_TRAM :Ploddyphut Wobble Tram
+STR_NAME_TOY_TROLLEYBUS :Ploddyphut Bumble Trolleybus

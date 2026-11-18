@@ -14,11 +14,12 @@ All models here are made for this project; do not add models copied from elsewhe
 * `*.glb`: the models, as binary glTF 2.0 files.
 * `make_models.py`: makes all the models and the index. Run it after changing a model.
 * `gfx3d.py`: the toolkit the models are made with: materials and the `Model` class.
-* `models_*.py`: the models, in groups (base, road, trains, ships, air, houses_north, houses_south, industry_temperate, industry_other, infra, land). Each has a `build()` that writes its models and returns its entries for the index. Each group names its .glb files and new materials with its own prefix. `make_models.py` stops when two groups give a model to the same thing.
+* `models_*.py`: the models, in groups (base, road, trams, trains, ships, air, houses_north, houses_south, industry_temperate, industry_other, infra, land). Each has a `build()` that writes its models and returns its entries for the index. Each group names its .glb files and new materials with its own prefix. `make_models.py` stops when two groups give a model to the same thing.
 * `ground_*.png`: the ground textures. Each repeats without a seam, and the game spreads it over several tiles.
 * `make_textures.py`: makes the ground textures (needs numpy and Pillow). Run it, and then `make_models.py` to list them in the index.
 * `tex_*.png`: the surface textures of the models: brickwork, roof tiles, planks, sheet metal, leaves and so on, in shades of grey. The models refer to them by file name, so all models share them.
 * `make_model_textures.py`: makes the surface textures (needs numpy and Pillow). Run it, and then `make_models.py`.
+* `make_trams_grf.py`: makes `newgrf/opengfx3d_trams.grf`, the NewGRF of the fork's trams and trolleybuses (ID `OG3T`, models in `models_trams.py`), with 2D sprites drawn from the models (needs numpy, Pillow and nmlc from `pip install nml`). Run `make_models.py` first. The game copies the .grf to its `newgrf` folder and adds it to the NewGRFs of new games once.
 * `preview.py`: draws pictures of models from the angle of the 2D game and from behind, to check them without the game (needs Pillow).
 
 The build copies the package to `opengfx3d/` in the build folder. The game looks for a folder of that name in all places where it looks for its data, such as your personal OpenTTD folder.

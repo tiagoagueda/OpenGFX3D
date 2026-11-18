@@ -895,8 +895,9 @@ def rail_depot():
     return f"{GROUP}_rail_depot.glb"
 
 
-def road_depot():
-    """A garage for road vehicles, the door to +x."""
+def road_depot(kind="road"):
+    """A garage for road vehicles, the door to +x. kind "trolley" is a trolleybus garage, with the wire pairs of both
+    lanes running in through the door; "tram" is a tram shed, with a track in each lane and their contact wires."""
     m = Model()
     x0, x1, y0, y1, h = -7, 4, -6, 6, 5.2
     m.box("concrete", x1, 8, -4.2, 4.2, 0, 0.08)
@@ -914,8 +915,22 @@ def road_depot():
     m.box("company", x0 - 0.2, x1 + 0.2, y0 - 0.2, y1 + 0.2, h, h + 0.7)
     m.box("roof", x0, x1, y0, y1, h + 0.7, h + 0.8)
     m.windows("glass", x0, x1 - 1, y0, y1, 1.8, 3.6, 1, 3, size=(1.5, 1.2))
-    m.save(f"{GROUP}_road_depot.glb")
-    return f"{GROUP}_road_depot.glb"
+    name = "road_depot" if kind == "road" else f"{kind}_depot"
+    if kind != "road":
+        from models_track import CONTACT, LANE, PAIR
+        # The door is raised for the poles and pantographs; the wires go in through it to the back wall.
+        m.box("wall", x1 - 0.6, x1, y0, y1, 4.9, h)
+        m.box("dark", x1 - 0.5, x1 - 0.1, -4.2, 4.2, 4.3, 4.9)
+        m.box("company", x1, x1 + 0.3, -4.4, 4.4, CONTACT + 0.1, CONTACT + 0.3)  # bracket holding the wires
+        for lane in (-LANE, LANE):
+            wires_y = (lane - PAIR, lane + PAIR) if kind == "trolley" else (lane,)
+            for y in wires_y:
+                m.box("dark", x0 + 1.0, 8, y - 0.06, y + 0.06, CONTACT - 0.06, CONTACT + 0.06)
+            if kind == "tram":
+                for y in (lane - 0.75, lane + 0.75):
+                    m.box("track_rail", x0 + 1.0, 8, y - 0.12, y + 0.12, 0.04, 0.12)
+    m.save(f"{GROUP}_{name}.glb")
+    return f"{GROUP}_{name}.glb"
 
 
 def ship_depot():
@@ -1065,6 +1080,8 @@ def build():
     buildings.append({"type": "buoy", "ids": [0], "model": buoy()})
     buildings.append({"type": "rail_depot", "ids": [0], "model": rail_depot()})
     buildings.append({"type": "road_depot", "ids": [0], "model": road_depot()})
+    buildings.append({"type": "road_depot", "ids": [1], "model": road_depot("trolley")})
+    buildings.append({"type": "road_depot", "ids": [2], "model": road_depot("tram")})
     buildings.append({"type": "ship_depot", "ids": [0], "model": ship_depot()})
     buildings.append({"type": "object", "ids": [0], "model": transmitter()})
     buildings.append({"type": "object", "ids": [1], "model": lighthouse()})

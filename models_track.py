@@ -251,12 +251,14 @@ def build():
 # Overhead wires (catenary) for electrified railways.
 #
 # Index type `catenary`, ids: 0 a pylon beside straight track, 1 a pylon beside diagonal track, 2 the wires of
-# a straight piece, 3 the wires of a diagonal piece; for trams and electric roads, 4 the wires from the middle of a
-# tile to one edge (along x from 0 to 8) and 5 a pole beside the road that reaches 6.4 to its middle; for trolleybuses
+# a straight piece, 3 the wires of a diagonal piece; for trams and electric roads, 4 the contact wires over both lanes from
+# the middle of a tile to one edge (along x from 0 to 8) and 5 a pole beside the road that holds them (6.4 - 3 and
+# 6.4 + 3 from the pole); for trolleybuses
 # on electrified road, 6 the wire pairs over both lanes from the middle of a tile to one edge, 7 a pole beside the
 # road whose arm holds both pairs (6.4 - 3 and 6.4 + 3 from the pole), 8 the frogs and span wires hung over the middle
 # of a junction, 9 the insulated crossing over the middle of a tile where tram wire meets trolleybus wires, and 10
-# the wire pairs across a whole tile, centred like id 2, for bridges. A
+# the wire pairs across a whole tile, centred like id 2, for bridges; 11 the tram contact wires across a whole tile,
+# for bridges. A
 # stands at its origin with its arm along +x, towards the track; the wires run along x like the track pieces, at
 # the height of the contact wire above the rails.
 
@@ -314,6 +316,30 @@ def wires(length, x0=None):
 
 LANE = 3.0  # road vehicles drive 3 either side of the middle of the road
 PAIR = 0.45  # each trolleybus wire is this far either side of the middle of its lane
+
+
+def tram_wires(length, x0=None):
+    """A contact wire over each lane, where the trams' pantographs and poles reach it."""
+    m = Model()
+    x0 = -length / 2 if x0 is None else x0
+    x1 = x0 + length
+    for lane in (-LANE, LANE):
+        m.box(mat("wire"), x0, x1, lane - 0.08, lane + 0.08, CONTACT - 0.08, CONTACT + 0.08)
+        m.box(mat("wire"), x0, x1, lane - 0.06, lane + 0.06, MESSENGER - 0.06, MESSENGER + 0.06)
+        count = max(1, round(length / 2.4))
+        for i in range(count):
+            x = x0 + (i + 0.5) * length / count
+            m.box(mat("wire"), x - 0.04, x + 0.04, lane - 0.04, lane + 0.04, CONTACT, MESSENGER)
+    return m
+
+
+def tram_pole(reach=6.4):
+    """A pole beside the road whose arm carries both tram contact wires, reach - LANE and reach + LANE from it."""
+    m = pylon(reach + LANE)
+    for x in (reach - LANE, reach + LANE):
+        m.box(mat("insulator"), x - 0.1, x + 0.1, -0.1, 0.1, MESSENGER, MESSENGER + 0.2)
+        m.box(mat("wire"), x - 0.03, x + 0.03, -0.03, 0.03, CONTACT, MESSENGER)
+    return m
 
 
 def trolley_wires(length, x0=None):
@@ -397,13 +423,14 @@ def build():
             ("pylon_diagonal", pylon(2.83)),
             ("wires_straight", wires(STRAIGHT)),
             ("wires_diagonal", wires(DIAGONAL)),
-            ("wires_tram", wires(8, 0)),
-            ("pole_tram", pylon(6.4)),
+            ("wires_tram", tram_wires(8, 0)),
+            ("pole_tram", tram_pole()),
             ("wires_trolley", trolley_wires(8, 0)),
             ("pole_trolley", trolley_pole()),
             ("junction_trolley", trolley_junction()),
             ("crossing_tram_trolley", tram_trolley_crossing()),
-            ("wires_trolley_straight", trolley_wires(STRAIGHT)))):
+            ("wires_trolley_straight", trolley_wires(STRAIGHT)),
+            ("wires_tram_straight", tram_wires(STRAIGHT)))):
         filename = f"{GROUP}_catenary_{name}.glb"
         model.save(filename)
         entries["buildings"].append({"type": "catenary", "ids": [i], "model": filename})

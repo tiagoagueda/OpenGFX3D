@@ -40,7 +40,7 @@ def main():
     for key in ("vehicles", "buildings"):
         for entry in index[key]:
             for i in entry["ids"]:
-                where = (key, entry["type"], i)
+                where = (key, entry["type"], entry.get("grfid", "0"), i)
                 if where in seen:
                     sys.exit(f"{entry['type']} {i} has two models: {seen[where]} and {entry['model']}")
                 seen[where] = entry["model"]

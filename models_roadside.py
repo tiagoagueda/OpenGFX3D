@@ -6,7 +6,8 @@ Index type `roadside`, ids:
     2 a straight piece of pavement, running along x over a whole tile edge (16 long) with its middle at the
       origin; the kerb is on its +y side, towards the road;
     3 a square of pavement for the corner of a tile, centred on the origin;
-    4 tram rails from the middle of a tile to one edge: along x from 0 to 8, laid into the road.
+    4 tram rails from the middle of a tile to one edge: along x from 0 to 8, one track in each lane (3 either side of
+      the middle), laid into the road.
 """
 
 import math
@@ -73,8 +74,10 @@ def pavement_corner():
 
 def tram_rails():
     m = Model()
-    for y in (-1.2, 1.2):
-        m.box(mat("rail"), 0, 8, y - 0.12, y + 0.12, 0, 0.05)
+    # One track in each lane, under the middle of the trams that drive 3 either side of the middle of the road.
+    for lane in (-3.0, 3.0):
+        for y in (lane - 0.75, lane + 0.75):
+            m.box(mat("rail"), 0, 8, y - 0.12, y + 0.12, 0, 0.05)
     return m
 
 
