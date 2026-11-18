@@ -20,6 +20,7 @@ All models here are made for this project; do not add models copied from elsewhe
 * `tex_*.png`: the surface textures of the models: brickwork, roof tiles, planks, sheet metal, leaves and so on, in shades of grey. The models refer to them by file name, so all models share them.
 * `make_model_textures.py`: makes the surface textures (needs numpy and Pillow). Run it, and then `make_models.py`.
 * `preview.py`: draws pictures of models from the angle of the 2D game and from behind, to check them without the game (needs Pillow).
+* `make_sprites.py`: draws 2D sprites of the power line models and packs them into `power.grf` for the 2D view of the game (needs numpy). Run `python3 make_sprites.py <game>/src/table/palettes.h -o <game>/media/baseset/power.grf` after changing `models_power.py`.
 
 The build copies the package to `opengfx3d/` in the build folder. The game looks for a folder of that name in all places where it looks for its data, such as your personal OpenTTD folder.
 
@@ -54,7 +55,7 @@ Like the models, the textures are made for this project: `make_textures.py` comp
 }
 ```
 
-* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`; `construction` for building sites, `waypoint`, `lock` for canal locks and `disaster` for disaster vehicles; `interface` for the posts of labels and the parts of the cursor (see `models_interface.py`).
+* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`; `construction` for building sites, `waypoint`, `lock` for canal locks and `disaster` for disaster vehicles; `interface` for the posts of labels and the parts of the cursor (see `models_interface.py`); `power` for pylons, substations and wires of power lines (see `models_power.py`).
 * `grfid`: the ID of the NewGRF that defines the vehicles, as the eight hexadecimal digits the game shows for it. Leave it out for the vehicles of the base game.
 * `ids`: the numbers within that NewGRF. For the base game:
   * vehicles count from 0 per type, in the order of `src/table/engines.h`: road vehicle 0 is the MPS Regal Bus;

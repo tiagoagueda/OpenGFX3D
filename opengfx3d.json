@@ -4657,6 +4657,41 @@
 			"far": ""
 		},
 		{
+			"type": "power",
+			"ids": [
+				0
+			],
+			"model": "power_pylon.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				1
+			],
+			"model": "power_substation_overhead.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				2
+			],
+			"model": "power_substation_underground.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				3
+			],
+			"model": "power_pylon_transition.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				4
+			],
+			"model": "power_conductor.glb"
+		},
+		{
 			"type": "roadside",
 			"ids": [
 				0
