@@ -7,6 +7,7 @@ Index type `roadside`, ids:
       origin; the kerb is on its +y side, towards the road;
     3 a square of pavement for the corner of a tile, centred on the origin;
     4 tram rails from the middle of a tile to one edge: along x from 0 to 8, laid into the road.
+    5 a street lamp like 0 that stays dark at night, for streets without power.
 """
 
 import math
@@ -18,6 +19,7 @@ GROUP = "roadside"
 for name, colour in {
     "pole": (0.30, 0.32, 0.34),
     "lamp": (1.00, 0.95, 0.75),
+    "bulb": (0.80, 0.80, 0.76),
     "paving": (0.66, 0.64, 0.60),
     "kerb": (0.78, 0.77, 0.74),
     "bark": (0.40, 0.29, 0.19),
@@ -37,14 +39,18 @@ PAVEMENT = 2.6  # width of a pavement
 KERB = 0.16  # height of the kerb above the road
 
 
-def street_lamp():
+def street_lamp(lit=True):
     m = Model()
     m.box(mat("pole"), -0.2, 0.2, -0.2, 0.2, 0, 0.4)
     m.box(mat("pole"), -0.09, 0.09, -0.09, 0.09, 0.4, 4.6)
     m.box(mat("pole"), -0.07, 1.5, -0.07, 0.07, 4.5, 4.62)
     m.box(mat("pole"), 1.1, 1.7, -0.2, 0.2, 4.35, 4.55)
-    m.box(mat("lamp"), 1.15, 1.65, -0.15, 0.15, 4.28, 4.36)
+    m.box(mat("lamp" if lit else "bulb"), 1.15, 1.65, -0.15, 0.15, 4.28, 4.36)
     return m
+
+
+def dark_street_lamp():
+    return street_lamp(lit=False)
 
 
 def roadside_tree():
@@ -81,7 +87,8 @@ def tram_rails():
 def build():
     buildings = []
     for i, (name, make) in enumerate((("lamp", street_lamp), ("tree", roadside_tree), ("pavement", pavement),
-                                      ("pavement_corner", pavement_corner), ("tram_rails", tram_rails))):
+                                      ("pavement_corner", pavement_corner), ("tram_rails", tram_rails),
+                                      ("lamp_dark", dark_street_lamp))):
         filename = f"{GROUP}_{name}.glb"
         make().save(filename)
         buildings.append({"type": "roadside", "ids": [i], "model": filename})

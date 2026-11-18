@@ -241,6 +241,7 @@ def coal_plant():
     m.windows("glass", -6, 6, -1, 7, 1, 7, 2, 4, size=(1.1, 1.5))
     m.box("brick", 1, 4, 1.5, 4.5, 7.5, 12)  # boiler chimney stub
     m.box("dark", 0.8, 4.2, 1.3, 4.7, 11.5, 12)
+    m.smoke_at(2.5, 3.0, 12, 1.4)
     # Loading bay underneath: coal falls into wagons along the front.
     m.box("indt_steel", 2, 7.5, -6.5, -1, 3.5, 6)
     for x in (2.3, 7.2):
@@ -350,7 +351,7 @@ def power_chimney():
     m.windows("glass", -7, 1, -7, 7, 1.5, 7, 2, 4, size=(1.1, 1.6))
     frustum(m, "brick", 4, 0, 0, 1.5, 3.2, 3.2, 12)
     frustum(m, "brick", 4, 0, 1.5, 27, 2.6, 1.6, 12)
-    m.chimney("dark", 4, 0, 26.2, 27.4, 1.75, 12)
+    m.chimney("dark", 4, 0, 26.2, 27.4, 1.75, 12, smoke=True)
     for z in (20.0, 24.0):
         r = 2.6 - (z - 1.5) / 25.5 * 1.0 + 0.12
         frustum(m, "indt_white", 4, 0, z, z + 0.7, r, r - 0.03, 12)
@@ -443,7 +444,7 @@ def sawmill_boiler():
     m.prism_roof("slate", "brick", -6.3, 4.3, -6.4, 6.4, 6, 8)
     m.windows("glass", -6, 4, -6, 6, 1, 5.5, 1, 3, size=(1.2, 1.8))
     frustum(m, "brick", -3, 3, 0, 15, 1.2, 0.9, 10)
-    m.chimney("dark", -3, 3, 14.6, 15.4, 1.0, 10)
+    m.chimney("dark", -3, 3, 14.6, 15.4, 1.0, 10, smoke=True)
     # Sawdust cyclone on a frame.
     cx, cy = 5.5, -3.5
     for dx in (-1.2, 1.2):
@@ -959,7 +960,7 @@ def steel_stoves():
         beam(m, "indt_redsteel", (-3, y, 3), (-1.6, y, 3), 0.6)
     beam(m, "indt_steel", (2.5, -8, 11), (2.5, 6, 11), 0.9)  # gas main from the furnace
     frustum(m, "brick", 5.5, 5.5, 0, 18, 1.0, 0.7, 10)  # stove chimney
-    m.chimney("dark", 5.5, 5.5, 17.6, 18.3, 0.8, 10)
+    m.chimney("dark", 5.5, 5.5, 17.6, 18.3, 0.8, 10, smoke=True)
     m.save(fname("steel_stoves"))
     return fname("steel_stoves")
 
@@ -972,7 +973,7 @@ def steel_casthouse():
     m.box("slate", -6.4, 7.4, -1, 1, 9.3, 10.3)  # ventilation ridge
     for y in (-4.5, 4.5):
         frustum(m, "brick", -3, y, 9, 19, 0.9, 0.7, 10)
-        m.chimney("dark", -3, y, 18.6, 19.3, 0.75, 10)
+        m.chimney("dark", -3, y, 18.6, 19.3, 0.75, 10, smoke=True)
     m.windows("glass", -6, 7, -7, 7, 2, 6, 1, 4, size=(1.6, 2.6))
     m.box("indt_glow", 7, 7.1, -2, 2, 0, 3.5)  # open door with the glow of molten iron
     m.save(fname("steel_casthouse"))
@@ -1026,7 +1027,7 @@ def steel_hall_front():
     m.box("slate", 3, 7.3, -7.3, -0.7, 5, 5.4)
     for (x, y) in ((5, 3.5),):
         frustum(m, "brick", x, y, 0, 16, 1.1, 0.8, 10)
-        m.chimney("dark", x, y, 15.6, 16.3, 0.85, 10)
+        m.chimney("dark", x, y, 15.6, 16.3, 0.85, 10, smoke=True)
     m.save(fname("steel_hall_front"))
     return fname("steel_hall_front")
 

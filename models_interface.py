@@ -5,7 +5,9 @@ Ids: 0 the post under a town name, station name or sign, one unit tall (the game
 2 a post at a corner of the selected tiles; 3 the arrow that hovers over the tile below the cursor, its tip
 at the origin; 4 a bracket for a corner of the tile below the cursor when no tool is in use, along +x and +y;
 5 half of a plate that marks a tile, such as one in the catchment area of a station: the triangle from the
-origin to x = 1 and y = 1, flat (the game puts two of them on each tile, tilted to follow the ground).
+origin to x = 1 and y = 1, flat (the game puts two of them on each tile, tilted to follow the ground);
+6 half a piece of road for the preview of the road tools: from the middle of a tile (the origin) to its edge
+at x = 8, with kerbs along both sides and a dashed line down the middle (the game shows it see-through).
 All but the post take the colour the game gives them.
 """
 
@@ -59,6 +61,16 @@ def mark():
     return save(m, "tile_mark")
 
 
+def road_piece():
+    m = Model()
+    m.box("company", 0, 8, -4.6, 4.6, 0, 0.3)
+    for y in (-4.6, 4.0):
+        m.box("company", 0, 8, y, y + 0.6, 0.3, 0.75)
+    for x in (0.5, 4.5):
+        m.box("company", x, x + 2.5, -0.25, 0.25, 0.3, 0.42)
+    return save(m, "road_piece")
+
+
 def build():
-    models = [post(), edge(), corner(), arrow(), bracket(), mark()]
+    models = [post(), edge(), corner(), arrow(), bracket(), mark(), road_piece()]
     return {"vehicles": [], "buildings": [{"type": "interface", "ids": [i], "model": model} for i, model in enumerate(models)]}

@@ -146,6 +146,17 @@ def texture_coordinates(positions, normals, size):
 class Model:
     def __init__(self):
         self.parts = {}  # material -> (positions, normals), three corners per triangle
+        self.smoke = []  # (x, y, z, size): where smoke comes out of a chimney
+
+    def smoke_at(self, x, y, z, size=1.0):
+        """Smoke rises from here: the top of a chimney. size is about the radius of the chimney."""
+        self.smoke.append((x, y, z, size))
+
+    def house_chimney(self, material, x, y, z0, z1, w=0.45):
+        """A small square chimney with a dark cap that smokes, for houses."""
+        self.box(material, x - w, x + w, y - w, y + w, z0, z1)
+        self.box("dark", x - w - 0.08, x + w + 0.08, y - w - 0.08, y + w + 0.08, z1, z1 + 0.15)
+        self.smoke_at(x, y, z1 + 0.15, w)
 
     def triangle(self, material, a, b, c):
         u = [b[i] - a[i] for i in range(3)]
@@ -219,8 +230,10 @@ class Model:
             self.triangle(caps, (x1, y, z), (x1, by, bz), (x1, ay, az))
             self.triangle(caps, (x0, y, z), (x0, ay, az), (x0, by, bz))
 
-    def chimney(self, material, x, y, z0, z1, radius, sides=10):
-        """A cylinder standing upright, open at the top."""
+    def chimney(self, material, x, y, z0, z1, radius, sides=10, smoke=False):
+        """A cylinder standing upright, open at the top; with smoke, smoke rises from it."""
+        if smoke:
+            self.smoke_at(x, y, z1, radius)
         ring = [(x + radius * math.cos(2 * math.pi * i / sides), y + radius * math.sin(2 * math.pi * i / sides)) for i in range(sides)]
         for i in range(sides):
             (ax, ay), (bx, by) = ring[i], ring[(i + 1) % sides]
@@ -298,11 +311,15 @@ class Model:
             materials.append({"name": name, "pbrMetallicRoughness": surface})
             primitives.append({"attributes": attributes, "material": len(materials) - 1})
 
+        node = {"mesh": 0}
+        if self.smoke:
+            # Where smoke rises, for the game; in glTF axes like the corners, with the size as a fourth number.
+            node["extras"] = {"smoke": [[round(p[1], 4), round(p[2], 4), round(p[0], 4), round(p[3], 4)] for p in self.smoke]}
         scene = {
             "asset": {"version": "2.0", "generator": "OpenGFX3D make_models.py"},
             "scene": 0,
             "scenes": [{"nodes": [0]}],
-            "nodes": [{"mesh": 0}],
+            "nodes": [node],
             "meshes": [{"primitives": primitives}],
             "materials": materials,
             "accessors": accessors,

@@ -96,6 +96,9 @@ class Placed(Model):
     def triangle(self, material, a, b, c):
         self.target.triangle(material, self._map(a), self._map(b), self._map(c))
 
+    def smoke_at(self, x, y, z, size=1.0):
+        self.target.smoke_at(*self._map((x, y, z)), size)
+
 
 # ---------------------------------------------------------------- helpers
 
@@ -568,6 +571,7 @@ def stone_house(snow):
     m.box("stone", -2.5, 3.0, 1.5, 5.5, 0, 3.0)
     gable_y(m, roof_mat(snow, P + "red_roof"), "stone", -2.8, 3.3, 1.5, 5.8, 3.0, 5.0)
     m.box("stone", -2.5, -1.3, -3.5, -2.3, 6.0, 9.0)
+    m.smoke_at(-1.9, -2.9, 9.0, 0.5)
     wins(m, "glass", -4.5, 3.5, -5.5, 1.5, 0.4, 5.0, 2, 3, 3, w=1.0, h=1.2, sides="Xy")
     wins(m, "glass", -2.5, 3.0, 1.5, 5.5, 0.4, 3.0, 1, 2, 2, w=1.0, h=1.2, sides="XY")
     door(m, 3.5, -2.0)
@@ -587,6 +591,7 @@ def thatched_flats(snow):
     m.box(P + "yellow_brick", -5.0, 4.5, -5.5, 5.0, 3.0, 5.6)
     hip_roof(m, roof_mat(snow, P + "thatch"), -5.6, 5.1, -6.1, 5.6, 5.6, 9.0)
     m.box("brick", -1.0, 0.0, 2.0, 3.0, 7.0, 9.8)
+    m.smoke_at(-0.5, 2.5, 9.8, 0.5)
     wins(m, "glass", -5.0, 4.5, -5.5, 5.0, 0.4, 5.6, 2, 3, 3, w=1.0, h=1.2, sides="XYy")
     door(m, 4.5, -0.5)
     m.box(P + "path", 4.5, 8.0, -1.2, 0.2, 0, 0.1)
@@ -603,6 +608,7 @@ def slate_house(snow):
     m.box(P + "red_brick", 1.0, 5.0, -5.0, 0.0, 0, 3.6)
     m.prism_roof(rm, P + "red_brick", 0.6, 5.4, -5.4, 0.4, 3.6, 6.0)
     m.box("brick", -3.0, -2.0, 2.5, 3.5, 6.0, 9.0)
+    m.smoke_at(-2.5, 3.0, 9.0, 0.5)
     wins(m, "glass", -5.0, 1.0, -5.0, 4.5, 0.4, 4.6, 2, 2, 3, w=1.0, h=1.2, sides="XY")
     wins(m, "glass", 1.0, 5.0, -5.0, 0.0, 0.4, 3.4, 1, 2, 2, w=1.0, h=1.2, sides="X")
     door(m, 1.0, 2.5)
@@ -620,6 +626,7 @@ def villa(snow):
     gable_y(m, rm, yb, -5.4, 2.4, -4.9, 4.9, 4.6, 7.8)
     m.box(yb, 2.0, 4.5, -3.5, 0.5, 0, 4.6)
     m.prism_roof(rm, yb, 1.6, 5.0, -3.9, 0.9, 4.6, 7.2)
+    m.house_chimney(P + "red_brick", -3.2, -2.5, 5.5, 8.8)
     wins(m, "glass", -5.0, 2.0, -4.5, 4.5, 0.4, 4.6, 2, 2, 3, w=1.0, h=1.2, sides="XY")
     wins(m, "glass", 2.0, 4.5, -3.5, 0.5, 0.4, 4.6, 2, 1, 1, w=1.2, h=1.3, sides="X")
     door(m, 2.0, 2.4)
@@ -637,6 +644,7 @@ def cottage(snow):
     m.box(P + "beige", -3.5, 3.5, -2.0, 4.5, 0, 4.4)
     gable_y(m, rm, P + "beige", -3.9, 3.9, -2.4, 4.9, 4.4, 7.4)
     m.box(P + "red_brick", -1.0, 0.6, -3.2, -2.0, 0, 8.4)
+    m.smoke_at(-0.2, -2.6, 8.4, 0.6)
     wins(m, "glass", -3.5, 3.5, -2.0, 4.5, 0.4, 4.4, 2, 2, 2, w=1.0, h=1.2, sides="XY")
     door(m, 3.5, 1.2)
     m.box(P + "path", 3.5, 8.0, 0.6, 1.8, 0, 0.1)
@@ -657,6 +665,7 @@ def brick_house(snow):
     m.box(P + "red_brick", 3.5, 5.0, -1.2, 1.2, 0, 2.6)  # porch
     m.box(roof_mat(snow, P + "red_roof"), 3.4, 5.3, -1.5, 1.5, 2.6, 3.0)
     m.box("brick", 1.0, 2.0, 2.0, 3.0, 6.0, 9.0)
+    m.smoke_at(1.5, 2.5, 9.0, 0.5)
     wins(m, "glass", -4.5, 3.5, -4.5, 4.5, 0.4, 4.8, 2, 3, 3, w=1.0, h=1.2, sides="XY")
     door(m, 5.0, 0.0)
     m.box(P + "path", 5.0, 8.0, -0.6, 0.6, 0, 0.1)
@@ -753,6 +762,7 @@ def terrace(snow):
         m.box("glass", 6.0, 6.06, yc - 0.8, yc + 0.8, 3.9, 5.6)
         m.box("door", 6.0, 6.1, yc + 0.4, yc + 1.4, 0.1, 2.3)
         m.box("brick", -3.0, -2.0, yc + 2.4, yc + 3.4, H + 1.5, H + 4.6)
+        m.smoke_at(-2.5, yc + 2.9, H + 4.6, 0.5)
         m.box(P + "path", 6.0, 8.0, yc + 0.3, yc + 1.5, 0, 0.1)
     wins(m, "glass", -5.5, 3.5, -14.5, 14.5, 0.4, H, 2, 2, 10, w=1.0, h=1.2, sides="xyY")
     m.save(P + ("terrace_snow.glb" if snow else "terrace.glb"))

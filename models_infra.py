@@ -18,6 +18,7 @@ for _name, _colour in {
     "infra_tarmac": (0.40, 0.40, 0.42),
     "infra_runway": (0.27, 0.27, 0.29),
     "infra_white": (0.93, 0.93, 0.90),
+    "infra_beam_glow": (1.00, 0.93, 0.66),
     "infra_yellow": (0.92, 0.74, 0.18),
     "infra_red": (0.78, 0.16, 0.12),
     "infra_orange": (0.96, 0.50, 0.10),
@@ -987,6 +988,33 @@ def lighthouse():
     return f"{GROUP}_lighthouse.glb"
 
 
+LIGHTHOUSE_LAMP = (0, 0, 20.4)  # the middle of the lamp of the lighthouse, where its beams turn
+
+
+# The beams of the lighthouse in pieces from the lamp outwards, each a part of its own that is more see-through
+# than the one before, so the light fades with distance: (start, end, how opaque at night).
+LIGHTHOUSE_BEAM_PIECES = ((0.9, 8.0, 0.42), (8.0, 18.0, 0.28), (18.0, 30.0, 0.16), (30.0, 46.0, 0.07))
+
+
+def lighthouse_beams(piece):
+    """Two beams of light from the lamp of the lighthouse, to opposite sides along x, from start to end away from
+    the lamp; they show and turn at night only. Wedges that widen away from the lamp, with the lamp at the origin."""
+    m = Model()
+    start, end, _ = LIGHTHOUSE_BEAM_PIECES[piece]
+    width = lambda d: 0.5 + 4.0 * d / 46.0
+    for sign in (1, -1):
+        x0, x1 = sign * start, sign * end
+        a0, a1 = width(start) / 2, width(end) / 2
+        pts = [(x0, -a0, -a0 * 0.6), (x0, a0, -a0 * 0.6), (x0, a0, a0 * 0.6), (x0, -a0, a0 * 0.6),
+               (x1, -a1, -a1 * 0.6), (x1, a1, -a1 * 0.6), (x1, a1, a1 * 0.6), (x1, -a1, a1 * 0.6)]
+        for (i, j, k, l) in ((0, 1, 5, 4), (1, 2, 6, 5), (2, 3, 7, 6), (3, 0, 4, 7)):
+            # Both faces, so the beam shows from inside and outside.
+            m.quad("infra_beam_glow", pts[i], pts[j], pts[k], pts[l])
+            m.quad("infra_beam_glow", pts[l], pts[k], pts[j], pts[i])
+    m.save(f"{GROUP}_lighthouse_beams_{piece}.glb")
+    return f"{GROUP}_lighthouse_beams_{piece}.glb"
+
+
 def statue():
     """The company statue: a figure in company colour on a stone plinth, on a paved square."""
     m = Model()
@@ -1067,7 +1095,9 @@ def build():
     buildings.append({"type": "road_depot", "ids": [0], "model": road_depot()})
     buildings.append({"type": "ship_depot", "ids": [0], "model": ship_depot()})
     buildings.append({"type": "object", "ids": [0], "model": transmitter()})
-    buildings.append({"type": "object", "ids": [1], "model": lighthouse()})
+    buildings.append({"type": "object", "ids": [1], "model": lighthouse(), "parts": [
+        {"model": lighthouse_beams(k), "at": list(LIGHTHOUSE_LAMP), "axis": [0, 0, 1], "spin": 1.1, "night": piece[2]}
+        for k, piece in enumerate(LIGHTHOUSE_BEAM_PIECES)]})
     buildings.append({"type": "object", "ids": [2], "model": statue()})
     buildings.append({"type": "object", "ids": [4], "model": company_hq()})
     return {"vehicles": [], "buildings": buildings}
