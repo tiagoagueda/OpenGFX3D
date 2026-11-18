@@ -4030,7 +4030,69 @@
 			"ids": [
 				1
 			],
-			"model": "infra_lighthouse.glb"
+			"model": "infra_lighthouse.glb",
+			"parts": [
+				{
+					"model": "infra_lighthouse_beams_0.glb",
+					"at": [
+						0,
+						0,
+						20.4
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"spin": 1.1,
+					"night": 0.42
+				},
+				{
+					"model": "infra_lighthouse_beams_1.glb",
+					"at": [
+						0,
+						0,
+						20.4
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"spin": 1.1,
+					"night": 0.28
+				},
+				{
+					"model": "infra_lighthouse_beams_2.glb",
+					"at": [
+						0,
+						0,
+						20.4
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"spin": 1.1,
+					"night": 0.16
+				},
+				{
+					"model": "infra_lighthouse_beams_3.glb",
+					"at": [
+						0,
+						0,
+						20.4
+					],
+					"axis": [
+						0,
+						0,
+						1
+					],
+					"spin": 1.1,
+					"night": 0.07
+				}
+			]
 		},
 		{
 			"type": "object",
@@ -4664,6 +4726,70 @@
 			"far": ""
 		},
 		{
+			"type": "pedestrian",
+			"ids": [
+				0
+			],
+			"model": "people_trousers_0.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				1
+			],
+			"model": "people_trousers_1.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				2
+			],
+			"model": "people_trousers_2.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				3
+			],
+			"model": "people_trousers_3.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				4
+			],
+			"model": "people_dress_0.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				5
+			],
+			"model": "people_dress_1.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				6
+			],
+			"model": "people_dress_2.glb",
+			"far": ""
+		},
+		{
+			"type": "pedestrian",
+			"ids": [
+				7
+			],
+			"model": "people_dress_3.glb",
+			"far": ""
+		},
+		{
 			"type": "roadside",
 			"ids": [
 				0
@@ -4697,6 +4823,13 @@
 				4
 			],
 			"model": "roadside_tram_rails.glb"
+		},
+		{
+			"type": "roadside",
+			"ids": [
+				5
+			],
+			"model": "roadside_lamp_dark.glb"
 		},
 		{
 			"type": "signal",

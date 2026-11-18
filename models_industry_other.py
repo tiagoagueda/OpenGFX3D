@@ -371,9 +371,11 @@ def paper_mill(m, gfx):
         m.box("io_tan", -7, -2.5, -7, -2.5, 0, 26)
         m.box("brick", -7.3, -2.2, -7.3, -2.2, 24, 25)
         m.box("dark", -6.4, -3.1, -6.4, -3.1, 25.9, 26.05)
+        m.smoke_at(-4.75, -4.75, 26.05, 1.6)
         m.box("io_tan", -6.5, -3, -1, 2.5, 0, 16)
         m.box("brick", -6.8, -2.7, -1.3, 2.8, 14, 15)
         m.box("dark", -6, -3.5, -0.5, 2, 15.9, 16.05)
+        m.smoke_at(-4.75, 0.75, 16.05, 1.2)
         if gfx == 69:
             paper_rolls(m, 1, 0, 3, 3, layers=1, r=1.1)
     elif gfx == 70:  # small shed on a dark yard
@@ -419,6 +421,7 @@ def gold_mine(m, gfx):
         wins(m, -8, 7, -8, 8, 1, 6.5, 2, 4, "X", size=(1.4, 1.8))
         m.box("brick", 1.5, 4, -5, -2.5, 0, 17)
         m.box("dark", 1.3, 4.2, -5.2, -2.3, 16.5, 17.3)
+        m.smoke_at(2.75, -3.75, 17.3, 1.2)
     elif gfx == 75:  # winding house beside the shaft tower
         m.box("wall", -7, 6, -7, 7, 0, 6)
         m.prism_roof("slate", "wall", -7.3, 6.3, -7.3, 7.3, 6, 9)
@@ -544,6 +547,7 @@ def copper_mine(m, gfx):
         for y in (-4.5, -2, 0.5):
             m.box("brick", -3, -1.5, y - 0.7, y + 0.7, 6, 14)
             m.box("dark", -3.15, -1.35, y - 0.85, y + 0.85, 13.6, 14.1)
+            m.smoke_at(-2.25, y, 14.1, 0.75)
     elif gfx == 50:  # small shed
         m.box("brick", -3.5, 3.5, -4, 4, 0, 4)
         roof_y(m, "slate", "brick", -3.7, 3.7, -4.2, 4.2, 4, 6)
@@ -706,6 +710,7 @@ def factory2(m, gfx):
         m.prism_roof("company", "brick", -6.3, 6.3, -6.3, 6.3, 6, 8.5)
         for (x, y, h) in ((-3, -3, 18), (0, 0, 15), (3, 3, 20)):
             tank(m, "brick", x, y, 6, h, 0.8, sides=10, top="dark")
+            m.smoke_at(x, y, h, 0.8)
     elif gfx == 122:
         m.box("brick", -7, 6, -8, 2, 0, 15)
         wins(m, -7, 6, -8, 2, 1, 14.5, 4, 3, "xXY", size=(1.4, 1.8))

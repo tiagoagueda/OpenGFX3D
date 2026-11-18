@@ -243,6 +243,7 @@ def house():
     m.box("concrete", -5.2, 5.2, -4.2, 4.2, 0, 0.4)
     m.prism_roof("tiles", "company", -5.6, 5.6, -4.7, 4.7, 4.6, 8.2)
     m.box("brick", 2.2, 3.2, -1.8, -0.8, 6.0, 9.0)  # chimney
+    m.smoke_at(2.7, -1.3, 9.0, 0.5)
     m.windows("glass", -5, 5, -4, 4, 0.6, 4.4, 2, 3, size=(1.1, 1.2))
     m.box("door", 4.98, 5.1, -0.6, 0.6, 0.3, 2.3)
     m.box("grass", -7, 7, -7, 7, 0, 0.05)
@@ -327,6 +328,7 @@ def factory_chimney():
     m.box("concrete", -8, 8, 2, 8, 0, 0.2)
     m.box("brick", 3, 6, 3, 6, 0, 22)
     m.box("dark", 2.8, 6.2, 2.8, 6.2, 21, 22.2)
+    m.smoke_at(4.5, 4.5, 22.2, 1.5)
     m.box("company", 2.9, 6.1, 2.9, 6.1, 16, 17)
     m.windows("glass", -8, 8, -8, 2, 1, 5, 1, 4, size=(2.0, 2.4))
     m.save("factory_chimney.glb")

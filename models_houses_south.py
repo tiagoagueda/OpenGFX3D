@@ -256,6 +256,7 @@ def st_villa():
     face_windows(m, "glass", "-y", -5, 2.5, -5.5, (1.7, 5.0), 3)
     m.box("door", 2.5, 2.6, -2.2, -1.0, 0.1, 2.4)
     m.box("brick", -2.5, -1.6, 2, 2.9, 8, 10)
+    m.smoke_at(-2.05, 2.45, 10, 0.45)
     m.save("houses_south_villa.glb")
     return m
 
@@ -290,6 +291,7 @@ def st_cottage():
         m.box(c("leaf"), x0, x1, y0, y1, 0, 0.8)
     walls(m, "company", -3.5, 3.5, -4.5, 4.0, 0, 3.8)
     roof_y(m, c("redroof"), "company", -4.0, 4.0, -5.0, 4.5, 3.8, 6.8)
+    m.house_chimney("brick", -1.6, -2.5, 5.0, 7.8)
     face_windows(m, "glass", "+x", -4.5, 4.0, 3.5, (2.0,), 3, skip=(1,))
     face_windows(m, "glass", "+y", -3.5, 3.5, 4.0, (2.0, 4.8), 2)
     face_windows(m, "glass", "-x", -4.5, 4.0, -3.5, (2.0,), 3)
@@ -398,6 +400,7 @@ def st_house_garden():
     walls(m, "company", -6, 1.5, -6.5, 4, 0, 6.6)
     m.prism_roof(c("redroof"), "company", -6.5, 2.0, -7.0, 4.5, 6.6, 9.6)
     m.box("brick", -4, -3.1, 1.5, 2.4, 8.5, 10.4)
+    m.smoke_at(-3.55, 1.95, 10.4, 0.45)
     # balcony on the front
     m.box("concrete", 1.5, 3.0, -5.5, -0.5, 3.1, 3.4)
     m.box("company", 2.85, 3.0, -5.5, -0.5, 3.4, 4.3)
@@ -674,6 +677,7 @@ def toy_striped_house():
     face_windows(m, "glass", "-y", x0, x1, y0, (1.8, 5.0), 3, size=(1.3, 1.4))
     m.box("door", x1, x1 + 0.1, -2.6, -1.4, 0, 2.4)
     m.box(c("bluedark"), -3.5, -2.3, -4, -2.8, 8, 11)
+    m.smoke_at(-2.9, -3.4, 11, 0.6)
     tube(m, "metal", (0, 1.5, 9.5), (0, 1.5, 12.5), 0.08, 4)
     tube(m, "metal", (0, 0.3, 12), (0, 2.7, 12), 0.06, 4)
     tube(m, "metal", (0, 0.6, 11.3), (0, 2.4, 11.3), 0.06, 4)
@@ -768,6 +772,7 @@ def toy_shoe():
     # a green roof with a chimney on the leg
     m.prism_roof(c("leaf"), lt, -5.4, 5.4, -14.3, -2.7, 16.4, 19.5)
     m.box("brick", -2.5, -1.2, -10.5, -9.2, 17.5, 21)
+    m.smoke_at(-1.85, -9.85, 21, 0.6)
     # windows and a door
     for y in (-11, -6):
         m.box("glass", 4.6, 4.68, y - 0.8, y + 0.8, 2.8, 4.6)

@@ -54,7 +54,7 @@ Like the models, the textures are made for this project: `make_textures.py` comp
 }
 ```
 
-* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`; `construction` for building sites, `waypoint`, `lock` for canal locks and `disaster` for disaster vehicles; `interface` for the posts of labels and the parts of the cursor (see `models_interface.py`).
+* `type`: for vehicles `train`, `road`, `ship` or `aircraft`; for buildings `house`, `industry_tile`, `rail_station`, `road_stop`, `object`, `airport_tile`, `dock`, `buoy`, `rail_depot`, `road_depot` or `ship_depot`; for the landscape `tree`, `field`, `rough` or `rocks`; for effects `effect`; for infrastructure `track`, `signal`, `catenary`, `fence`, `bridge`, `tunnel`, `crossing` or `roadside`; `construction` for building sites, `waypoint`, `lock` for canal locks and `disaster` for disaster vehicles; `interface` for the posts of labels and the parts of the cursor (see `models_interface.py`); `pedestrian` for the people who walk along town streets (see `models_people.py`).
 * `grfid`: the ID of the NewGRF that defines the vehicles, as the eight hexadecimal digits the game shows for it. Leave it out for the vehicles of the base game.
 * `ids`: the numbers within that NewGRF. For the base game:
   * vehicles count from 0 per type, in the order of `src/table/engines.h`: road vehicle 0 is the MPS Regal Bus;
@@ -77,7 +77,7 @@ Like the models, the textures are made for this project: `make_textures.py` comp
 * `rotor`, `rotor_at`: optional, for helicopters; the model of the main rotor, which the game turns, and where its hub is in the frame of the helicopter.
 * `far`: optional; a simpler model to draw far from the camera, or "" to leave the model out there (small details).
 * `snow`: optional, for industry tiles; the model to use in the sub-arctic climate, where the 2D game draws the tile with snow (forests).
-* `parts`: optional, for buildings; parts that move, each `{ "model": ..., "at": [x, y, z], "axis": [x, y, z], "spin": radians per second, "swing": radians, "period": seconds, "lift": world units }`. The part turns around `axis` through `at` (in the frame of the building), by `spin` all the time and back and forth by `swing`, and moves `lift` along `axis` and back once per `period` (a press, rising bubbles). Draw the part with the point it turns around at its origin. Give the ids of a tile that is animated in the game an entry of their own when only those should move.
+* `parts`: optional, for buildings; parts that move, each `{ "model": ..., "at": [x, y, z], "axis": [x, y, z], "spin": radians per second, "swing": radians, "period": seconds, "lift": world units }`. The part turns around `axis` through `at` (in the frame of the building), by `spin` all the time and back and forth by `swing`, and moves `lift` along `axis` and back once per `period` (a press, rising bubbles). Draw the part with the point it turns around at its origin. Give the ids of a tile that is animated in the game an entry of their own when only those should move. With `"night": opacity` the part shows only at night, see-through by that much, like the beams of the lighthouse.
 
 ## Models
 
@@ -90,6 +90,7 @@ Like the models, the textures are made for this project: `make_textures.py` comp
 * A texture is a PNG image, either inside the model or a file in this folder that the model names (`"uri": "tex_brick.png"`); models that name the same file share it. Textures always repeat, and only the first set of texture coordinates is read. The game brings all textures to one size, that of the largest (at most 1024 by 1024), so keep them square and of one size; it can hold 256 of them.
 * A material with a name that starts with `company` takes a colour from the game, multiplied with its base colour: white becomes that colour, grey a darker shade of it. For vehicles, stations, stops and objects it is the owner's company colour; houses and industries use the colour the game picked for them.
 * Triangles of a material with a name that starts with `load` are the cargo of a vehicle. They are drawn only when the vehicle carries cargo, and sink into the vehicle as it gets emptier, by up to their own height; so make the load as high as the part that should disappear, and let the sides of the vehicle hide it.
+* Smoke rises from the points listed in `"extras": { "smoke": [[x, y, z, radius], ...] }` of a node, in the axes of glTF: the tops of chimneys. `Model.smoke_at()`, `Model.chimney(..., smoke=True)` and `Model.house_chimney()` add them. Industries always smoke, houses only now and then, more in winter.
 * Each wagon or part of a vehicle is drawn with the model of its own vehicle ID.
 * Houses and industries are replaced only when they are finished; while being built they keep their sprites.
 
