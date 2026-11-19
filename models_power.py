@@ -10,7 +10,10 @@ Index type `power`, ids:
   5 a cable marker post, set over underground cables;
   6 one piece of underground cable as the power network view shows it: a bright strip on the ground, 16 long along x;
   7-9 a status light over a substation or a pylon joining a power plant: green (energy flows), yellow (on a network,
-      nothing flows), red (not joined to any plant or consumer). Its origin is its foot; the game sets it on top.
+      nothing flows), red (not joined to any plant or consumer). Its origin is its foot; the game sets it on top;
+  10 the concrete foundation of a pylon standing in water, its top a little above the water;
+  11 a hydro dam on a river slope (models_power_plants.dam_step()): the top of the slope at -x, its origin at the
+     foot of the slope.
 
 The game hangs three conductors from every pylon and gantry, at WIRE_Z above its foot and PHASE apart
 across the line (y = -PHASE, 0, +PHASE), and an earth wire from the top of the pylon. These numbers must
@@ -19,6 +22,7 @@ match the ones in the game (src/viewport3d/terrain_mesh.cpp, AddPowerModels()).
 
 from gfx3d import MATERIALS, Model
 from models_infra import beam
+from models_power_plants import dam_step
 
 GROUP = "power"
 
@@ -212,6 +216,14 @@ def status_light(colour):
     return m
 
 
+def water_foundation():
+    """A square concrete pier under a pylon in the water, wider at the waterline."""
+    m = Model()
+    m.box(mat("concrete"), -3.6, 3.6, -3.6, 3.6, -1.5, 0.5)
+    m.box(mat("concrete"), -3.0, 3.0, -3.0, 3.0, 0.5, 0.9)
+    return m
+
+
 def build():
     buildings = []
     for i, (name, model) in enumerate((
@@ -224,7 +236,9 @@ def build():
             ("cable_view", cable_view()),
             ("status_green", status_light("green")),
             ("status_yellow", status_light("yellow")),
-            ("status_red", status_light("red")))):
+            ("status_red", status_light("red")),
+            ("water_foundation", water_foundation()),
+            ("dam_step", dam_step()))):
         filename = f"{GROUP}_{name}.glb"
         model.save(filename)
         buildings.append({"type": "power", "ids": [i], "model": filename})

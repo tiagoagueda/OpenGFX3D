@@ -37,6 +37,7 @@ for _name, _colour in {
     "dam": (0.70, 0.69, 0.65),
     "dam_dark": (0.42, 0.42, 0.42),
     "water_foam": (0.85, 0.92, 0.95),
+    "reservoir": (0.20, 0.38, 0.54),
     "pipe": (0.42, 0.46, 0.50),
     "transformer": (0.36, 0.42, 0.38),
     "insulator": (0.62, 0.46, 0.34),
@@ -181,23 +182,24 @@ def wind_rotor():
     return m
 
 
-def dam():
+def dam(bottom=-4.0):
     """A concrete dam across a river flowing along x: the wall runs along y from bank to bank. It reaches
-    down below the tile, so it closes the river on a slope too."""
+    down below the tile (to bottom), so it closes the river on a slope too."""
     m = Model()
-    m.box(mat("dam"), -2.6, 2.6, -8, 8, -4.0, 4.6)
+    m.box(mat("dam"), -2.6, 2.6, -8, 8, bottom, 4.6)
     m.box(mat("dam_dark"), -2.8, 2.8, -8, 8, 4.6, 5.0)  # road on the crest
     railing(m, -2.6, 2.6, -8, 8, 5.0, h=0.8, material="indt_steel")
     # Spillway gates on both faces, with foam where the water leaves them.
     for y in (-5.0, 0.0, 5.0):
         for sx in (-1, 1):
-            m.box(mat("dam_dark"), sx * 2.6 - 0.1, sx * 2.6 + 0.1, y - 1.4, y + 1.4, -1.0, 2.6)
-        m.box(mat("water_foam"), 2.6, 4.6, y - 1.6, y + 1.6, -1.2, -0.9)
+            m.box(mat("dam_dark"), sx * 2.6 - 0.1, sx * 2.6 + 0.1, y - 1.4, y + 1.4, max(bottom, -1.0), 2.6)
+        if bottom < -1.2:
+            m.box(mat("water_foam"), 2.6, 4.6, y - 1.6, y + 1.6, -1.2, -0.9)
         # Gate hoists on the crest.
         m.box(mat("cladding_dark"), -1.0, 1.0, y - 1.0, y + 1.0, 5.0, 6.8)
     # Buttress ribs on the downstream face.
     for y in (-7.4, -2.5, 2.5, 7.4):
-        m.box(mat("dam"), 2.6, 3.4, y - 0.4, y + 0.4, -3.0, 3.0)
+        m.box(mat("dam"), 2.6, 3.4, y - 0.4, y + 0.4, max(bottom, -3.0), 3.0)
     return m
 
 
@@ -208,6 +210,25 @@ def dam_x():
 def dam_y():
     m = dam()
     rotated_z(m, 1)
+    return m
+
+
+# One height level of the game, in world units.
+LEVEL = 8 * 0.40824829
+
+
+def dam_step():
+    """A dam on a river slope, the river flowing along +x down one height level: the reservoir stands high
+    behind the wall (at -x, the top of the slope) and the water leaves through the gates at the foot of the
+    wall, onto the lower river (at +x). The origin is the foot of the slope, at the lower water."""
+    m = dam(bottom=-0.6)
+    # The reservoir, held up by the wall at the height of the top of the slope.
+    m.box(mat("reservoir"), -8.0, -2.6, -8, 8, LEVEL - 1.2, LEVEL - 0.25)
+    # The lower river, and the white water where it pours out of the gates.
+    m.box(mat("reservoir"), 2.6, 8.0, -8, 8, -0.6, 0.05)
+    for y in (-5.0, 0.0, 5.0):
+        m.box(mat("water_foam"), 2.6, 6.2, y - 1.8, y + 1.8, 0.05, 0.25)
+        m.box(mat("water_foam"), 6.2, 8.0, y - 1.2, y + 1.2, 0.05, 0.15)
     return m
 
 

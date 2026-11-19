@@ -25,6 +25,8 @@ The order of the sprites must match SPR_POWER_* in the game (src/table/sprites.h
   47-52 mouse cursors for the same tools as 40-45 (origin at the middle of their foot)
   53-55 status lights over substations and plant connections: green (energy flows), yellow (on a
         network, but nothing flows), red (not joined to any plant or consumer)
+  56    concrete foundation of a pylon standing in water (drawn relative to the north corner, like the pylons)
+  57-60 hydro dam on a river slope, the top of the slope towards NE, SE, SW, NW; drawn from the foot of the slope
 
 Sprites are drawn relative to the north corner of their tile at the height of its foot (the game
 draws them with that point as their origin). Wires are drawn with their conductors at height 0;
@@ -279,6 +281,11 @@ def subjects():
         out.append((f"cursor_{name}", tris))
     for name, colour in (("green", (0.25, 0.95, 0.30)), ("yellow", (1.0, 0.85, 0.15)), ("red", (1.0, 0.20, 0.15))):
         out.append((f"light_{name}", lamp((8.0, 8.0, 0.0), colour, 0.9)))
+    out.append(("water_foundation", rotated(read_glb("power_water_foundation.glb"), 0.0, centre)))
+    step = read_glb("power_dam_step.glb")
+    # The model has the top of the slope at -x; NE is -x on the map, SE +y, SW +x, NW -y.
+    for name, heading in (("ne", 0.0), ("se", -math.pi / 2), ("sw", math.pi), ("nw", math.pi / 2)):
+        out.append((f"dam_step_{name}", rotated(step, heading, centre)))
     return out
 
 

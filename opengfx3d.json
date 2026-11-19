@@ -4860,6 +4860,20 @@
 			"model": "power_status_red.glb"
 		},
 		{
+			"type": "power",
+			"ids": [
+				10
+			],
+			"model": "power_water_foundation.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				11
+			],
+			"model": "power_dam_step.glb"
+		},
+		{
 			"type": "industry_tile",
 			"ids": [
 				175
