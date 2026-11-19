@@ -20,6 +20,11 @@ The order of the sprites must match SPR_POWER_* in the game (src/table/sprites.h
   32-39 industry tiles 175 to 182 of the power plants (models_power_plants.py), without their ground plate:
         oil turbine hall, oil tanks, solar panels, solar inverter house, wind turbine (rotor standing still),
         dam across a river along x, dam across a river along y, hydro powerhouse
+  40-46 toolbar icons: build line, pylon, overhead substation, transition pylon, underground cable,
+        underground substation, power network view (drawn small, with their top left corner as origin)
+  47-52 mouse cursors for the same tools as 40-45 (origin at the middle of their foot)
+  53-55 status lights over substations and plant connections: green (energy flows), yellow (on a
+        network, but nothing flows), red (not joined to any plant or consumer)
 
 Sprites are drawn relative to the north corner of their tile at the height of its foot (the game
 draws them with that point as their origin). Wires are drawn with their conductors at height 0;
@@ -249,7 +254,67 @@ def subjects():
             rotor = [(tuple((p[0] + hub[0], p[1] + hub[1], p[2] + hub[2]) for p in tri), colour) for tri, colour in read_glb(plants.fname("wind_rotor"))]
             tris = tris + rotor
         out.append((f"plant_{name}", rotated(tris, 0.0, (8.0, 8.0, 0.0))))
+
+    # Toolbar icons and cursors: the models seen the same way, drawn small.
+    line = rotated(pylon, math.pi / 2, centre) + wire_at(wire_triangles((0, 1)), models_power.WIRE_Z)
+    cable_icon = rotated(marker, 0.0, (8.0, 8.0, 0.0))
+    for d in ((-1, 0), (1, 0)):
+        length = 8
+        heading = math.atan2(d[1], d[0])
+        scaled = [(tuple((p[0] * length / 16 + length / 2, p[1], p[2]) for p in tri), colour) for tri, colour in cable]
+        cable_icon += rotated(scaled, heading, (8.0, 8.0, 0.0))
+    tools = [
+        ("line", line),
+        ("pylon", rotated(pylon, math.pi / 2, centre)),
+        ("substation", rotated(overhead, math.pi / 2, centre)),
+        ("transition", rotated(transition, math.pi / 2, centre)),
+        ("cable", cable_icon),
+        ("substation_underground", rotated(underground, 0.0, centre)),
+    ]
+    view_icon = rotated(pylon, math.pi / 2, centre) + wire_at(wire_triangles((0, 1)), models_power.WIRE_Z) + lamp((8.0, 8.0, models_power.TOP + 2.0), (0.25, 0.85, 0.30), 1.6)
+    for name, tris in tools:
+        out.append((f"icon_{name}", tris))
+    out.append(("icon_network_view", view_icon))
+    for name, tris in tools:
+        out.append((f"cursor_{name}", tris))
+    for name, colour in (("green", (0.25, 0.95, 0.30)), ("yellow", (1.0, 0.85, 0.15)), ("red", (1.0, 0.20, 0.15))):
+        out.append((f"light_{name}", lamp((8.0, 8.0, 0.0), colour, 0.9)))
     return out
+
+
+def outlined(rgba, zoom):
+    """Give an icon a dark outline, as the game's own icons have, so thin lattice work reads on any button."""
+    width = {0: 1, 2: 2, 1: 3}[zoom]
+    rgba = np.pad(rgba, ((width, width), (width, width), (0, 0)))
+    mask = rgba[..., 3] > 0.35
+    grown = mask.copy()
+    for dy in range(-width, width + 1):
+        for dx in range(-width, width + 1):
+            grown |= np.roll(np.roll(mask, dy, axis=0), dx, axis=1)
+    edge = grown & ~mask
+    rgba[edge] = (0.06, 0.06, 0.06, 1.0)
+    # Brighten the inside a little: the models are grey steel, which looks dull at this size.
+    rgba[mask, :3] = np.clip(rgba[mask, :3] * 1.25, 0, 1)
+    rgba[mask, 3] = 1.0
+    return rgba
+
+
+def wire_at(tris, z):
+    """Lift wire triangles (conductors at height 0) to height z."""
+    return [(tuple((p[0], p[1], p[2] + z) for p in tri), colour) for tri, colour in tris]
+
+
+def lamp(at, colour, r):
+    """A small octahedron of one colour: a status light."""
+    x, y, z = at
+    top, bottom = (x, y, z + 2 * r), (x, y, z)
+    ring = [(x + r, y, z + r), (x, y + r, z + r), (x - r, y, z + r), (x, y - r, z + r)]
+    tris = []
+    for k in range(4):
+        a, b = ring[k], ring[(k + 1) % 4]
+        tris.append(((top, a, b), colour))
+        tris.append(((bottom, b, a), colour))
+    return tris
 
 
 def main():
@@ -264,12 +329,27 @@ def main():
     zooms = ((0, 1, 4), (2, 2, 3), (1, 4, 2))
     sprites = []
     sheet = []
+    ICON_SIZE = 20  # pixels at normal zoom, the size of the game's own toolbar icons
+    CURSOR_SIZE = 26
     for name, tris in subjects():
         versions = []
+        fit = 1.0
+        if name.startswith("icon_") or name.startswith("cursor_"):
+            size = ICON_SIZE if name.startswith("icon_") else CURSOR_SIZE
+            rgba, _, _ = crop(*rasterise(tris, 1, 1))
+            fit = min(1.0, (size - 1) / max(rgba.shape[0], rgba.shape[1]))
         for zoom, scale, aa in zooms:
-            rgba, xoff, yoff = rasterise(tris, scale, aa)
+            rgba, xoff, yoff = rasterise(tris, scale * fit, aa)
             rgba, xoff, yoff = crop(rgba, xoff, yoff)
+            if name.startswith("icon_") or name.startswith("cursor_"):
+                rgba = outlined(rgba, zoom)
             h, w = rgba.shape[:2]
+            if name.startswith("icon_"):
+                xoff, yoff = 0, 0
+            elif name.startswith("cursor_"):
+                xoff, yoff = -(w // 2), -h
+            elif name.startswith("light_"):
+                xoff, yoff = -(w // 2), -h
             if zoom == 0:
                 pal = to_8bpp(rgba, palette)
                 versions.append((0x04, 0, pal.tobytes(), w, h, xoff, yoff))

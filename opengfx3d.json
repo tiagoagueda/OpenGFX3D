@@ -4839,6 +4839,27 @@
 			"model": "power_cable_view.glb"
 		},
 		{
+			"type": "power",
+			"ids": [
+				7
+			],
+			"model": "power_status_green.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				8
+			],
+			"model": "power_status_yellow.glb"
+		},
+		{
+			"type": "power",
+			"ids": [
+				9
+			],
+			"model": "power_status_red.glb"
+		},
+		{
 			"type": "industry_tile",
 			"ids": [
 				175

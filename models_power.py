@@ -8,7 +8,9 @@ Index type `power`, ids:
   3 a transition pylon, where an overhead line along x goes into the ground;
   4 one piece of conductor, 16 long along x, centred on the origin; the game stretches it from pylon to pylon;
   5 a cable marker post, set over underground cables;
-  6 one piece of underground cable as the power network view shows it: a bright strip on the ground, 16 long along x.
+  6 one piece of underground cable as the power network view shows it: a bright strip on the ground, 16 long along x;
+  7-9 a status light over a substation or a pylon joining a power plant: green (energy flows), yellow (on a network,
+      nothing flows), red (not joined to any plant or consumer). Its origin is its foot; the game sets it on top.
 
 The game hangs three conductors from every pylon and gantry, at WIRE_Z above its foot and PHASE apart
 across the line (y = -PHASE, 0, +PHASE), and an earth wire from the top of the pylon. These numbers must
@@ -42,6 +44,9 @@ for _name, _colour in {
     "marker": (0.95, 0.55, 0.10),
     "marker_post": (0.88, 0.86, 0.80),
     "cable": (1.00, 0.45, 0.05),
+    "light_green": (0.25, 0.95, 0.30),
+    "light_yellow": (1.00, 0.85, 0.15),
+    "light_red": (1.00, 0.20, 0.15),
 }.items():
     MATERIALS[f"{GROUP}_{_name}"] = _colour
 
@@ -198,6 +203,15 @@ def cable_view():
     return m
 
 
+def status_light(colour):
+    """A small signal lamp on a short stalk, the colour of the status."""
+    m = Model()
+    m.box(mat("steel_dark"), -0.1, 0.1, -0.1, 0.1, 0.0, 0.5)
+    m.box(mat(f"light_{colour}"), -0.45, 0.45, -0.45, 0.45, 0.5, 1.4)
+    m.box(mat("steel_dark"), -0.5, 0.5, -0.5, 0.5, 1.4, 1.5)
+    return m
+
+
 def build():
     buildings = []
     for i, (name, model) in enumerate((
@@ -207,7 +221,10 @@ def build():
             ("pylon_transition", transition_pylon()),
             ("conductor", conductor()),
             ("cable_marker", cable_marker()),
-            ("cable_view", cable_view()))):
+            ("cable_view", cable_view()),
+            ("status_green", status_light("green")),
+            ("status_yellow", status_light("yellow")),
+            ("status_red", status_light("red")))):
         filename = f"{GROUP}_{name}.glb"
         model.save(filename)
         buildings.append({"type": "power", "ids": [i], "model": filename})
